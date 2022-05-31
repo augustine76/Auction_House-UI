@@ -6,17 +6,11 @@ import { cancel} from "../api/src/auction-house";
 export const Cancel: FC = () => {
     let walletAddress = "";
     const { publicKey } = useWallet();
-    const [price, setPrice] = useState(''); // '' is the initial state value
-    const [mintAddress, setMintAddress] = useState(''); // '' is the initial state value
-    const [auctionHouseAddress,setAuctionHouseAddress]= useState(''); // '' is the initial state value
-    
+    const [price, setPrice] = useState(''); 
+    const [mintAddress, setMintAddress] = useState(''); 
+    const [auctionHouseAddress,setAuctionHouseAddress]= useState(''); 
     
     const wallet = useWallet();
-    if (wallet.connected && wallet.publicKey) {
-        walletAddress = wallet.publicKey.toString()
-        console.log("my pub wallet ===>",walletAddress);
-    }
-
 
     function getCancel() {
         cancel({ auctionHouse: auctionHouseAddress, buyPrice: price, mint: mintAddress, tokenSize: '1', env: 'devnet', wallet: wallet })

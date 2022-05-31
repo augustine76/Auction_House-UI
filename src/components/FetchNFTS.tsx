@@ -1,15 +1,8 @@
-import { useConnection, useWallet } from "@solana/wallet-adapter-react";
-import {
-    Keypair,
-    SystemProgram,
-    Transaction,
-    TransactionSignature,
-} from "@solana/web3.js";
+import {  useWallet } from "@solana/wallet-adapter-react";
 import { FC, useCallback, useState } from "react";
 import { notify } from "../utils/notifications";
 import {
     Metaplex,
-    keypairIdentity,
     bundlrStorage,
     walletAdapterIdentity,
 } from "@metaplex-foundation/js-next";
@@ -18,9 +11,7 @@ import {NFTS} from "./NFTS";
 export const FetchNFTS: FC = () => {
     const [NFTList, setNFTList] = useState([]);
     
-
     const connection = new Connection(clusterApiUrl("devnet"));
-   
 
     let myNFTs;
     let indexKeys = 0;
@@ -30,6 +21,7 @@ export const FetchNFTS: FC = () => {
     const { publicKey } = useWallet();
     const wallet = useWallet();
     const metaplex = Metaplex.make(connection)
+        //@ts-ignore
         .use(walletAdapterIdentity(wallet))
         .use(bundlrStorage());
 
@@ -49,8 +41,6 @@ export const FetchNFTS: FC = () => {
             setTimeout(() => {
                 setNFTList(arr); 
               }, 1000);
-            // settest(true);
-            // await updateNFTs();
             console.log("NFTList is", arr);
         } catch (err) {
             console.log(err);
@@ -79,13 +69,9 @@ export const FetchNFTS: FC = () => {
             <div className="row">
                     
                         {NFTList.map((x) => {
-                            // let uri = await fetch(x.uri);
-                            // let res = await uri.json();
-                            // return <img width={200} height={200} src={x} key={indexKeys++}/>;
                             return  <NFTS data={x} key={indexKeys++}/> 
-                        })}</div>
-                   
-            {/* <button onClick={()=> settest(true)}>update</button> */}
+                        })}
+            </div>
 
         </div>
     );

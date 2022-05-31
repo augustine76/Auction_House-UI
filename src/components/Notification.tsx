@@ -47,10 +47,6 @@ const NotificationList = () => {
 const Notification = ({ type, message, description, txid, onHide }) => {
   const { connection } = useConnection();
 
-  // TODO: we dont have access to the network or endpoint here.. 
-  // getExplorerUrl(connection., txid, 'tx')
-  // Either a provider, context, and or wallet adapter related pro/contx need updated
-
 
   useEffect(() => {
     const id = setTimeout(() => {

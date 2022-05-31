@@ -1,17 +1,14 @@
 // TODO: SignMessage
-import bs58 from 'bs58';
+
 import { FC, useCallback, useState } from 'react';
-import { sign } from 'tweetnacl';
 import { notify } from "../utils/notifications";
-import { ConnectionProvider, useWallet, WalletProvider } from '@solana/wallet-adapter-react'
-import { WalletModalProvider } from '@solana/wallet-adapter-react-ui'
+import {  useWallet } from '@solana/wallet-adapter-react'
 import { WalletAdapterNetwork } from '@solana/wallet-adapter-base'
 import { clusterApiUrl } from '@solana/web3.js'
 import { PhantomWalletAdapter, SolflareWalletAdapter } from '@solana/wallet-adapter-wallets'
 import { Connection } from '@solana/web3.js';
-import { TOKEN_PROGRAM_ID, } from "@solana/spl-token";
 import { actions } from "@metaplex/js";
-const { mintNFT, } = actions;
+const { mintNFT } = actions;
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 
@@ -32,13 +29,11 @@ export const SignMessage: FC = () => {
     const wallet = useWallet();
     const onClick = useCallback(async () => {
         try {
-
-            // const uri = "https://gateway.pinata.cloud/ipfs/QmPbSW7PcSMHBSPEyqs8SETDJvqC69rKBbGmawhmJmHxSE"
-            const nft =  await mintNFT({ connection, wallet: wallet , uri : URI, })
-            // const vault =  await createVault({connection,wallet,hi,wallet,});
+            const nft =  await mintNFT({ connection, wallet :  wallet, uri : URI,})
 
             console.log(nft);
-        } catch (err) {
+        } 
+        catch (err) {
             console.log(err)
         }
     }, [publicKey, notify, signMessage]);

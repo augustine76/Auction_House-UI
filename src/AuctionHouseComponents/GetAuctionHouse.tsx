@@ -15,8 +15,6 @@ import Paper from '@mui/material/Paper';
 
 export const GetAuctionHouse: FC = () => {
 
-    
-
     let walletAddress = " ";
     let AuctionAddress = " ";
 
@@ -33,7 +31,7 @@ export const GetAuctionHouse: FC = () => {
 
     function createData(name, value) {
         return { name, value};
-      }
+    }
 
     const rows = [
         createData('Auction House Key', AHInfo[0] ),
@@ -46,13 +44,9 @@ export const GetAuctionHouse: FC = () => {
         createData('Seller Fee Basis Points', AHInfo[7]),
         createData('AH Bump', AHInfo[11]),
         createData('AH Fee Bump', AHInfo[12]),
-
-        // createData('Creator', 305, 3.7, 67, 4.3),
-        // createData('Creator', 305, 3.7, 67, 4.3),
-        // createData('Creator', 305, 3.7, 67, 4.3),
-      ];
+    ];
     
-      const StyledTableCell = styled(TableCell)(({ theme }) => ({
+    const StyledTableCell = styled(TableCell)(({ theme }) => ({
         [`&.${tableCellClasses.head}`]: {
           backgroundColor: theme.palette.common.black,
           color: theme.palette.common.white,
@@ -60,9 +54,9 @@ export const GetAuctionHouse: FC = () => {
         [`&.${tableCellClasses.body}`]: {
           fontSize: 14,
         },
-      }));
+    }));
       
-      const StyledTableRow = styled(TableRow)(({ theme }) => ({
+    const StyledTableRow = styled(TableRow)(({ theme }) => ({
         '&:nth-of-type(odd)': {
           backgroundColor: theme.palette.action.hover,
         },
@@ -70,7 +64,7 @@ export const GetAuctionHouse: FC = () => {
         '&:last-child td, &:last-child th': {
           border: 0,
         },
-      }));
+    }));
 
     const AHTable = () => {
         return (
@@ -137,21 +131,7 @@ export const GetAuctionHouse: FC = () => {
             <span className="block group-disabled:hidden">Get Auction House Info</span>
             </button>
             { AHFetched ?   
-                            // <>
-                            // <h3>Auction House Key: {AHInfo[0]}</h3>
-                            // <h3>Mint: {AHInfo[1]}</h3>
-                            // <h3>Authority: {AHInfo[2]}</h3>
-                            // <h3>Creator: {AHInfo[3]}</h3>
-                            // <h3>Fee Payer Acct: {AHInfo[4]}</h3>
-                            // <h3>Treasury Acct: {AHInfo[5]}</h3>
-                            // <h3>Fee Payer Withdrawal Acct: {AHInfo[6]}</h3>
-                            // <h3>Treasury Withdrawal Acct: {AHInfo[7]}</h3>
-                            // <h3>Seller Fee Basis Points: {AHInfo[8]}</h3>
-                            // <h3>Requires Sign Off: {AHInfo[9]}</h3>
-                            // <h3>Can Change Sale Price: {AHInfo[10]}</h3>
-                            // <h3>AH Bump: {AHInfo[11]}</h3>
-                            // <h3>AH Fee Bump: {AHInfo[12]}</h3>
-                            // </>
+                            
                             <AHTable />
                             :
                             <></>
