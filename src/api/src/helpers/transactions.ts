@@ -50,22 +50,12 @@ export const sendTransactionWithRetryWithKeypair = async (
     );
   }
 
-  // if (signers.length > 0) {
-  //   transaction.sign(...[wallet, ...signers]);
-  // } else {
-  //   transaction.sign(wallet);
-  // }
-
-  
-  
   const signedTransaction = await wallet.signTransaction(transaction);
   console.log("sign transaction",signedTransaction);
-  // const {signature , slot}= await connection.sendRawTransaction(signedTransaction.serialize());
 
   if (beforeSend) {
     beforeSend();
   }
-  console.log("abc")
 
   const { txid, slot } = await sendSignedTransaction({
     connection,
@@ -109,7 +99,6 @@ export async function sendSignedTransaction({
       await sleep(500);
     }
   })();
-  console.log("pass2")
   try {
     const confirmation = await awaitTransactionSignatureConfirmation(
       txid,
@@ -240,7 +229,6 @@ async function awaitTransactionSignatureConfirmation(
       done = true;
       log.error('WS error in setup', txid, e);
     }
-    console.log("pass4")
     while (!done && queryStatus) {
       // eslint-disable-next-line no-loop-func
       (async () => {
@@ -249,7 +237,6 @@ async function awaitTransactionSignatureConfirmation(
             txid,
           ]);
           status = signatureStatuses && signatureStatuses.value[0];
-          console.log("pass5")
           if (!done) {
             if (!status) {
               log.debug('REST null result for', txid, status);
@@ -272,7 +259,6 @@ async function awaitTransactionSignatureConfirmation(
           }
         }
       })();
-      console.log("pass6")
       await sleep(2000);
     }
   });
