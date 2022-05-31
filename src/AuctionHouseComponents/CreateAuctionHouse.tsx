@@ -4,17 +4,11 @@ import { FC, useCallback, useState } from 'react';
 import { create_auction_house} from "../api/src/auction-house";
 
 export const CreateAuctionHouse: FC = () => {
-    let walletAddress = "";
     var AuctionAddress 
-
 
     const { publicKey } = useWallet();
     const wallet = useWallet();
-    if (wallet.connected && wallet.publicKey) {
-        walletAddress = wallet.publicKey.toString()
-    }
-
-
+   
     function getCreateauctionhouse() {
         create_auction_house({ env: 'devnet', sfbp: 100, ccsp: 100, rso: true, wallet : wallet}).then(x => {
             alert('Auction House Address: ' + x)

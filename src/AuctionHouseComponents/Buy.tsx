@@ -4,22 +4,17 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 
 import { buy } from "../api/src/auction-house";
-import { PublicKey } from '@solana/web3.js';
+
 
 export const Buy: FC = () => {
-    let walletAddress = "";
     
     const { publicKey } = useWallet();
-    const [price, setPrice] = useState(''); // '' is the initial state value
-    const [mintAddress, setMintAddress] = useState(''); // '' is the initial state value
-    const [auctionHouseAddress,setAuctionHouseAddress]= useState(''); // '' is the initial state value
+    const [price, setPrice] = useState(''); 
+    const [mintAddress, setMintAddress] = useState('');
+    const [auctionHouseAddress,setAuctionHouseAddress]= useState('');
     
     const wallet = useWallet();
-    if (wallet.connected && wallet.publicKey) {
-        walletAddress = wallet.publicKey.toString()
-    }
-
-
+  
     function getBuy() {
         buy({ auctionHouse: auctionHouseAddress, buyPrice: price, tokenSize: '1', mint: mintAddress, env: 'devnet', wallet: wallet }).then(x => {
             alert('Buy / offer Action'+'Offer: '+x);

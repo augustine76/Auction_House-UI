@@ -18,8 +18,6 @@ export const Sell: FC = () => {
     
     const wallet = useWallet();
    
-
-
     function getSell() {
         console.log("ah,auction",auctionHouseAddress);
         
@@ -34,15 +32,15 @@ export const Sell: FC = () => {
         <div>
             <Box
                 component="form"
-      sx={{
-        '& > :not(style)': { m: 2, width: '25ch' },
-        input:{
-            background: "white"
-        }
-      }}
-      noValidate
-      autoComplete="off"
-    >
+                sx={{
+                    '& > :not(style)': { m: 2, width: '25ch' },
+                    input:{
+                        background: "white"
+                    }
+                }}
+                noValidate
+                autoComplete="off"
+            >
             <TextField 
                 label="Auction House Address"
                 variant='filled'
@@ -68,7 +66,7 @@ export const Sell: FC = () => {
                 size='small'
             />
     </Box>
-    <button
+            <button
                 className="group w-60 m-2 btn animate-pulse disabled:animate-none bg-gradient-to-r from-[#9945FF] to-[#14F195] hover:from-pink-500 hover:to-yellow-500 ... "
                 onClick={getSell} disabled={!publicKey}
             >

@@ -14,10 +14,6 @@ export const Withdraw: FC = () => {
 
     const { publicKey } = useWallet();
     const wallet = useWallet();
-    if (wallet.connected && wallet.publicKey) {
-        walletAddress = wallet.publicKey.toString()
-    }
-
 
     function getWithdraw() {
         withdraw({ auctionHouse: auctionHouseAddress, amount: price, env: 'devnet', wallet: wallet })
@@ -26,16 +22,16 @@ export const Withdraw: FC = () => {
     return (
         <div>
         <Box
-                component="form"
-      sx={{
-        '& > :not(style)': { m: 2, width: '25ch' },
-        input:{
-            background: "white"
-        }
-      }}
-      noValidate
-      autoComplete="off"
-    >
+            component="form"
+            sx={{
+                '& > :not(style)': { m: 2, width: '25ch' },
+                input:{
+                background: "white"
+                }
+            }}
+            noValidate
+            autoComplete="off"
+        >
                 <TextField 
                 label="Auction House Address"
                 variant='filled'
@@ -65,13 +61,7 @@ export const Withdraw: FC = () => {
                     Withdraw 
                 </span>
             </button>
-            {/* <label>Auction House Address:
-                    <input type="text" value={auctionHouseAddress} onInput={e => setAuctionHouseAddress((e.target as HTMLTextAreaElement).value)}/>
-                </label>
-                <label>Amount:
-                    <input type="number" value={price} onInput={e => setPrice((e.target as HTMLTextAreaElement).value)}/>
-                </label> */}
-
+            
         </div>
     );
 };

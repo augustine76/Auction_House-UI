@@ -16,10 +16,6 @@ export const ExecuteSell: FC = () => {
     const [sellerAccount, setSellerAccount] = useState(''); // '' is the initial
     
     const wallet = useWallet();
-    if (wallet.connected && wallet.publicKey) {
-        walletAddress = wallet.publicKey.toString()
-    }
-
 
     function getExecuteSale() {
         execute_sale({ auctionHouse: auctionHouseAddress, buyPrice: price, mint: mintAddress, tokenSize: '1', buyerWallet: buyerAccount, sellerWallet: sellerAccount, env: 'devnet', wallet: wallet })
@@ -30,15 +26,15 @@ export const ExecuteSell: FC = () => {
         <div>
             <Box
                 component="form"
-      sx={{
-        '& > :not(style)': { m: 1, width: '15ch' },
-        input:{
-            background: "white"
-        }
-      }}
-      noValidate
-      autoComplete="off"
-    >
+                sx={{
+                    '& > :not(style)': { m: 1, width: '15ch' },
+                    input:{
+                        background: "white"
+                    }
+                }}
+                noValidate
+                autoComplete="off"
+            >
             <TextField 
                 label="Auction House Address"
                 variant='filled'
@@ -47,7 +43,7 @@ export const ExecuteSell: FC = () => {
                 size='small'
                 onChange={(e) => { setAuctionHouseAddress(e.target.value)}}
             />
-                        <TextField 
+            <TextField 
                 label="Mint Address"
                 variant='filled'
                 color='success'
