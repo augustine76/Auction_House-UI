@@ -29,6 +29,7 @@ export const SignMessage: FC = () => {
     const wallet = useWallet();
     const onClick = useCallback(async () => {
         try {
+            alert("MetaData Field should contain a creator address same as the minter");
             const nft =  await mintNFT({ connection, wallet :  wallet, uri : URI,})
 
             console.log(nft);
