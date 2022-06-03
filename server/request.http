@@ -1,0 +1,12 @@
+@base_url = http://localhost:5000
+
+###Create nft
+POST {{{base_url}}}/users/createnft
+Content-Type: application/json
+
+{
+    "url": "dddd"
+} 
+
+###Fetch all nfts
+GET {{{base_url}}}/users/fetchAllNfts 
