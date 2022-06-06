@@ -2,14 +2,14 @@ import express from "express"
 import mongoose from "mongoose"
 import dotenv from "dotenv"
 import UserRoute from "./route/user.js";
-import User from "./model/user.js";
-import cors from "cors"
-// const cors = require("cors");
-// app.use(cors);
+import NftRoute from "./route/nft.js";
+import cookieParser from "cookie-parser";
+
 dotenv.config()
 const app = express()
 
 app.use(express.json())
+app.use(cookieParser())
 
 app.use(function (req, res, next) { //allow cross origin requests
     res.setHeader("Access-Control-Allow-Methods", "POST, PUT, OPTIONS, DELETE, GET");
@@ -19,11 +19,12 @@ app.use(function (req, res, next) { //allow cross origin requests
 });
 // Routes
 app.use(UserRoute);
+app.use(NftRoute);
 
 const PORT = process.env.PORT || 5000
 
 mongoose
-    .connect('mongodb+srv://isha:isha2180@cluster0.govgi.mongodb.net/test', {
+    .connect(process.env.MONGODB_URL, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
     })

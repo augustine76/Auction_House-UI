@@ -1,11 +1,12 @@
 import express from "express"
-import {createnft, fetchAllNfts} from "../controller/api.js";
+import {createSignUp, createSignIn, fetchAllUsers} from "../controller/api.js";
+import { isAuthenticated } from "../middleware/auth.js";
 
 const router = express.Router()
 
 
-router.post('/createNFTS', createnft);
-router.get("/fetchAllNfts", fetchAllNfts)
-
+router.post('/createSignUp', isAuthenticated, createSignUp);
+router.post('/createSignIn', createSignIn);
+router.get("/fetchAllUsers", fetchAllUsers);
 
 export default router;
