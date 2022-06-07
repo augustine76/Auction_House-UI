@@ -11,7 +11,14 @@ import { Buy } from '../../AuctionHouseComponents/Buy';
 import { Cancel} from '../../AuctionHouseComponents/Cancel';
 import {Deposit} from '../../AuctionHouseComponents/Deposit';
 import {Withdraw} from '../../AuctionHouseComponents/Withdraw';
+import NFTCollections from '../../components/FetchCollections';
+import Collections from "../../components/Collections";
 export const HomeView: FC = ({ }) => {
+
+  // const mystyle = {
+  //   display: "flex",
+  //   flex-direction: "row",
+  // };
 
   return (
     <div className="md:hero mx-auto p-4">
@@ -21,13 +28,28 @@ export const HomeView: FC = ({ }) => {
         </h1>
         {/* CONTENT GOES HERE */}
         <div className="text-center">
-          <CreateAuctionHouse />
+
+          {/* <CreateAuctionHouse />
           <Deposit/>
           <Withdraw/>
-          <GetAuctionHouse />
+          <GetAuctionHouse /> */}
           {/* <Sell />
           <Buy />
           <ExecuteSell /> */}
+          <div style={{display:"flex", "flexDirection":"row", "flexWrap": "wrap",
+           "justifyContent":"space-between"}}>
+          <NFTCollections />
+          {/* <NFTCollections />
+          <NFTCollections />
+
+          <Collections />
+          <Collections />
+          <Collections /> */}
+
+
+          </div>
+
+
 
         </div>
       </div>
