@@ -11,8 +11,7 @@ import { actions } from "@metaplex/js";
 const { mintNFT } = actions;
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
-
-
+import { signIn } from 'next-auth/react';
 
 export const SignMessage2: FC = () => {
     const network = WalletAdapterNetwork.Devnet;
@@ -27,29 +26,40 @@ export const SignMessage2: FC = () => {
     const [URI, setURI] = useState("");
 
     const wallet = useWallet();
-    const onClick = useCallback(async () => {
-        try {
-            alert("MetaData Field should contain a creator address same as the minter");
-            const nft = await mintNFT({ connection, wallet: wallet, uri: URI, })
 
-            console.log("url",URI)
+    async function fetchNonce() {
+    
+        const response = await fetch('api/login');
+      
+        if(response.status != 200)
+          throw new Error("nonce could not be retrieved");
+    
+        const { nonce } = await response.json();
+        
+        return nonce;
+      }
 
-            const requestOptions = {
-                mode: 'no-cors',
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ url: URI })
-            };
-            fetch('http://localhost:5000/createNFTS', requestOptions)
-                .then(response => console.log(response))
-                .then(data => console.log(data));
+    const login = async (req, res) => {
 
-            console.log(nft);
-        }
-        catch (err) {
-            console.log(err)
-        }
-    }, [publicKey, notify, signMessage]);
+        const nonce = await fetchNonce();
+
+        const message = `Sign this message for authenticating with your wallet.  Nonce: ${nonce}`;
+        const encodedMessage = new TextEncoder().encode(message);
+        const signedMessage = await solana.request({
+          method: "signMessage",
+          params: {
+            message: encodedMessage,
+          },
+        });
+
+        signIn('credentials',
+      { 
+        redirect: false,    
+        publicKey: signedMessage.publicKey,
+        signature: signedMessage.signature
+      }
+    )
+    }
 
     return (
         <div>
@@ -74,7 +84,7 @@ export const SignMessage2: FC = () => {
             </Box>
             <button
                 className="group w-60 m-2 btn animate-pulse disabled:animate-none bg-gradient-to-r from-[#9945FF] to-[#14F195] hover:from-pink-500 hover:to-yellow-500 ... "
-                onClick={onClick} disabled={!publicKey}
+                onClick={login} disabled={!publicKey}
             >
                 <div className="hidden group-disabled:block">
                     Wallet not connected
