@@ -1,5 +1,5 @@
 import { hexToRgb } from "@material-ui/core";
-import {User,Nft} from "../model/user.js";
+import {User} from "../model/user.js";
 import sendToken from "../utils/jwtToken.js";
 
 export const createSignUp = async (req, res) => {
