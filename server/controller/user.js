@@ -1,14 +1,13 @@
+import { hexToRgb } from "@material-ui/core";
 import {User,Nft} from "../model/user.js";
 import sendToken from "../utils/jwtToken.js";
 
 export const createSignUp = async (req, res) => {
     
     try {
-        const { email, username} = req.body
-        const newUser = new User({
-            email,
-            username
-        })
+        const { username } = req.body
+        
+         
         const existingUser = await User.findOne({email, username})
         if(existingUser){
             res.json({
@@ -18,7 +17,7 @@ export const createSignUp = async (req, res) => {
         }else{
             newUser.save(async(_, user) => {
             res.status(201).json(user);
-            console.log(user.email);
+            console.log(user);
         })
     }
     } catch (error) {
@@ -100,21 +99,4 @@ export const fetchAllNfts = async (req, res) => {
         } catch (error) {
             res.status(409).json({ error: error.message })
         }
-}
-
-export const fetchAllUsers = async (req, res) => {
-    try {
-        const { url } = req.body
-        const users = await User.find()
-        if (!users) return res.status(404).json({
-            sucess: false,
-            message: "No nft found."
-        })
-        res.status(200).json({
-            sucess: true,
-            message: users
-        })
-    } catch (error) {
-        res.status(409).json({ error: error.message })
-    }
 }

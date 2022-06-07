@@ -4,12 +4,14 @@ import dotenv from "dotenv"
 import UserRoute from "./route/user.js";
 import NftRoute from "./route/nft.js";
 import cookieParser from "cookie-parser";
+import bodyParser from "body-parser";
 
 dotenv.config()
 const app = express()
 
 app.use(express.json())
 app.use(cookieParser())
+app.use(bodyParser.urlencoded({extended:false}));
 
 app.use(function (req, res, next) { //allow cross origin requests
     res.setHeader("Access-Control-Allow-Methods", "POST, PUT, OPTIONS, DELETE, GET");
@@ -24,7 +26,7 @@ app.use(NftRoute);
 const PORT = process.env.PORT || 5000
 
 mongoose
-    .connect(process.env.MONGODB_URL, {
+    .connect("mongodb+srv://abhi:abhi@hi.mwcxr.mongodb.net/?retryWrites=true&w=majority", {
         useNewUrlParser: true,
         useUnifiedTopology: true,
     })
