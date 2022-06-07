@@ -27,29 +27,33 @@ export const SignMessage2: FC = () => {
     const [URI, setURI] = useState("");
 
     const wallet = useWallet();
-    const onClick = useCallback(async () => {
+    const onClick = async () => {
         try {
-            alert("MetaData Field should contain a creator address same as the minter");
-            const nft = await mintNFT({ connection, wallet: wallet, uri: URI, })
 
-            console.log("url",URI)
+            
+            const myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
 
+            const urlencoded = new URLSearchParams();
+            urlencoded.append("url", "URI");
+
+            //@ts-ignore
             const requestOptions = {
-                mode: 'no-cors',
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ url: URI })
+                mode : "no-cors",
+                headers: myHeaders,
+                body: urlencoded,
+                redirect: 'follow'
             };
-            fetch('http://localhost:5000/createNFTS', requestOptions)
-                .then(response => console.log(response))
-                .then(data => console.log(data));
+            //@ts-ignore
+           const uri =  fetch("http://localhost:5000/createNft", requestOptions)
 
-            console.log(nft);
+            // console.log(nft);
         }
         catch (err) {
             console.log(err)
         }
-    }, [publicKey, notify, signMessage]);
+    }
 
     return (
         <div>
