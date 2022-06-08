@@ -13,7 +13,7 @@ import Box from '@mui/material/Box';
 import { useSession, signIn } from 'next-auth/react';
 
 export const SignMessage2: FC = () => {
-    // const { data: session } = useSession()
+    const { data: session } = useSession()
     const network = WalletAdapterNetwork.Devnet;
     const wallets = [
         new PhantomWalletAdapter(),
