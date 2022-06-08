@@ -1,4 +1,4 @@
-import {User,Nft} from "../model/user.js";
+import {User,Nft} from "../model/schema.js";
 import jwt from "jsonwebtoken";
 
 export const isAuthenticated = async (req, res, next) => {

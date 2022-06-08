@@ -1,5 +1,4 @@
 // TODO: SignMessage
-
 import { FC, useCallback, useState } from 'react';
 import { useWallet } from '@solana/wallet-adapter-react'
 import { WalletAdapterNetwork } from '@solana/wallet-adapter-base'
@@ -13,7 +12,7 @@ import Box from '@mui/material/Box';
 import { useSession, signIn } from 'next-auth/react';
 
 export const SignMessage2: FC = () => {
-    const { data: session } = useSession()
+    // const { data: session } = useSession()
     const network = WalletAdapterNetwork.Devnet;
     const wallets = [
         new PhantomWalletAdapter(),
@@ -56,8 +55,7 @@ export const SignMessage2: FC = () => {
       { 
         redirect: false,
         publicKey: signedMessage.publicKey,
-        signature: signedMessage.signature,
-        synchronize: false
+        signature: signedMessage.signature
         // callbackUrl: `${window.location.origin}`
       }
     )

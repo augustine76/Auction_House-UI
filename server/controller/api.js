@@ -1,15 +1,17 @@
-import {User,Nft} from "../model/user.js";
+import { User,Nft } from "../model/schema.js";
 import sendToken from "../utils/jwtToken.js";
 
-export const createSignUp = async (req, res) => {
+//edit profile:- submit button
+export const createUser = async (req, res) => {
     
     try {
-        const { email, username} = req.body
+        const { email, publicKey, username} = req.body
         const newUser = new User({
             email,
+            publicKey,
             username
         })
-        const existingUser = await User.findOne({email, username})
+        const existingUser = await User.findOne({publicKey})
         if(existingUser){
             res.json({
                 status:false,
@@ -26,44 +28,46 @@ export const createSignUp = async (req, res) => {
     }
 }
 
-export const createSignIn = async (req, res) => {
-    try { 
-        const {username, email} = req.body
-        const user = await User.findOne({
-            username, email
-        })
-        if(user){
-            sendToken(user,res);
-        }else if(user){
-            res.status(200).json(user)
-        }else if(!user) return res.status(404).json({
-            sucess:false,
-            message:"User not found."
-        })
-    } catch (error) {
-        res.status(409).json({ error: error.message })
-    }
-}
+// export const createSignIn = async (req, res) => {
+//     try { 
+//         const {username, email} = req.body
+//         const user = await User.findOne({
+//             username, email
+//         })
+//         if(user){
+//             sendToken(user,res);
+//         }else if(user){
+//             res.status(200).json(user)
+//         }else if(!user) return res.status(404).json({
+//             success:false,
+//             message:"User not found."
+//         })
+//     } catch (error) {
+//         res.status(409).json({ error: error.message })
+//     }
+// }
 
-export const createNft = async (req, res) => {
+//selling nfts
+export const createSell = async (req, res) => {
     try {
 
-        const {username, email} = req.body
+        const { publicKey } = req.body
         const user = await User.findOne({
-            username, email
+            publicKey
         })
         if(user){
-            const { url } = req.body
+            const { url, amount } = req.body
             const newNft = new Nft({
-                url
+                url, publicKey, amount
             })
+            newNft.isSell = true;
             newNft.save(async(_, nft) => {
                 res.status(201).json(nft);
             })
         }else if(user){
             res.status(200).json(user)
         }else if(!user) return res.status(404).json({
-            sucess:false,
+            success:false,
             message:"User not found."
         })
     
@@ -72,27 +76,55 @@ export const createNft = async (req, res) => {
     }
 }
 
+//browse:- nfts listed for sale
 export const fetchAllNfts = async (req, res) => {
     try {
-        const {username, email} = req.body
+        // const {isSell} = req.body
+        const nfts = await Nft.find({
+            isSell: true
+        })
+        if(nfts){
+                res.status(200).json({
+                    success: true,
+                    message: nfts
+                });
+        }else {
+                return res.status(404).json({
+                success:false,
+                message:"No nfts are on sale."
+            })
+        }
+
+           
+        } catch (error) {
+            res.status(409).json({ error: error.message })
+        }
+}
+
+//collections:- nfts owned
+export const fetchAllUserNfts = async (req, res) => {
+    try {
+        const {publicKey} = req.body
         const user = await User.findOne({
-            username, email
+            publicKey
         })
         if(user){
-            const { url } = req.body
-            const nfts = await Nft.find()
-            if (!nfts) return res.status(404).json({
-                sucess: false,
-                message: "No nft found."
+            const nft = await Nft.find({
+                publicKey
             })
-            res.status(200).json({
-                sucess: true,
-                message: nfts
-            })
-        }else if(user){
-            res.status(200).json(user)
-        }else if(!user) return res.status(404).json({
-            sucess:false,
+            if(!nft){
+                    return res.status(404).json({
+                    success: false,
+                    message: "No nft found."
+                })
+            }else{ 
+                res.status(200).json({
+                    success: true,
+                    message: nft
+                })
+            }
+        }else return res.status(404).json({
+            success:false,
             message:"User not found."
         })
 
@@ -102,16 +134,16 @@ export const fetchAllNfts = async (req, res) => {
         }
 }
 
+//users list
 export const fetchAllUsers = async (req, res) => {
     try {
-        const { url } = req.body
         const users = await User.find()
         if (!users) return res.status(404).json({
-            sucess: false,
+            success: false,
             message: "No nft found."
         })
         res.status(200).json({
-            sucess: true,
+            success: true,
             message: users
         })
     } catch (error) {
