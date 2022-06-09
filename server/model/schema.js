@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import jwt from 'jsonwebtoken';
 
 const nftSchema = mongoose.Schema({
-
+    
     url: String,
     publicKey: String,
     buyerWallet: String,
@@ -17,6 +17,14 @@ const nftSchema = mongoose.Schema({
         default: false
     },
     isBuy: {
+        type: Boolean,
+        default: false
+    },
+    isSignedBySeller: {
+        type: Boolean,
+        default: false
+    },
+    isSignedByBuyer: {
         type: Boolean,
         default: false
     },
@@ -45,6 +53,7 @@ const userSchema = mongoose.Schema({
 const signatureSchema = mongoose.Schema({
 
     signature: String,
+    publicKey: String,
     isSigned: {
         type: Boolean,
         default: false

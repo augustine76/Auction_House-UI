@@ -14,8 +14,8 @@ export const createUser = async (req, res) => {
         })
         const existingUser = await User.findOne({ publicKey })
         if (existingUser) {
-            res.json({
-                status: false,
+            return res.status(404).json({
+                success: false,
                 message: "User already exists."
             })
         } else {
@@ -56,25 +56,44 @@ export const createListedNfts = async (req, res) => {
         const user = await User.findOne({
             publicKey, userType: "seller"
         })
-        // console.log('user.userType ===>', user.userType)
         if (user) {
             const { url, amountToSell, auctionHouseKey, amountToBuy, mintKey } = req.body
             const newNft = new Nft({
                 url, publicKey, auctionHouseKey, amountToSell, amountToBuy, mintKey, userType: user.userType
             })
-            newNft.sellerWallet = user.publicKey;
-            newNft.buyerWallet = "";
-            newNft.amountToBuy = 0;
-            newNft.isListed = true;
-            newNft.save(async (_, nft) => {
-                res.status(201).json(nft);
-                console.log("nft ===>", nft)
+            const findMintKey = await Nft.findOne({
+                publicKey, mintKey
             })
-        }else return res.status(404).json({
+            const findSignSignature = await Signature.findOne({
+                publicKey, isSigned: true
+            })
+            if (findSignSignature) {
+                if (!findMintKey) {
+                    newNft.sellerWallet = user.publicKey;
+                    newNft.buyerWallet = "";
+                    newNft.amountToBuy = 0;
+                    newNft.isListed = true;
+                    newNft.isSignedBySeller = true;
+                    newNft.save(async (_, nft) => {
+                        res.status(201).json(nft);
+                    })
+                }
+                else {
+                    return res.status(404).json({
+                        success: false,
+                        message: "Cannot list the nft twice."
+                    })
+                }
+            } else {
+                return res.status(404).json({
+                    success: false,
+                    message: "Signature is not signed by the seller."
+                })
+            }
+        } else return res.status(404).json({
             success: false,
             message: "User not found."
         })
-
     } catch (error) {
         return res.status(409).json({ error: error.message })
     }
@@ -90,27 +109,32 @@ export const createBuy = async (req, res) => {
         const findMintKey = await Nft.findOne({
             mintKey
         })
+        const findSignSignature = await Signature.findOne({
+            publicKey, isSigned: true
+        })
         if (user) {
-            const { amountToBuy, amountToSell } = req.body
-            console.log("findMintKey.amountToSell ===>", findMintKey.amountToSell)
-            console.log("findMintKey.amountToBuy ===>", findMintKey.amountToBuy)
-            console.log("amountToBuy ===>", amountToBuy)
-            console.log("amountToSell ===>", amountToSell)
-            console.log("findMintKey.isBuy ===>", findMintKey.isBuy)
-            console.log("findMintKey.isListed ===>", findMintKey.isListed)
-            if (findMintKey.amountToSell == amountToBuy && findMintKey.isListed == true && findMintKey.isBuy == false && findMintKey.isSell == false) {
-                var myquery = { amountToBuy: 0, buyerWallet: "", isBuy: false };
-                var newvalues = { $set: { amountToBuy, buyerWallet: findMintKey.publicKey, isBuy: true } };
-                const updateValues = await Nft.updateMany(myquery, newvalues, function (err, res) {
-                    if (err) throw err;
-                    console.log("1 document updated");
-                });
-                res.status(201).json(updateValues);
+            const { amountToBuy, mintKey } = req.body
+            if (findSignSignature) {
+                if (findMintKey.mintKey == mintKey && findMintKey.amountToSell == amountToBuy && findMintKey.isListed == true && findMintKey.isBuy == false && findMintKey.isSell == false) {
+                    var myquery = { amountToBuy: 0, buyerWallet: "", isBuy: false, isSignedByBuyer: false };
+                    var newvalues = { $set: { amountToBuy, buyerWallet: user.publicKey, isBuy: true, isSignedByBuyer: true } };
+                    const updateValues = await Nft.updateMany(myquery, newvalues, function (err, res) {
+                        if (err) throw err;
+                        console.log("1 document updated");
+                    });
+                    res.status(201).json(updateValues);
+
+                } else {
+                    return res.status(404).json({
+                        success: false,
+                        message: "Buy amount does not match with sell amount."
+                    })
+                }
 
             } else {
                 return res.status(404).json({
                     success: false,
-                    message: "Buy amount does not match with sell amount."
+                    message: "Signature is not signed by the buyer."
                 })
             }
         } else if (!user) return res.status(404).json({
@@ -137,13 +161,7 @@ export const createSell = async (req, res) => {
         })
         if (checkWallet) {
             const { amountToBuy, amountToSell } = req.body
-            console.log("findMintKey.amountToSell ===>", findMintKey.amountToSell)
-            console.log("findMintKey.amountToBuy ===>", findMintKey.amountToBuy)
-            console.log("amountToBuy ===>", amountToBuy)
-            console.log("amountToSell ===>", amountToSell)
-            console.log("findMintKey.isBuy ===>", findMintKey.isBuy)
-            console.log("findMintKey.isListed ===>", findMintKey.isListed)
-            if (findMintKey.amountToSell == findMintKey.amountToBuy && findMintKey.isBuy == true && findMintKey.isListed == true && findMintKey.isSell == false) {
+            if (findMintKey.amountToSell == amountToSell && findMintKey.amountToBuy == amountToBuy && findMintKey.isBuy == true && findMintKey.isListed == true && findMintKey.isSell == false) {
                 var myquery = { isSell: false };
                 var newvalues = { $set: { isSell: true } };
                 const updateValues = await Nft.updateMany(myquery, newvalues, function (err, res) {
@@ -151,19 +169,19 @@ export const createSell = async (req, res) => {
                     console.log("1 document updated");
                 });
                 res.status(201).json(updateValues);
-            }else {
+            } else {
                 return res.status(404).json({
                     success: false,
                     message: "Buy amount does not match with sell amount."
                 })
             }
-        }else {
+        } else {
             return res.status(404).json({
                 success: false,
                 message: "Buyer wallet or Seller wallet account address does not match."
             })
         }
-    }catch (error) {
+    } catch (error) {
         console.log(error.reason)
         return res.status(409).json({ error: error.message })
     }
@@ -172,20 +190,29 @@ export const createSell = async (req, res) => {
 //signing signature
 export const signSignature = async (req, res) => {
     try {
-
         const { publicKey } = req.body
         const user = await User.findOne({
             publicKey
         })
         if (user) {
-            const { signature } = req.body
+            const { signature, publicKey } = req.body
             const newSignature = new Signature({
-                signature
+                publicKey, signature
             })
-            newSignature.isSigned = true;
-            newSignature.save(async (_, signature) => {
-                res.status(201).json(signature);
-            })
+            const existingUser = await Signature.findOne({ publicKey })
+            if (existingUser) {
+                return res.status(404).json({
+                    success: false,
+                    message: "User already exists."
+                })
+            }
+            else {
+                newSignature.isSigned = true;
+                newSignature.save(async (_, signature) => {
+                    res.status(201).json(signature);
+                })
+
+            }
         } else if (!user) return res.status(404).json({
             success: false,
             message: "User not found."
