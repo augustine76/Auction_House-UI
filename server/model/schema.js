@@ -5,15 +5,29 @@ const nftSchema = mongoose.Schema({
 
     url: String,
     publicKey: String,
+    buyerWallet: String,
+    sellerWallet: String,
+    mintKey: String,
+    isListed: {
+        type: Boolean,
+        default: false
+    },
     isSell: {
         type: Boolean,
         default: false
     },
-    sellAt: {
+    isBuy: {
+        type: Boolean,
+        default: false
+    },
+    listedAt: {
         type: Date,
         default: new Date()
     },
-    amount: Number
+    amountToBuy: Number,
+    amountToSell: Number,
+    auctionHouseKey: String,
+    userType: String
 })
 
 const userSchema = mongoose.Schema({
@@ -21,6 +35,20 @@ const userSchema = mongoose.Schema({
     email: String,
     publicKey: String,
     username: String,
+    userType: String,
+    createdAt: {
+        type: Date,
+        default: new Date()
+    }
+})
+
+const signatureSchema = mongoose.Schema({
+
+    signature: String,
+    isSigned: {
+        type: Boolean,
+        default: false
+    },
     createdAt: {
         type: Date,
         default: new Date()
@@ -35,3 +63,4 @@ const userSchema = mongoose.Schema({
 
 export const User = mongoose.model("users", userSchema)
 export const Nft = mongoose.model("nfts", nftSchema)
+export const Signature = mongoose.model("signatureSchema", signatureSchema)

@@ -31,8 +31,8 @@ export const HomeView: FC = ({ }) => {
 
           {/* <CreateAuctionHouse />
           <Deposit/>
-          <Withdraw/>
-          <GetAuctionHouse /> */}
+          <Withdraw/> */}
+          <GetAuctionHouse />
           {/* <Sell />
           <Buy />
           <ExecuteSell /> */}
