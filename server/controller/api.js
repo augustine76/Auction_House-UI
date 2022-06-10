@@ -5,12 +5,11 @@ import sendToken from "../utils/jwtToken.js";
 export const createUser = async (req, res) => {
 
     try {
-        const { email, publicKey, username, userType } = req.body
+        const { email, publicKey, username } = req.body
         const newUser = new User({
             email,
             publicKey,
-            username,
-            userType
+            username
         })
         const existingUser = await User.findOne({ publicKey })
         if (existingUser) {
@@ -54,12 +53,12 @@ export const createListedNfts = async (req, res) => {
 
         const { publicKey } = req.body
         const user = await User.findOne({
-            publicKey, userType: "seller"
+            publicKey
         })
         if (user) {
             const { url, amountToSell, auctionHouseKey, amountToBuy, mintKey } = req.body
             const newNft = new Nft({
-                url, publicKey, auctionHouseKey, amountToSell, amountToBuy, mintKey, userType: user.userType
+                url, publicKey, auctionHouseKey, amountToSell, amountToBuy, mintKey
             })
             const findMintKey = await Nft.findOne({
                 publicKey, mintKey
@@ -104,7 +103,7 @@ export const createBuy = async (req, res) => {
     try {
         const { publicKey, mintKey } = req.body
         const user = await User.findOne({
-            publicKey, userType: "buyer"
+            publicKey
         })
         const findMintKey = await Nft.findOne({
             mintKey

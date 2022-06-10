@@ -34,8 +34,7 @@ const nftSchema = mongoose.Schema({
     },
     amountToBuy: Number,
     amountToSell: Number,
-    auctionHouseKey: String,
-    userType: String
+    auctionHouseKey: String
 })
 
 const userSchema = mongoose.Schema({
@@ -43,7 +42,6 @@ const userSchema = mongoose.Schema({
     email: String,
     publicKey: String,
     username: String,
-    userType: String,
     createdAt: {
         type: Date,
         default: new Date()
