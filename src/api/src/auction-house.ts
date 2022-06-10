@@ -1134,7 +1134,7 @@ export const create_auction_house = async (cmd: any) => {
     const {
       wallet,
       env,
-      sellerFeeBasisPoints,
+      sellerFeeBasisPoints = 100,
       canChangeSalePrice,
       requiresSignOff,
       treasuryWithdrawalDestination,

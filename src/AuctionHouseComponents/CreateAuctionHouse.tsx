@@ -10,7 +10,7 @@ export const CreateAuctionHouse: FC = () => {
     const wallet = useWallet();
    
     function getCreateauctionhouse() {
-        create_auction_house({ env: 'devnet', sfbp: 100, ccsp: 100, rso: true, wallet : wallet}).then(x => {
+        create_auction_house({ env: 'devnet', sfbp: 100, ccsp: true, rso: true, wallet : wallet}).then(x => {
             alert('Auction House Address: ' + x)
             AuctionAddress = x
         })
