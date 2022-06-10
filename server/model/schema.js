@@ -32,8 +32,7 @@ const nftSchema = mongoose.Schema({
         type: Date,
         default: new Date()
     },
-    amountToBuy: Number,
-    amountToSell: Number,
+    amount: Number,
     auctionHouseKey: String
 })
 

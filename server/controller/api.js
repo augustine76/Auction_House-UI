@@ -56,9 +56,9 @@ export const createListedNfts = async (req, res) => {
             publicKey
         })
         if (user) {
-            const { url, amountToSell, auctionHouseKey, amountToBuy, mintKey } = req.body
+            const { url, amount, auctionHouseKey, mintKey } = req.body
             const newNft = new Nft({
-                url, publicKey, auctionHouseKey, amountToSell, amountToBuy, mintKey
+                url, publicKey, auctionHouseKey, amount, mintKey
             })
             const findMintKey = await Nft.findOne({
                 publicKey, mintKey
@@ -70,7 +70,6 @@ export const createListedNfts = async (req, res) => {
                 if (!findMintKey) {
                     newNft.sellerWallet = user.publicKey;
                     newNft.buyerWallet = "";
-                    newNft.amountToBuy = 0;
                     newNft.isListed = true;
                     newNft.isSignedBySeller = true;
                     newNft.save(async (_, nft) => {
@@ -112,11 +111,11 @@ export const createBuy = async (req, res) => {
             publicKey, isSigned: true
         })
         if (user) {
-            const { amountToBuy, mintKey } = req.body
+            const { amount, mintKey } = req.body
             if (findSignSignature) {
-                if (findMintKey.mintKey == mintKey && findMintKey.amountToSell == amountToBuy && findMintKey.isListed == true && findMintKey.isBuy == false && findMintKey.isSell == false) {
-                    var myquery = { mintKey: findMintKey.mintKey, amountToBuy: 0, buyerWallet: "", isBuy: false, isSignedByBuyer: false };
-                    var newvalues = { $set: { amountToBuy, buyerWallet: user.publicKey, isBuy: true, isSignedByBuyer: true } };
+                if (findMintKey.mintKey == mintKey && findMintKey.amount == amount && findMintKey.isListed == true && findMintKey.isBuy == false && findMintKey.isSell == false) {
+                    var myquery = { mintKey: findMintKey.mintKey, buyerWallet: "", isBuy: false, isSignedByBuyer: false };
+                    var newvalues = { $set: { buyerWallet: user.publicKey, isBuy: true, isSignedByBuyer: true } };
                     const updateValues = await Nft.updateOne(myquery, newvalues, function (err, res) {
                         if (err) throw err;
                         console.log("1 document updated");
@@ -159,8 +158,8 @@ export const createSell = async (req, res) => {
             mintKey
         })
         if (checkWallet) {
-            const { amountToBuy, amountToSell } = req.body
-            if (findMintKey.amountToSell == amountToSell && findMintKey.amountToBuy == amountToBuy && findMintKey.isBuy == true && findMintKey.isListed == true && findMintKey.isSell == false) {
+            const { amount } = req.body
+            if (findMintKey.amount == amount && findMintKey.amount == amount && findMintKey.isBuy == true && findMintKey.isListed == true && findMintKey.isSell == false) {
                 var myquery = { mintKey: findMintKey.mintKey, isSell: false };
                 var newvalues = { $set: { isSell: true } };
                 const updateValues = await Nft.updateOne(myquery, newvalues, function (err, res) {
