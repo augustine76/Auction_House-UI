@@ -116,9 +116,9 @@ export const createBuy = async (req, res) => {
             const { amountToBuy, mintKey } = req.body
             if (findSignSignature) {
                 if (findMintKey.mintKey == mintKey && findMintKey.amountToSell == amountToBuy && findMintKey.isListed == true && findMintKey.isBuy == false && findMintKey.isSell == false) {
-                    var myquery = { amountToBuy: 0, buyerWallet: "", isBuy: false, isSignedByBuyer: false };
+                    var myquery = { mintKey: findMintKey.mintKey, amountToBuy: 0, buyerWallet: "", isBuy: false, isSignedByBuyer: false };
                     var newvalues = { $set: { amountToBuy, buyerWallet: user.publicKey, isBuy: true, isSignedByBuyer: true } };
-                    const updateValues = await Nft.updateMany(myquery, newvalues, function (err, res) {
+                    const updateValues = await Nft.updateOne(myquery, newvalues, function (err, res) {
                         if (err) throw err;
                         console.log("1 document updated");
                     });
@@ -162,9 +162,9 @@ export const createSell = async (req, res) => {
         if (checkWallet) {
             const { amountToBuy, amountToSell } = req.body
             if (findMintKey.amountToSell == amountToSell && findMintKey.amountToBuy == amountToBuy && findMintKey.isBuy == true && findMintKey.isListed == true && findMintKey.isSell == false) {
-                var myquery = { isSell: false };
+                var myquery = { mintKey: findMintKey.mintKey, isSell: false };
                 var newvalues = { $set: { isSell: true } };
-                const updateValues = await Nft.updateMany(myquery, newvalues, function (err, res) {
+                const updateValues = await Nft.updateOne(myquery, newvalues, function (err, res) {
                     if (err) throw err;
                     console.log("1 document updated");
                 });
