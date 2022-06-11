@@ -51,35 +51,42 @@ export const createUser = async (req, res) => {
 export const createListedNfts = async (req, res) => {
     try {
 
-        const { publicKey } = req.body
+        const { publicKey, mintKey } = req.body
         const user = await User.findOne({
             publicKey
+        })
+        const findMintKey = await Nft.findOne({
+            publicKey, mintKey
         })
         if (user) {
             const { url, amount, auctionHouseKey, mintKey } = req.body
             const newNft = new Nft({
-                url, publicKey, auctionHouseKey, amount, mintKey
-            })
-            const findMintKey = await Nft.findOne({
-                publicKey, mintKey
+                url, publicKey, mintKey, auctionHouseKey, amount
             })
             const findSignSignature = await Signature.findOne({
                 publicKey, isSigned: true
             })
             if (findSignSignature) {
-                if (!findMintKey) {
-                    newNft.sellerWallet = user.publicKey;
-                    newNft.buyerWallet = "";
-                    newNft.isListed = true;
-                    newNft.isSignedBySeller = true;
-                    newNft.save(async (_, nft) => {
-                        res.status(201).json(nft);
-                    })
-                }
-                else {
+                if(newNft.mintKey && newNft.publicKey){
+                    if (!findMintKey) {
+                        newNft.sellerWallet = user.publicKey;
+                        newNft.buyerWallet = "";
+                        newNft.isListed = true;
+                        newNft.isSignedBySeller = true;
+                        newNft.save(async (_, nft) => {
+                            res.status(201).json(nft);
+                        })
+                    }
+                    else {
+                        return res.status(404).json({
+                            success: false,
+                            message: "Cannot list the nft twice."
+                        })
+                    }
+                }else{
                     return res.status(404).json({
                         success: false,
-                        message: "Cannot list the nft twice."
+                        message: "Not mintkey found."
                     })
                 }
             } else {
@@ -125,7 +132,7 @@ export const createBuy = async (req, res) => {
                 } else {
                     return res.status(404).json({
                         success: false,
-                        message: "Buy amount does not match with sell amount."
+                        message: "No mintkey found. OR Buy amount does not match with sell amount."
                     })
                 }
 
