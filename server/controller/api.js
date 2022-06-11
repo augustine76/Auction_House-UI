@@ -86,7 +86,7 @@ export const createListedNfts = async (req, res) => {
                 }else{
                     return res.status(404).json({
                         success: false,
-                        message: "Not mintkey found."
+                        message: "MintKey not found."
                     })
                 }
             } else {
@@ -285,7 +285,7 @@ export const fetchAllUsers = async (req, res) => {
         const users = await User.find()
         if (!users) return res.status(404).json({
             success: false,
-            message: "No nft found."
+            message: "User not found."
         })
         res.status(200).json({
             success: true,
