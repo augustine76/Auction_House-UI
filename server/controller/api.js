@@ -132,7 +132,7 @@ export const createBuy = async (req, res) => {
                 } else {
                     return res.status(404).json({
                         success: false,
-                        message: "No mintkey found. OR Buy amount does not match with sell amount."
+                        message: "Buy amount does not match with sell amount."
                     })
                 }
 
@@ -264,17 +264,10 @@ export const fetchAllListedNfts = async (req, res) => {
             const nft = await Nft.find({
                 publicKey
             })
-            if (!nft) {
-                return res.status(404).json({
-                    success: false,
-                    message: "No nft found."
-                })
-            } else {
-                res.status(200).json({
-                    success: true,
-                    message: nft
-                })
-            }
+            res.status(200).json({
+                success: true,
+                message: nft
+            })
         } else return res.status(404).json({
             success: false,
             message: "User not found."
