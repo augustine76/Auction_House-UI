@@ -41,11 +41,12 @@ export const HomeView: FC = ({ }) => {
           <NFTCollections />
           {/* <NFTCollections />
           <NFTCollections />
-
+          
           <Collections />
           <Collections />
           <Collections /> */}
-
+           <GetAuctionHouse /> 
+          <Cancel/>
 
           </div>
 

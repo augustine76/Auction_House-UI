@@ -5,3 +5,4 @@ export { SellView } from "./sell";
 export { ExecuteView } from "./execute";
 export { CollectionsView } from "./collections";
 export {ProfileView} from "./profile";
+export {NFTDetailView} from "./nftdetails"

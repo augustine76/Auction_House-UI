@@ -7,5 +7,6 @@ const router = express.Router()
 
 router.post('/createSignUp', createSignUp);
 router.post('/createSignIn', createSignIn);
+// router.get("/fetchAllUsers", fetchAllUsers);
 
 export default router;
