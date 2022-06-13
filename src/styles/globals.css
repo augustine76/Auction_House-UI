@@ -86,5 +86,36 @@ input[type="number"]
 
 
 
+.profileimg {
+  border-radius: 50%;
+  height: 200px;
+  width: 200px;
+  
+}
+.profileName{
+  font-size: 30px;
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
+  padding-top: 0.5rem;
+  color:#f3eded;
+}
+.profileNameB{
+  font-size: 20px;
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
+  padding: none;
+  padding-bottom: 0.5rem;
+  
+}
+.publicKey{
+  font-size: 20px;
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
+  
+  background-color: rgb(88, 82, 82);
+  }
+
+
+
 
 

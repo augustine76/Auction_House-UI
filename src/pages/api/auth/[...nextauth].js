@@ -8,6 +8,7 @@ const nextAuthOptions = (req, res) => {
         providers: [
             CredentialsProvider({
                 async authorize(credentials) {
+                    
                     const nonce = req.cookies["auth-nonce"];
 
                     const message = `Sign this message for authenticating with your wallet. Nonce: ${nonce}`;
@@ -35,3 +36,5 @@ const nextAuthOptions = (req, res) => {
 export default (req, res) => {
     return NextAuth(req, res, nextAuthOptions(req, res))
 }
+
+

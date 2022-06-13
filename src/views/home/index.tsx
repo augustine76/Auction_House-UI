@@ -29,10 +29,10 @@ export const HomeView: FC = ({ }) => {
         {/* CONTENT GOES HERE */}
         <div className="text-center">
 
-          {<CreateAuctionHouse />
-          /*<Deposit/>
-          <Withdraw/> */}
-          <GetAuctionHouse />
+          {/* <CreateAuctionHouse />
+          <Deposit/>
+          <Withdraw/>
+          <GetAuctionHouse /> */}
           {/* <Sell />
           <Buy />
           <ExecuteSell /> */}
@@ -41,11 +41,12 @@ export const HomeView: FC = ({ }) => {
           <NFTCollections />
           {/* <NFTCollections />
           <NFTCollections />
-
+          
           <Collections />
           <Collections />
           <Collections /> */}
-
+           <GetAuctionHouse /> 
+          {/* <Cancel/> */}
 
           </div>
 

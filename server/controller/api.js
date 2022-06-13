@@ -5,22 +5,30 @@ import sendToken from "../utils/jwtToken.js";
 export const createUser = async (req, res) => {
 
     try {
-        const { email, publicKey, username } = req.body
+        const { publicKey ,signature} = req.body
         const newUser = new User({
-            email,
+
             publicKey,
-            username
+            signature
         })
         const existingUser = await User.findOne({ publicKey })
         if (existingUser) {
-            return res.status(404).json({
-                success: false,
-                message: "User already exists."
+
+            existingUser.signature=signature;
+            existingUser.save();
+            return res.status(201).json({
+                success: true,
+                message: "User already exists.",
+                data: existingUser
             })
         } else {
             newUser.save(async (_, user) => {
-                res.status(201).json(user);
-                console.log(user.email);
+                res.status(201).json({
+                    success: true,
+                    message: "User created",
+                    data: user
+                });
+
             })
         }
     } catch (error) {
@@ -67,7 +75,7 @@ export const createListedNfts = async (req, res) => {
                 publicKey, isSigned: true
             })
             if (findSignSignature) {
-                if(newNft.mintKey && newNft.publicKey){
+                if (newNft.mintKey && newNft.publicKey) {
                     if (!findMintKey) {
                         newNft.sellerWallet = user.publicKey;
                         newNft.buyerWallet = "";
@@ -83,7 +91,7 @@ export const createListedNfts = async (req, res) => {
                             message: "Cannot list the nft twice."
                         })
                     }
-                }else{
+                } else {
                     return res.status(404).json({
                         success: false,
                         message: "MintKey not found."
@@ -229,7 +237,7 @@ export const signSignature = async (req, res) => {
 }
 
 //browse:- nfts listed for sale
-export const fetchAllNfts = async (req, res) => {
+export const fetchAllListedNfts = async (req, res) => {
     try {
         // const {isListed} = req.body
         const nfts = await Nft.find({
@@ -254,7 +262,7 @@ export const fetchAllNfts = async (req, res) => {
 }
 
 //collections:- nfts owned
-export const fetchAllListedNfts = async (req, res) => {
+export const fetchUserListedNfts = async (req, res) => {
     try {
         const { publicKey } = req.body
         const user = await User.findOne({

@@ -12,6 +12,8 @@ const { mintNFT } = actions;
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 
+
+
 export const SignMessage: FC = () => {
     const network = WalletAdapterNetwork.Devnet;
     const wallets = [

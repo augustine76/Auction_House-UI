@@ -33,10 +33,10 @@ export const FetchNFTS: FC = () => {
 
             console.log(myNFTs);
             myNFTs.map(async (x) => {
-                let uri = await fetch(x.uri);
-                let res = await uri.json();
-                arr.push(res);
-                console.log("name is", res.image);
+                // let uri = await fetch(x.uri);
+                // let res = await uri.json();
+                arr.push(x);
+                // console.log("name is", res.image);
             });
             setTimeout(() => {
                 setNFTList(arr); 
