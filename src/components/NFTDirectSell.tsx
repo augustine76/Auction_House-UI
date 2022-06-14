@@ -52,14 +52,19 @@ export const NFTDetails = (props) => {
         let uri = await fetch(data);
         let res = await uri.json();
         // console.log("Res", res.image);
-        if(!updated)
+        if(!updated){
             setimage(res.image);
+            setname(res.name);
+            setcollection(res.collection["name"]);
+        }
         setupdated(true);
         
     }
     pic(uri);
 
     const [image, setimage] = useState("")
+    const [name, setname] = useState("")
+    const [collection, setcollection] = useState("");
     const [updated, setupdated] = useState(false);
     
     const { publicKey } = useWallet();
@@ -91,8 +96,8 @@ export const NFTDetails = (props) => {
                 <CardContent>
                     <TextInfoContent
                         classes={textCardContentStyles}
-                        overline={props.name}
-                        heading={props.collection}
+                        overline={name}
+                        heading={collection}
                     // body={
                     //     props.body
                     // }
