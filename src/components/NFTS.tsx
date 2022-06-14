@@ -1,13 +1,25 @@
 // import { FC } from 'react';
 import { produceWithPatches } from 'immer';
-import React from 'react';
+import React, { useState } from 'react';
 import Link from "next/link";
 
 export const NFTS = (props) => {
-    console.log("props",props);
-    // const abc=async (data) => {
-    //     let uri = await fetch(data);
-    //     let res = await uri.json();
+    const [image, setimage] = useState("")
+    const [updated, setupdated] = useState(false);
+    // console.log("props",props);
+    const pic = async (data) => {
+        let uri = await fetch(data);
+        let res = await uri.json();
+        // console.log("Res", res.image);
+        if(!updated)
+            setimage(res.image);
+        setupdated(true);
+        
+    }
+    pic(props.data.uri);
+    // const test = (data) => {
+    //     let res = abc(data);
+    //     console.log("res", res)
     //     return res;
     // }
     
@@ -32,8 +44,20 @@ export const NFTS = (props) => {
                     <div className="bg-image hover-overlay pd" data-mdb-rippleripple rounded-0-color="light">
                         <img className="img-fluid  max_width image_width"
                        
-                         src={props.data.uri}
+                         src={image}
                             alt="NFT" />
+                            {/* {
+                                
+                                    abc(props.data.uri).then((x) => {
+                                        return(
+                                            <img className="img-fluid  max_width image_width"
+                       
+                                                src={x}
+                                                 alt="NFT" />
+                                        )
+                                    })
+                                
+                            } */}
 
                     </div>
                     <br />
