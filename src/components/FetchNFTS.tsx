@@ -62,14 +62,14 @@ export const FetchNFTS: FC = () => {
                     Wallet not connected
                 </div> 
                 <span className="block group-disabled:hidden">Fetch NFTS</span>
-            </button><br/><br/><br/>
+            </button> <br/><br/><br/>
             <h1 className="text-center text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-tr from-[#9945FF] to-[#14F195]">
           Your NFTS
         </h1><br/>
             <div className="row">
                     
                         {NFTList.map((x) => {
-                            return  <NFTS data={x} key={indexKeys++}/> 
+                            return   <NFTS data={x} key={indexKeys++}/> 
                         })}
             </div>
 
