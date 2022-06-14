@@ -31,6 +31,8 @@ const useStyles = makeStyles(() => ({
 }));
 
 export const NFTDetails = (props) => {
+
+    
     const router = useRouter()
     const styles = useStyles();
     const mediaStyles = useFourThreeCardMediaStyles();
@@ -43,8 +45,22 @@ export const NFTDetails = (props) => {
         // "height": "100px"
     }
     const {
-        query: { mint },
+        query: { mint, uri },
     } = router
+
+    const pic = async (data) => {
+        let uri = await fetch(data);
+        let res = await uri.json();
+        // console.log("Res", res.image);
+        if(!updated)
+            setimage(res.image);
+        setupdated(true);
+        
+    }
+    pic(uri);
+
+    const [image, setimage] = useState("")
+    const [updated, setupdated] = useState(false);
     
     const { publicKey } = useWallet();
     const wallet = useWallet();
@@ -59,7 +75,7 @@ export const NFTDetails = (props) => {
             alert('Create Sell Action'+'Account'+x.account+'MintAddress'+x.mintAddress+'Price'+x.price);
         })
     }
-    console.log("nft details", mint)
+    console.log("nft details", uri);
     return (
         <div
             style={mystyles}
@@ -67,9 +83,10 @@ export const NFTDetails = (props) => {
             <Card className={cx(styles.root, shadowStyles.root)}>
                 <CardMedia
                     className={cx(styles.media, mediaStyles.root)}
-                // image={
-                //     props.image
-                // }
+                image={
+                    // props.image
+                    image
+                }
                 />
                 <CardContent>
                     <TextInfoContent
