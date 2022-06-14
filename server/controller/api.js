@@ -3,32 +3,31 @@ import sendToken from "../utils/jwtToken.js";
 
 //edit profile:- submit button
 export const createUser = async (req, res) => {
-
     try {
-        const { publicKey ,signature} = req.body
-        const newUser = new User({
-
-            publicKey,
-            signature
+        const { publicKey, signature } = req.body
+        const findSignSignature = await Signature.findOne({
+            publicKey, isSigned: true
         })
-        const existingUser = await User.findOne({ publicKey })
-        if (existingUser) {
-
-            existingUser.signature=signature;
-            existingUser.save();
-            return res.status(201).json({
-                success: true,
-                message: "User already exists.",
-                data: existingUser
+        if (findSignSignature) {
+            const newUser = new User({
+                publicKey
             })
+            const existingUser = await User.findOne({ publicKey })
+            if (existingUser) {
+                return res.status(404).json({
+                    success: false,
+                    message: "User already exists."
+                })
+            } else {
+                newUser.save(async (_, user) => {
+                    res.status(201).json(user);
+                    console.log(user.publicKey);
+                })
+            }
         } else {
-            newUser.save(async (_, user) => {
-                res.status(201).json({
-                    success: true,
-                    message: "User created",
-                    data: user
-                });
-
+            return res.status(404).json({
+                success: false,
+                message: "Signature does not exists for this user."
             })
         }
     } catch (error) {
@@ -80,7 +79,6 @@ export const createListedNfts = async (req, res) => {
                         newNft.sellerWallet = user.publicKey;
                         newNft.buyerWallet = "";
                         newNft.isListed = true;
-                        newNft.isSignedBySeller = true;
                         newNft.save(async (_, nft) => {
                             res.status(201).json(nft);
                         })
@@ -128,9 +126,9 @@ export const createBuy = async (req, res) => {
         if (user) {
             const { amount, mintKey } = req.body
             if (findSignSignature) {
-                if (findMintKey.mintKey == mintKey && findMintKey.amount == amount && findMintKey.isListed == true && findMintKey.isBuy == false && findMintKey.isSell == false) {
-                    var myquery = { mintKey: findMintKey.mintKey, buyerWallet: "", isBuy: false, isSignedByBuyer: false };
-                    var newvalues = { $set: { buyerWallet: user.publicKey, isBuy: true, isSignedByBuyer: true } };
+                if (findMintKey.mintKey == mintKey && findMintKey.amount == amount && findMintKey.isListed == true && findMintKey.isBuy == false &&findMintKey.isExecuteSell == false) {
+                    var myquery = { mintKey: findMintKey.mintKey, buyerWallet: "", isBuy: false };
+                    var newvalues = { $set: { buyerWallet: user.publicKey, isBuy: true } };
                     const updateValues = await Nft.updateOne(myquery, newvalues, function (err, res) {
                         if (err) throw err;
                         console.log("1 document updated");
@@ -162,7 +160,7 @@ export const createBuy = async (req, res) => {
 }
 
 //selling nfts:- execute sell
-export const createSell = async (req, res) => {
+export const createExecuteSell = async (req, res) => {
     try {
 
         const { buyerWallet, sellerWallet, mintKey } = req.body
@@ -174,9 +172,9 @@ export const createSell = async (req, res) => {
         })
         if (checkWallet) {
             const { amount } = req.body
-            if (findMintKey.amount == amount && findMintKey.amount == amount && findMintKey.isBuy == true && findMintKey.isListed == true && findMintKey.isSell == false) {
-                var myquery = { mintKey: findMintKey.mintKey, isSell: false };
-                var newvalues = { $set: { isSell: true } };
+            if (findMintKey.amount == amount && findMintKey.amount == amount && findMintKey.isListed == true && findMintKey.isBuy == true && findMintKey.isExecuteSell == false) {
+                var myquery = { mintKey: findMintKey.mintKey, isExecuteSell: false };
+                var newvalues = { $set: { isExecuteSell: true } };
                 const updateValues = await Nft.updateOne(myquery, newvalues, function (err, res) {
                     if (err) throw err;
                     console.log("1 document updated");
@@ -203,41 +201,32 @@ export const createSell = async (req, res) => {
 //signing signature
 export const signSignature = async (req, res) => {
     try {
-        const { publicKey } = req.body
-        const user = await User.findOne({
+        const { signature, publicKey } = req.body
+        const newSignature = new Signature({
+            publicKey, signature
+        })
+        const findSignSignature = await Signature.findOne({
             publicKey
         })
-        if (user) {
-            const { signature, publicKey } = req.body
-            const newSignature = new Signature({
-                publicKey, signature
+        if(!findSignSignature){
+            newSignature.isSigned = true;
+            newSignature.save(async (_, signature) => {
+                res.status(201).json(signature);
             })
-            const existingUser = await Signature.findOne({ publicKey })
-            if (existingUser) {
-                return res.status(404).json({
-                    success: false,
-                    message: "User already exists."
-                })
-            }
-            else {
-                newSignature.isSigned = true;
-                newSignature.save(async (_, signature) => {
-                    res.status(201).json(signature);
-                })
-
-            }
-        } else if (!user) return res.status(404).json({
-            success: false,
-            message: "User not found."
-        })
-
+        }else{
+            return res.status(404).json({
+                success: false,
+                message: "User with this publicKey already exists."
+            })
+        }
+        
     } catch (error) {
         return res.status(409).json({ error: error.message })
     }
 }
 
 //browse:- nfts listed for sale
-export const fetchAllListedNfts = async (req, res) => {
+export const fetchAllNfts = async (req, res) => {
     try {
         // const {isListed} = req.body
         const nfts = await Nft.find({
@@ -262,7 +251,7 @@ export const fetchAllListedNfts = async (req, res) => {
 }
 
 //collections:- nfts owned
-export const fetchUserListedNfts = async (req, res) => {
+export const fetchAllUserOwnedNfts = async (req, res) => {
     try {
         const { publicKey } = req.body
         const user = await User.findOne({
