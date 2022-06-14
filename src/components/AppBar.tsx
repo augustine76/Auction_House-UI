@@ -19,7 +19,7 @@ export const AppBar: FC = props => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path>
             </svg>
           </label>
-        
+
           <div className="hidden sm:inline w-22 h-22 md:p-2">
             <svg width="100%" height="22" viewBox="0 0 646 96" fill="none" xmlns="http://www.w3.org/2000/svg">
               <g clipPath="url(#clip0_1064_606)">
@@ -66,6 +66,9 @@ export const AppBar: FC = props => {
             <Link href="/execute">
               <a className="btn btn-ghost btn-sm rounded-btn">Execute Sale</a>
             </Link>
+            <Link href="/collections">
+              <a className="btn btn-ghost btn-sm rounded-btn"> Collections</a>
+            </Link>
           </div>
         </div>
 
@@ -87,8 +90,18 @@ export const AppBar: FC = props => {
                   </label>
                 </div>
               </li>
+              <li>
+                <div className="form-control">
+                  <label className="cursor-pointer label">
+                    <Link href="/profile">
+                      <a >Change Profile</a>
+                    </Link>
+                  </label>
+                </div>
+              </li>
             </ul>
           </div>
+
           <WalletMultiButton className="btn btn-ghost mr-4" />
         </div>
       </div>

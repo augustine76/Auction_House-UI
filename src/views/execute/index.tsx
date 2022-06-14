@@ -1,8 +1,5 @@
 
 import { FC } from "react";
-import { SignMessage } from '../../components/SignMessage';
-import { CreateNFTS } from '../../components/CreateNFTS';
-import { FetchNFTS} from '../../components/FetchNFTS';
 import { ExecuteSell } from '../../AuctionHouseComponents/ExecuteSell';
 export const ExecuteView: FC = ({ }) => {
 

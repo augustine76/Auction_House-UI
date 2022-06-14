@@ -1,0 +1,34 @@
+@base_url = http://localhost:5000
+
+### Create user signup
+POST {{base_url}}/createSignUp
+Content-Type: application/json
+
+{
+    "email":"vivekpandey2710@gmail.com",
+    "username":"vivek"
+}
+
+### Create user signin
+Post {{base_url}}/createSignIn
+Content-Type: application/json
+
+{
+    "email":"vivekpandey2710@gmail.com",
+    "username":"vivek"
+}
+
+### Create nft
+POST {{{base_url}}}/createNft
+Content-Type: application/json
+
+{   "email":"vivekpandey2710@gmail.com",
+    "username":"vivek",
+    "url": "dddd"
+}
+
+###Fetch all nfts
+GET {{{base_url}}}/fetchAllNfts
+
+###Fetch all users
+GET {{{base_url}}}/fetchAllUsers 
