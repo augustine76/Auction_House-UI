@@ -3,37 +3,39 @@ import sendToken from "../utils/jwtToken.js";
 
 //edit profile:- submit button
 export const createUser = async (req, res) => {
+
     try {
-        const { publicKey, signature } = req.body
-        const findSignSignature = await Signature.findOne({
-            publicKey, isSigned: true
+        const { publicKey ,signature} = req.body
+        const newUser = new User({
+
+            publicKey,
+            signature
         })
-        if (findSignSignature) {
-            const newUser = new User({
-                publicKey
+        const existingUser = await User.findOne({ publicKey })
+        if (existingUser) {
+
+            existingUser.signature=signature;
+            existingUser.save();
+            return res.status(201).json({
+                success: true,
+                message: "User already exists.",
+                data: existingUser
             })
-            const existingUser = await User.findOne({ publicKey })
-            if (existingUser) {
-                return res.status(404).json({
-                    success: false,
-                    message: "User already exists."
-                })
-            } else {
-                newUser.save(async (_, user) => {
-                    res.status(201).json(user);
-                    console.log(user.publicKey);
-                })
-            }
         } else {
-            return res.status(404).json({
-                success: false,
-                message: "Signature does not exists for this user."
+            newUser.save(async (_, user) => {
+                res.status(201).json({
+                    success: true,
+                    message: "User created",
+                    data: user
+                });
+
             })
         }
     } catch (error) {
         return res.status(409).json({ error: error.message })
     }
 }
+
 
 // export const createSignIn = async (req, res) => {
 //     try { 

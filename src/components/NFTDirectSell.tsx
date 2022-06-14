@@ -16,6 +16,8 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import { sell } from "../api/src/auction-house";
 import { useWallet } from '@solana/wallet-adapter-react';
+import  axios  from "axios";
+const baseURL = "http://localhost:5000";
 const useStyles = makeStyles(() => ({
     root: {
         maxWidth: 343,
@@ -58,6 +60,13 @@ export const NFTDetails = (props) => {
 
             alert('Create Sell Action'+'Account'+x.account+'MintAddress'+x.mintAddress+'Price'+x.price);
         })
+        const insellnft = { publicKey: publicKey,mintKey:mint };
+        axios.post(`${baseURL}/createUser`, insellnft)
+          .then(response => console.log(response))
+          .catch(error => {
+            console.error('There was an error!', error);
+          });
+
     }
     console.log("nft details", mint)
     return (
@@ -79,7 +88,7 @@ export const NFTDetails = (props) => {
                     // body={
                     //     props.body
                     // }
-                    />
+                    />   
                 </CardContent>
             </Card>
             <div>
@@ -95,7 +104,7 @@ export const NFTDetails = (props) => {
                 autoComplete="off"
             >
            
-                        <TextField 
+                        <TextField   
                 label="Price"
                 variant='filled'
                 color='success'
