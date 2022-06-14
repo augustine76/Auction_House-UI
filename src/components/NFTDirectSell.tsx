@@ -1,15 +1,19 @@
 // import { FC } from 'react';
 import { produceWithPatches } from 'immer';
 import React from 'react';
+import { useRouter } from "next/router"
 
 export const NFTDetails = (props) => {
-    console.log("nft details",props)
+    const router = useRouter()
+    const {
+      query: { mint },
+    } = router
+    console.log("nft details",mint)
     return (
         <div className="column">
 
 
-
-            <section className="mx-auto my-5 max_width abc">
+            {/* <section className="mx-auto my-5 max_width abc">
 
                 <div className="card">
 
@@ -37,7 +41,7 @@ export const NFTDetails = (props) => {
                 </div>
 
 
-            </section>
+            </section> */}
 
 
         </div>

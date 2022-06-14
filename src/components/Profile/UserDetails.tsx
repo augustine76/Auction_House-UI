@@ -28,8 +28,6 @@ export const UserDetails = () => {
 
   const connection = new Connection(endpoint);
   const { publicKey, signMessage } = useWallet();
-
-
   const [URI, setURI] = useState("");
 
   const wallet = useWallet();
@@ -47,9 +45,6 @@ export const UserDetails = () => {
   }
 
   const getSignIn = async () => {
-
-   
-
 
     const nonce = await fetchNonce();
 

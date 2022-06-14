@@ -13,23 +13,16 @@ export const NFTS = (props) => {
     
     return (
         <div className="column">
-
-
-
             <section className="mx-auto my-5 max_width abc">
-
                 <div className="card">
-
-                    <br />
-
+                  <br />
                     <div>
                         <h5 className="card-title font-weight-bold mb-2 text-center">
                             {props.data.name}
                         </h5>
                     </div>
                     {/* {let abc1 = abc(props.data.uri)} */}
-
-                    <div className="bg-image hover-overlay pd" data-mdb-rippleripple rounded-0-color="light">
+                   <div className="bg-image hover-overlay pd" data-mdb-rippleripple rounded-0-color="light">
                         <img className="img-fluid  max_width image_width"
                        
                          src={props.data.uri}
@@ -46,14 +39,8 @@ export const NFTS = (props) => {
                        
                          ><span className="block group-disabled:hidden ">Sell</span></Link>
                     </button>
-
-
                 </div>
-
-
             </section>
-
-
         </div>
 
     );
