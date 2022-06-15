@@ -37,7 +37,7 @@ export const NFTS = (props) => {
 
                         <Link href="/nftdetails"
                        
-                         ><span className="block group-disabled:hidden ">Sell</span></Link>
+                         ><span className="block group-disabled:hidden ">Buy</span></Link>
                     </button>
                 </div>
             </section>
