@@ -69,14 +69,14 @@ export const NFTS = (props) => {
                         <Link 
                               href={{
                                 pathname: "/nftdetails",
-                                query: { mint: props.data.mint.toString() },
+                                query: { mint: props.data.mint.toString(), uri: props.data.uri},
                               }}
                        
-                         ><span className="block group-disabled:hidden ">Sell</span></Link>
+                         ><span   className="block group-disabled:hidden ">Sell</span></Link>
                     </button>
 
 
-                </div>
+                </div>   
 
 
             </section>

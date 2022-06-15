@@ -84,13 +84,16 @@ input[type="number"]
   }
 }
 
-
+/* profile page css */
 
 .profileimg {
   border-radius: 50%;
   height: 200px;
   width: 200px;
-  
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  border: 3px solid #f3eded;
 }
 .profileName{
   font-size: 30px;
@@ -103,18 +106,19 @@ input[type="number"]
   font-size: 20px;
   font-weight: bold;
   font-family: Arial, Helvetica, sans-serif;
-  padding: none;
   padding-bottom: 0.5rem;
   
 }
 .publicKey{
-  font-size: 20px;
+  font-size: 15px;
   font-weight: bold;
   font-family: Arial, Helvetica, sans-serif;
-  
-  background-color: rgb(88, 82, 82);
-  }
+  padding-left: 1px;
+  padding-right: 1px;
 
+  
+  background-color: rgb(77, 74, 74);
+  }
 
 
 
