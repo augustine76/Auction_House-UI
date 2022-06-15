@@ -5,7 +5,7 @@ import sendToken from "../utils/jwtToken.js";
 export const createUser = async (req, res) => {
 
     try {
-        const { publicKey ,signature} = req.body
+        const { publicKey, signature } = req.body
         const newUser = new User({
 
             publicKey,
@@ -14,12 +14,13 @@ export const createUser = async (req, res) => {
         const existingUser = await User.findOne({ publicKey })
         if (existingUser) {
 
-            existingUser.signature=signature;
+            existingUser.signature = signature;
             existingUser.save();
             return res.status(201).json({
                 success: true,
                 message: "User already exists.",
                 data: existingUser
+
             })
         } else {
             newUser.save(async (_, user) => {
@@ -35,7 +36,32 @@ export const createUser = async (req, res) => {
         return res.status(409).json({ error: error.message })
     }
 }
+export const getUserDetails = async (req, res) => {
+    console.log(req)
+    try {
 
+        var publicKey = req.params.id;
+        console.log('The id: ' + publicKey);
+        const user = await User.findOne({
+            publicKey
+        })
+        if (user) {
+            return res.status(201).json({
+                success: true,
+                data:user,
+                message: "User Details fetched"
+            })
+            
+            
+        } else return res.status(404).json({
+            success: false,
+            message: "User not found."
+        })
+    } catch (error) {
+        return res.status(409).json({ error: error.message })
+    }
+
+}
 
 // export const createSignIn = async (req, res) => {
 //     try { 
@@ -128,7 +154,7 @@ export const createBuy = async (req, res) => {
         if (user) {
             const { amount, mintKey } = req.body
             if (findSignSignature) {
-                if (findMintKey.mintKey == mintKey && findMintKey.amount == amount && findMintKey.isListed == true && findMintKey.isBuy == false &&findMintKey.isExecuteSell == false) {
+                if (findMintKey.mintKey == mintKey && findMintKey.amount == amount && findMintKey.isListed == true && findMintKey.isBuy == false && findMintKey.isExecuteSell == false) {
                     var myquery = { mintKey: findMintKey.mintKey, buyerWallet: "", isBuy: false };
                     var newvalues = { $set: { buyerWallet: user.publicKey, isBuy: true } };
                     const updateValues = await Nft.updateOne(myquery, newvalues, function (err, res) {
@@ -210,18 +236,18 @@ export const signSignature = async (req, res) => {
         const findSignSignature = await Signature.findOne({
             publicKey
         })
-        if(!findSignSignature){
+        if (!findSignSignature) {
             newSignature.isSigned = true;
             newSignature.save(async (_, signature) => {
                 res.status(201).json(signature);
             })
-        }else{
+        } else {
             return res.status(404).json({
                 success: false,
                 message: "User with this publicKey already exists."
             })
         }
-        
+
     } catch (error) {
         return res.status(409).json({ error: error.message })
     }

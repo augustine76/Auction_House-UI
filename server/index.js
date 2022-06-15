@@ -26,7 +26,7 @@ app.use(NftRoute);
 const PORT = process.env.PORT || 5000
 
 mongoose
-    .connect("mongodb+srv://abhi:abhi@hi.mwcxr.mongodb.net/?retryWrites=true&w=majority", {
+    .connect("mongodb+srv://isha:isha2180@cluster0.govgi.mongodb.net/?retryWrites=true&w=majority", {
         useNewUrlParser: true,
         useUnifiedTopology: true,
     })

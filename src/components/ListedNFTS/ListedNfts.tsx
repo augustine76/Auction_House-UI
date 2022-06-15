@@ -20,7 +20,7 @@ export const ListedNfts = () => {
     let arr = [];
 
     const onClick = () => {
-        axios.get(`${baseURL}/fetchAllListedNfts`)
+        axios.get(`${baseURL}/fetchAllNfts`)
             .then(response => console.log(response))
             .catch(error => {
                 console.error('There was an error!', error);
