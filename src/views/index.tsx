@@ -7,3 +7,4 @@ export { CollectionsView } from "./collections";
 export {ProfileView} from "./profile";
 export {NFTDetailView} from "./nftdetails"
 export {ListedNftsView} from "./listednfts"
+export {ListedCollectionsView} from "./ListedCollections"
