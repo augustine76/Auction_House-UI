@@ -75,17 +75,17 @@ export const NFTDetails = (props) => {
     const [price, setPrice] = useState(''); // '' is the initial state value
     function getSell() {
         console.log("ah,auction",auctionHouseAddress);
-         
+          
 
         sell({ auctionHouse: auctionHouseAddress, buyPrice: price, mint: mint, tokenSize: '1', wallet : wallet }).then(x => {
 
             alert('Create Sell Action'+'Account'+x.account+'MintAddress'+x.mintAddress+'Price'+x.price);
         })
         const insellnft = { publicKey: publicKey,mintKey:mint };
-        axios.post(`${baseURL}/createUser`, insellnft)
+        axios.post(`${baseURL}/createListedNfts`, insellnft)
           .then(response => console.log("response",response))
           .catch(error => {
-            console.error('There was an error!', error);
+            console.error('There was an error!', error); 
           });
 
     }

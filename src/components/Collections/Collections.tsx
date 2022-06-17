@@ -3,7 +3,7 @@ import { produceWithPatches } from 'immer';
 import React from 'react';
 import Link from "next/link";
 
-export const NFTS = (props) => {
+export const Collections = (props) => {
     console.log("props",props);
     // const abc=async (data) => {
     //     let uri = await fetch(data);

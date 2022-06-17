@@ -28,7 +28,7 @@ export const sendTransactionWithRetryWithKeypair = async (
   wallet: anchor.Wallet,
 
   instructions: TransactionInstruction[],
-  signers: Keypair[],
+  signers: anchor.Wallet[],
   commitment: Commitment = 'singleGossip',
   includesFeePayer: boolean = false,
   block?: BlockhashAndFeeCalculator,

@@ -38,19 +38,16 @@ export const FetchNFTS: FC = () => {
                 arr.push(x);
                 // console.log("name is", res.image);
             });
-            setTimeout(() => {
+            setTimeout(() => { 
                 setNFTList(arr); 
               }, 1000);
             console.log("NFTList is", arr);
         } catch (err) {
             console.log(err);
-        }
+        }      
     }, [notify, connection]);
 
-    const updateNFTs = async () => {
-        await setNFTList(arr);
-
-    }
+    
     return (
         <div>
             <button

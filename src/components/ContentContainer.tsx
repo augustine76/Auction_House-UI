@@ -32,6 +32,12 @@ export const ContentContainer: FC = props => {
               <a>Listed NFTs</a>
             </Link>
           </li>
+          <li>
+            <Link href="/listedcollection">
+              <a>Listed Collections</a>
+            </Link>
+          </li>
+          
         </ul>
       </div>
     </div>

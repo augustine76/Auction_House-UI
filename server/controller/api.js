@@ -9,7 +9,8 @@ export const createUser = async (req, res) => {
         const newUser = new User({
 
             publicKey,
-            signature
+            signature,
+            isSigned: true
         })
         const existingUser = await User.findOne({ publicKey })
         if (existingUser) {
@@ -48,11 +49,11 @@ export const getUserDetails = async (req, res) => {
         if (user) {
             return res.status(201).json({
                 success: true,
-                data:user,
+                data: user,
                 message: "User Details fetched"
             })
-            
-            
+
+
         } else return res.status(404).json({
             success: false,
             message: "User not found."
@@ -93,7 +94,7 @@ export const createListedNfts = async (req, res) => {
         const findMintKey = await Nft.findOne({
             publicKey, mintKey
         })
-        if (user) {
+        if (!user) {
             const { url, amount, auctionHouseKey, mintKey } = req.body
             const newNft = new Nft({
                 url, publicKey, mintKey, auctionHouseKey, amount
@@ -101,34 +102,29 @@ export const createListedNfts = async (req, res) => {
             const findSignSignature = await Signature.findOne({
                 publicKey, isSigned: true
             })
-            if (findSignSignature) {
-                if (newNft.mintKey && newNft.publicKey) {
-                    if (!findMintKey) {
-                        newNft.sellerWallet = user.publicKey;
-                        newNft.buyerWallet = "";
-                        newNft.isListed = true;
-                        newNft.save(async (_, nft) => {
-                            res.status(201).json(nft);
-                        })
-                    }
-                    else {
-                        return res.status(404).json({
-                            success: false,
-                            message: "Cannot list the nft twice."
-                        })
-                    }
-                } else {
+
+            if (newNft.mintKey && newNft.publicKey) {
+                if (!findMintKey) {
+                    newNft.sellerWallet = user.publicKey;
+                    newNft.buyerWallet = "";
+                    newNft.isListed = true;
+                    newNft.save(async (_, nft) => {
+                        res.status(201).json(nft);
+                    })
+                }
+                else {
                     return res.status(404).json({
                         success: false,
-                        message: "MintKey not found."
+                        message: "Cannot list the nft twice."
                     })
                 }
             } else {
                 return res.status(404).json({
                     success: false,
-                    message: "Signature is not signed by the seller."
+                    message: "MintKey not found."
                 })
             }
+
         } else return res.status(404).json({
             success: false,
             message: "User not found."
