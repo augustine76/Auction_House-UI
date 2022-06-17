@@ -1,5 +1,6 @@
 import express from "express"
 import {createUser, fetchAllUsers,getUserDetails} from "../controller/api.js";
+import { addCollection, fetchAllCollection, fetchCollection, FetchListedNftsOfCollection } from "../controller/collection.js";
 
 const router = express.Router()
 

@@ -7,7 +7,7 @@ import {
     walletAdapterIdentity,
 } from "@metaplex-foundation/js-next";
 import { Connection, clusterApiUrl } from "@solana/web3.js";
-// import { NFTS } from "./NFTS";
+import { NFTS } from "./NFTS";
 import  axios  from "axios";
 const baseURL = "http://localhost:5000";
 export const ListedCollections = () => {
