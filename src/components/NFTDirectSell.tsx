@@ -16,6 +16,8 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import { sell } from "../api/src/auction-house";
 import { useWallet } from '@solana/wallet-adapter-react';
+import  axios  from "axios";
+const baseURL = "http://localhost:5000"; 
 const useStyles = makeStyles(() => ({
     root: {
         maxWidth: 343,
@@ -31,6 +33,8 @@ const useStyles = makeStyles(() => ({
 }));
 
 export const NFTDetails = (props) => {
+
+    
     const router = useRouter()
     const styles = useStyles();
     const mediaStyles = useFourThreeCardMediaStyles();
@@ -43,8 +47,27 @@ export const NFTDetails = (props) => {
         // "height": "100px"
     }
     const {
-        query: { mint },
+        query: { mint, uri },
     } = router
+
+    const pic = async (data) => {
+        let uri = await fetch(data);
+        let res = await uri.json();
+        // console.log("Res", res.image);
+        if(!updated){
+            setimage(res.image);
+            setname(res.name);
+            setcollection(res.collection["name"]);
+        }
+        setupdated(true);
+        
+    }
+    pic(uri);
+
+    const [image, setimage] = useState("")
+    const [name, setname] = useState("")
+    const [collection, setcollection] = useState("");
+    const [updated, setupdated] = useState(false);
     
     const { publicKey } = useWallet();
     const wallet = useWallet();
@@ -52,14 +75,21 @@ export const NFTDetails = (props) => {
     const [price, setPrice] = useState(''); // '' is the initial state value
     function getSell() {
         console.log("ah,auction",auctionHouseAddress);
-        
+         
 
         sell({ auctionHouse: auctionHouseAddress, buyPrice: price, mint: mint, tokenSize: '1', wallet : wallet }).then(x => {
 
             alert('Create Sell Action'+'Account'+x.account+'MintAddress'+x.mintAddress+'Price'+x.price);
         })
+        const insellnft = { publicKey: publicKey,mintKey:mint };
+        axios.post(`${baseURL}/createUser`, insellnft)
+          .then(response => console.log("response",response))
+          .catch(error => {
+            console.error('There was an error!', error);
+          });
+
     }
-    console.log("nft details", mint)
+    console.log("nft details", uri);
     return (
         <div
             style={mystyles}
@@ -67,20 +97,21 @@ export const NFTDetails = (props) => {
             <Card className={cx(styles.root, shadowStyles.root)}>
                 <CardMedia
                     className={cx(styles.media, mediaStyles.root)}
-                // image={
-                //     props.image
-                // }
+                image={
+                    // props.image
+                    image
+                }
                 />
                 <CardContent>
                     <TextInfoContent
                         classes={textCardContentStyles}
-                        overline={props.name}
-                        heading={props.collection}
+                        overline={name}
+                        heading={collection}
                     // body={
                     //     props.body
                     // }
                     />
-                </CardContent>
+                </CardContent>  
             </Card>
             <div>
             <Box
@@ -117,36 +148,7 @@ export const NFTDetails = (props) => {
             </button>
         </div>
 
-            {/* <section className="mx-auto my-5 max_width abc">
-
-                <div className="card">
-
-                    <br />
-
-                    <div>
-                        <h5 className="card-title font-weight-bold mb-2 text-center">abc</h5>
-                    </div>
-
-                    <div className="bg-image hover-overlay pd" data-mdb-rippleripple rounded-0-color="light">
-                        <img className="img-fluid  max_width image_width" 
-                            alt="Card image cap" />
-
-                    </div>
-                    <br />
-                    <p className="card-text" id="collapseContent" >
-                        ABC
-                    </p>
-                    <button className="pd group w-60 m-2 btn animate-pulse disabled:animate-none bg-gradient-to-r from-[#9945FF] to-[#14F195] hover:from-pink-500 hover:to-yellow-500 ... "            >
-
-                        <span className="block group-disabled:hidden ">Sell</span>
-                    </button>
-
-
-                </div>
-
-
-            </section> */}
-
+           
 
         </div>
 

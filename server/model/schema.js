@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import jwt from 'jsonwebtoken';
 
 const nftSchema = mongoose.Schema({
-
+    
     url: String,
     publicKey: String,
     buyerWallet: String,
@@ -12,19 +12,11 @@ const nftSchema = mongoose.Schema({
         type: Boolean,
         default: false
     },
-    isSell: {
-        type: Boolean,
-        default: false
-    },
     isBuy: {
         type: Boolean,
         default: false
     },
-    isSignedBySeller: {
-        type: Boolean,
-        default: false
-    },
-    isSignedByBuyer: {
+    isExecuteSell: {
         type: Boolean,
         default: false
     },
@@ -32,37 +24,16 @@ const nftSchema = mongoose.Schema({
         type: Date,
         default: new Date()
     },
-
     amount: Number,
     auctionHouseKey: String
 })
 
 const userSchema = mongoose.Schema({
 
-    email: String,
     publicKey: String,
+    displayName: String,
     username: String,
     signature: String,
-    isSigned: {
-        type: Boolean,
-        default: false
-    },
-    createdAt: {
-        type: Date,
-        default: new Date()
-    },
-    
-})
-
-const signatureSchema = mongoose.Schema({
-
-    signature: String,
-    publicKey: String,
-    isSigned: {
-        type: Boolean,
-        default: false
-    }, signature: String,
-    publicKey: String,
     isSigned: {
         type: Boolean,
         default: false
@@ -73,11 +44,19 @@ const signatureSchema = mongoose.Schema({
     }
 })
 
-// userSchema.methods.getJWTToken = function () {
-//     return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
-//         expiresIn: process.env.JWT_EXPIRE,
-//     })
-// }
+const signatureSchema = mongoose.Schema({
+
+    signature: String,
+    publicKey: String,
+    isSigned: {
+        type: Boolean,
+        default: false
+    },
+    createdAt: {
+        type: Date,
+        default: new Date()
+    }
+})
 
 export const User = mongoose.model("users", userSchema)
 export const Nft = mongoose.model("nfts", nftSchema)

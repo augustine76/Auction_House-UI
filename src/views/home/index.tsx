@@ -13,6 +13,7 @@ import {Deposit} from '../../AuctionHouseComponents/Deposit';
 import {Withdraw} from '../../AuctionHouseComponents/Withdraw';
 import NFTCollections from '../../components/FetchCollections';
 import Collections from "../../components/Collections";
+import { Verify } from "../../AuctionHouseComponents/verifyCollection";
 export const HomeView: FC = ({ }) => {
 
   // const mystyle = {
@@ -45,7 +46,8 @@ export const HomeView: FC = ({ }) => {
           <Collections />
           <Collections />
           <Collections /> */}
-           <GetAuctionHouse /> 
+           <GetAuctionHouse />
+           <Verify/> 
           {/* <Cancel/> */}
 
           </div>
