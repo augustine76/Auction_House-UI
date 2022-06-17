@@ -11,6 +11,7 @@ export const addCollection = async(req,res) => {
     const description = req.body.description;
     const nfts = req.body.hash;
     const image = req.body.image;
+    const creator = req.body.creator;
 
     const existingCollection = Collection.findOne({ name :name });
 
@@ -27,7 +28,8 @@ export const addCollection = async(req,res) => {
         symbol : symbol,
         description : description,
         nfts : nfts,
-        image : image
+        image : image,
+        creator : creator
     })
 
    const newCollection =  await collection.save();

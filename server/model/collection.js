@@ -35,6 +35,10 @@ const collectionSchema = mongoose.Schema({
         type : Boolean,
         required : false,
         default : false
+    },
+    creator:{
+        type : String,
+        required : true
     }
 })
 
