@@ -8,19 +8,48 @@ import Box from '@mui/material/Box';
 
 
 
-// import { FilePicker } from 'react-file-picker'
+// import  FilePicker  from 'react-file-picker'
  
-// const MyComponent = () => (
-//   <FilePicker
-//     extensions={['md']}
-//     onChange={FileObject =>console.log(FileObject)}
-//     onError={errMsg => console.log(errMsg)}
-//   >
-//     <button>
-//       Click to upload markdown
-//     </button>
-//   </FilePicker>
-// )
+const FilePicker = () => {
+  // <FilePicker
+  //   extensions={['md']}
+  //   onChange={FileObject =>console.log(FileObject)}
+  //   onError={errMsg => console.log(errMsg)}
+  // >
+  //   <button>
+  //     Click to upload markdown
+  //   </button>
+  // </FilePicker>
+  const [hash, setHash] = useState(null);
+  const [createObjectURL, setCreateObjectURL] = useState(null);
+  const uploadToClient = (event) => {
+    if (event.target.files && event.target.files[0]) {
+      const i = event.target.files[0];
+      setHash(i);
+      setCreateObjectURL(URL.createObjectURL(i));
+    }
+  };
+  const uploadToServer = async () => {
+    console.log("url is", createObjectURL);
+    let res = await fetch(createObjectURL);
+    let data = await res.json();
+    console.log("json is", data);
+
+  }
+
+  return (
+    <>
+      <input type="file" name="myImage" onChange={uploadToClient} />
+          <button
+          className="btn btn-primary"
+          type="submit"
+          onClick={uploadToServer}
+      >
+        Send to server
+      </button>
+    </>
+  )
+}
 
 export const Verify: FC = () => {
     
@@ -37,7 +66,7 @@ export const Verify: FC = () => {
     
     return (
         <div>
-            {/* <MyComponent/> */}
+            <FilePicker/>
             <Box
                 component="form"
       sx={{
