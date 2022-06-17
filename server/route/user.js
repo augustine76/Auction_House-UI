@@ -7,4 +7,5 @@ const router = express.Router()
 router.post('/createUser', createUser);
 router.get("/fetchAllUsers", fetchAllUsers);
 router.get('/getUserDetails/:id', getUserDetails);
+
 export default router;
