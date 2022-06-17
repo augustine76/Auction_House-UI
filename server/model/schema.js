@@ -2,11 +2,14 @@ import mongoose from "mongoose";
 import jwt from 'jsonwebtoken';
 
 const nftSchema = mongoose.Schema({
-    
+
     url: String,
     publicKey: String,
     buyerWallet: String,
     sellerWallet: String,
+    collectionName: {
+        type: String,
+    },
     mintKey: String,
     isListed: {
         type: Boolean,
@@ -28,33 +31,29 @@ const nftSchema = mongoose.Schema({
     auctionHouseKey: String
 })
 
-const collectionSchema = mongoose.Schema({
-    
+const userSchema = mongoose.Schema({
+
     publicKey: String,
-    name : {
-        type : String,
-        required : true
+    isSigned: String,
+    userEmail: String,
+    userName: String,
+    displayName: String,
+    createdAt: {
+        type: Date,
+        default: new Date()
+    }
+})
+
+const collectionSchema = mongoose.Schema({
+
+    publicKey: String,
+    collectionName: {
+        type: String,
     },
-    symbol : {
-        type : String,
-        required : true
-    },
-    description : {
-        type : String,
-        required : true
-    },
-    image : {
-        type : String,
-        required : true
-    },
-    nfts : [{
-        type : String,
-    }],
-    verified : {
-        type : Boolean,
-        required : false,
-        default : false
-    },
+    symbol: String,
+    description: String,
+    image: String,
+    nfts: [],
     isCollectionCreated: {
         type: Boolean,
         default: false
@@ -66,37 +65,14 @@ const collectionSchema = mongoose.Schema({
     auctionHouseKey: String
 })
 
-const userSchema = mongoose.Schema({
 
-    publicKey: String,
-    displayName: String,
-    username: String,
-    signature: String,
-    isSigned: {
-        type: Boolean,
-        default: false
-    },
-    createdAt: {
-        type: Date,
-        default: new Date()
-    }
-})
-
-const signatureSchema = mongoose.Schema({
-
-    signature: String,
-    publicKey: String,
-    isSigned: {
-        type: Boolean,
-        default: false
-    },
-    createdAt: {
-        type: Date,
-        default: new Date()
-    }
-})
+// userSchema.methods.getJWTToken = function () {
+//     return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
+//         expiresIn: process.env.JWT_EXPIRE,
+//     })
+// }
 
 export const User = mongoose.model("users", userSchema)
 export const Nft = mongoose.model("nfts", nftSchema)
-export const Signature = mongoose.model("signatureSchema", signatureSchema)
-export const Collection = mongoose.model("collectionSchema", collectionSchema)
+export const Collection = mongoose.model("collections", collectionSchema)
+
