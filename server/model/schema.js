@@ -28,6 +28,44 @@ const nftSchema = mongoose.Schema({
     auctionHouseKey: String
 })
 
+const collectionSchema = mongoose.Schema({
+    
+    publicKey: String,
+    name : {
+        type : String,
+        required : true
+    },
+    symbol : {
+        type : String,
+        required : true
+    },
+    description : {
+        type : String,
+        required : true
+    },
+    image : {
+        type : String,
+        required : true
+    },
+    nfts : [{
+        type : String,
+    }],
+    verified : {
+        type : Boolean,
+        required : false,
+        default : false
+    },
+    isCollectionCreated: {
+        type: Boolean,
+        default: false
+    },
+    createdAt: {
+        type: Date,
+        default: new Date()
+    },
+    auctionHouseKey: String
+})
+
 const userSchema = mongoose.Schema({
 
     publicKey: String,
@@ -61,3 +99,4 @@ const signatureSchema = mongoose.Schema({
 export const User = mongoose.model("users", userSchema)
 export const Nft = mongoose.model("nfts", nftSchema)
 export const Signature = mongoose.model("signatureSchema", signatureSchema)
+export const Collection = mongoose.model("collectionSchema", collectionSchema)
