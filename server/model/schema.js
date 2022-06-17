@@ -58,12 +58,6 @@ const signatureSchema = mongoose.Schema({
     }
 })
 
-// userSchema.methods.getJWTToken = function () {
-//     return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
-//         expiresIn: process.env.JWT_EXPIRE,
-//     })
-// }
-
 export const User = mongoose.model("users", userSchema)
 export const Nft = mongoose.model("nfts", nftSchema)
 export const Signature = mongoose.model("signatureSchema", signatureSchema)

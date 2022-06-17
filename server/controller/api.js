@@ -93,7 +93,7 @@ export const createListedNfts = async (req, res) => {
         const findMintKey = await Nft.findOne({
             publicKey, mintKey
         })
-        if (user) {
+        if (!user) {
             const { url, amount, auctionHouseKey, mintKey } = req.body
             const newNft = new Nft({
                 url, publicKey, mintKey, auctionHouseKey, amount
@@ -101,7 +101,7 @@ export const createListedNfts = async (req, res) => {
             const findSignSignature = await Signature.findOne({
                 publicKey, isSigned: true
             })
-            if (findSignSignature) {
+            if (!findSignSignature) {
                 if (newNft.mintKey && newNft.publicKey) {
                     if (!findMintKey) {
                         newNft.sellerWallet = user.publicKey;
