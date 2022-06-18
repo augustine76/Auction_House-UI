@@ -141,13 +141,10 @@ export const createCollection = async (req, res) => {
             const findCollection = await Collection.findOne({
                 collectionName
             })
-            // console.log("findCollection ===>", findCollection.collectionName)
             if (!findCollection) {
                 const newCollection = new Collection({
                     publicKey, collectionName, symbol, description, image, nfts, auctionHouseKey
                 })
-                console.log("nfts ===>", nfts)
-                console.log("newCollection ===>", newCollection)
                 newCollection.isCollectionCreated = true;
                 newCollection.nfts = [];
                 const collection = await newCollection.save();
@@ -178,8 +175,8 @@ export const createListedNfts = async (req, res) => {
     try {
 
         const { publicKey, mintKey, collectionName } = req.body
-        var nft = [];
-        nft = req.body
+        var nfts = [];
+        nfts = req.body
         const user = await User.findOne({
             publicKey
         })
@@ -189,25 +186,21 @@ export const createListedNfts = async (req, res) => {
         const findCollection = await Collection.findOne({
             publicKey, collectionName
         })
-        console.log("findCollection1 ===>", findCollection)
         if (user) {
             if (findCollection) {
                 const { url, amount, auctionHouseKey, mintKey } = req.body
                 const newNft = new Nft({
                     url, publicKey, mintKey, auctionHouseKey, amount, collectionName
                 })
-                // const insert = { $push:  [{newNft}]  };
-                // var myquery = { publicKey: findCollection.publicKey, collectionName: findCollection.collectionName, nft: [] };
-                // var newvalues = { $set: { nfts: [{insert},{insert},{}] } };
-                // const updateValues = await Collection.updateMany(myquery, newvalues, function (err, res) {
+                // const insert = { $push:  [newNft]  };
+                // var myquery = {collectionName: findCollection.collectionName, nfts: findCollection.nfts };
+                // var newvalues = { $set: { nfts: [{insert}] } };
+                // const updateValues = await Collection.updateOne(myquery, newvalues, function (err, res) {
                 //     if (err) throw err;
                 //     console.log("1 document updated");
                 // });
                 // res.status(201).json(updateValues);
                 // console.log("insert ===>", insert)
-                // console.log("newNft ===>", newNft)
-                // console.log("collectionName ===>", collectionName)
-                // console.log("findCollection.collectionName ===>", findCollection.collectionName)
                 if (newNft.mintKey && newNft.publicKey) {
                     if (!findMintKey) {
                         newNft.sellerWallet = user.publicKey;
@@ -264,9 +257,6 @@ export const createBuy = async (req, res) => {
                     if (findMintKey.mintKey == mintKey && findMintKey.amount == amount && findMintKey.isListed == true && findMintKey.isBuy == false && findMintKey.isExecuteSell == false) {
                         var myquery = { mintKey: findMintKey.mintKey, buyerWallet: "", isBuy: false };
                         var newvalues = { $set: { buyerWallet: user.publicKey, isBuy: true } };
-                        // console.log("seller ===>", findMintKey.sellerWallet)
-                        console.log("buyer ===>", publicKey)
-                        console.log("seller ===>", findMintKey.sellerWallet)
                         const updateValues = await Nft.updateOne(myquery, newvalues, function (err, res) {
                             if (err) throw err;
                             console.log("User bought Nft successfly.");
@@ -324,7 +314,7 @@ export const createExecuteSell = async (req, res) => {
                     var newvalues = { $set: { isExecuteSell: true } };
                     const updateValues = await Nft.updateOne(myquery, newvalues, function (err, res) {
                         if (err) throw err;
-                        console.log("Executed successfully.");
+                        console.log("Sell executed successfully.");
                     });
                     res.status(201).json(updateValues);
                 } else {
@@ -361,7 +351,7 @@ export const fetchUserCollectionNft = async (req, res) => {
         if (findCollection) {
             res.status(200).json({
                 success: true,
-                data: findCollection
+                data: findCollection.nfts
             })
         } else {
             return res.status(404).json({
