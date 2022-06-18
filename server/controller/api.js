@@ -175,8 +175,8 @@ export const createListedNfts = async (req, res) => {
     try {
 
         const { publicKey, mintKey, collectionName } = req.body
-        var nfts = [];
-        nfts = req.body
+        // var nfts = [];
+        // nfts = req.body
         const user = await User.findOne({
             publicKey
         })
