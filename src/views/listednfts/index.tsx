@@ -1,7 +1,7 @@
 
 import { FC } from "react";
-
-import { ListedNfts } from '../../components/ListedNFTS/ListedNfts';
+import {ListedNfts} from "../../components/Collections/ListedNfts"
+// import { ListedNfts } from '../../components/ListedNFTS/ListedNfts';
 export const ListedNftsView : FC = ({ }) => {
 
 return (

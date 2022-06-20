@@ -5,11 +5,7 @@ import Link from "next/link";
 
 export const Collections = (props) => {
     console.log("props",props);
-    // const abc=async (data) => {
-    //     let uri = await fetch(data);
-    //     let res = await uri.json();
-    //     return res;
-    // }
+    
     
     return (
         <div className="column">
@@ -25,19 +21,24 @@ export const Collections = (props) => {
                    <div className="bg-image hover-overlay pd" data-mdb-rippleripple rounded-0-color="light">
                         <img className="img-fluid  max_width image_width"
                        
-                         src={props.data.uri}
+                         src="https://gateway.pinata.cloud/ipfs/QmYLxwKaXbuFiQm8N7FuAqUzwXz3o9tQDWB7WY2MniKL3j"
                             alt="NFT" />
 
                     </div>
                     <br />
                     <p className="card-text" id="collapseContent" >
-                        {props.data.mint.toBase58()}
+                        {props.data.description}
                     </p>
+                    
                     <button  className="pd group w-60 m-2 btn animate-pulse disabled:animate-none bg-gradient-to-r from-[#9945FF] to-[#14F195] hover:from-pink-500 hover:to-yellow-500 ... "            >
-
-                        <Link href="/nftdetails"
+                    <Link 
+                              href={{
+                                pathname: "/listednfts",
+                                query: { collectionName: props.data.name},
+                              }}
                        
-                         ><span className="block group-disabled:hidden ">Buy</span></Link>
+                         ><span   className="block group-disabled:hidden ">Go to NFTS</span></Link>
+                        
                     </button>
                 </div>
             </section>
