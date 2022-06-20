@@ -1,5 +1,5 @@
 import express from "express"
-import {createListedNfts, fetchAllNfts, fetchAllUserOwnedNfts, signSignature, createExecuteSell, createBuy,getNFTDetails,buy} from "../controller/api.js";
+import {createListedNfts, fetchAllNfts, fetchAllUserOwnedNfts, signSignature, createExecuteSell, createBuy,getNFTDetails,buy,isListed} from "../controller/api.js";
 import { isAuthenticated } from "../middleware/auth.js";
 
 const router = express.Router()
@@ -12,4 +12,6 @@ router.post("/createExecuteSell", createExecuteSell);
 router.post("/createBuy", createBuy);
 router.get("/getNFTDetails/:mint",getNFTDetails);
 router.post("/buy/:mint",buy);
+router.post("/isListed", isListed)
+
 export default router;
