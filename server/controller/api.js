@@ -64,7 +64,7 @@ export const editUser = async (req, res) => {
 //signIn
 export const signIn = async (req, res) => {
     try {
-        const { publicKey } = req.body
+        const { publicKey, signature } = req.body
         const user = await User.findOne({ publicKey })
         if (!user) {
             return res.status(404).json({
@@ -72,8 +72,8 @@ export const signIn = async (req, res) => {
                 message: "User not found."
             })
         } else {
-            var myquery = { publicKey: user.publicKey, isSigned: false };
-            var newvalues = { $set: { isSigned: true } };
+            var myquery = { publicKey: user.publicKey, isSigned: false, signature: user.signature };
+            var newvalues = { $set: { isSigned: true, signature } };
             const updateValues = await User.updateOne(myquery, newvalues, function (err, res) {
                 if (err) throw err;
                 console.log("User signedIn successfully.");
@@ -88,7 +88,7 @@ export const signIn = async (req, res) => {
 //signout
 export const signOut = async (req, res) => {
     try {
-        const { publicKey } = req.body
+        const { publicKey, signature } = req.body
         const user = await User.findOne({ publicKey })
         if (!user) {
             return res.status(404).json({
@@ -96,8 +96,8 @@ export const signOut = async (req, res) => {
                 message: "User not found."
             })
         } else {
-            var myquery = { publicKey: user.publicKey, isSigned: true };
-            var newvalues = { $set: { isSigned: false } };
+            var myquery = { publicKey: user.publicKey, isSigned: true, signature: user.signature };
+            var newvalues = { $set: { isSigned: false, signature: "" } };
             const updateValues = await User.updateOne(myquery, newvalues, function (err, res) {
                 if (err) throw err;
                 console.log("User signedOut successfully");

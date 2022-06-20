@@ -34,6 +34,7 @@ const nftSchema = mongoose.Schema({
 const userSchema = mongoose.Schema({
 
     publicKey: String,
+    signature: String,
     isSigned: String,
     userEmail: String,
     userName: String,
