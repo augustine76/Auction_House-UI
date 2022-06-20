@@ -13,16 +13,9 @@ export const Buy: FC = () => {
   const wallet = useWallet();
 
   function getBuy() {
-    buy({
-      auctionHouse: auctionHouseAddress,
-      buyPrice: price,
-      tokenSize: "1",
-      mint: mintAddress,
-      env: "devnet",
-      wallet: wallet,
-    }).then((x) => {
-      alert("Buy / offer Action" + "Offer: " + x);
-    });
+       buy({ auctionHouse: auctionHouseAddress, buyPrice: price, tokenSize: '1', mint: mintAddress, env: 'devnet', wallet: wallet,sellerWallet : '3xHQ23yToCpMPWrEm2KuwLXH5aY9JM8Sy1vyA7X1ekwV' }).then(x => {
+           alert('Buy / offer Action'+'Offer: '+x);
+      })
   }
 
   return (
