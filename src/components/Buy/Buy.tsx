@@ -18,6 +18,7 @@ export const Buy: FC = () => {
     const [mintAddress, setMintAddress] = useState('');
     let auctionHouseAddress="4kAkuX3eqqb6dFnpbBtbAi9g3tswyAEyns8kDE4nYuvo";
     const [price, setPrice] = useState(''); 
+    const [sellerWallet, setSellerWallet] = useState(''); 
     const wallet = useWallet();
   
     function getBuy() {
@@ -26,6 +27,7 @@ export const Buy: FC = () => {
           console.log("user details", response)
           console.log("pub key", response.data.data.amount)
           setPrice(response.data.data.amount);
+          setSellerWallet(response.data.data.sellerWallet)
           
         }
 
@@ -36,10 +38,16 @@ export const Buy: FC = () => {
         // buy({ auctionHouse: auctionHouseAddress, buyPrice: price, tokenSize: '1', mint: mint, env: 'devnet', wallet: wallet }).then(x => {
         //     alert('Buy / offer Action'+'Offer: '+x);
         // })
-
-        buy({ auctionHouse: auctionHouseAddress, buyPrice: 1, tokenSize: '1', mint: "BPBt7MxvbBAFkAxBVTX6YHLP22dVUFcA5q2YCmDPaNvB", env: 'devnet', wallet: wallet,sellerWallet : 'Ff8hAnXyPptRSXbCKTQwp3p4DYb8zrReMw18k4SLd7m7' }).then(x => {
+        console.log("mintkey",mint)
+        buy({ auctionHouse: auctionHouseAddress, buyPrice: price, tokenSize: '1', mint: mint, env: 'devnet', wallet: wallet,sellerWallet : sellerWallet }).then(x => {
             alert('Buy / offer Action'+'Offer: '+x);
         })
+        // const buyer = { buyer: publicKey  };
+    //   axios.post(`${baseURL}/buy`, buyer)
+    //     .then(response => console.log(response))
+    //     .catch(error => {
+    //       console.error('There was an error!', error);
+    //     });
     }
     
     return (

@@ -135,6 +135,37 @@ export const createListedNfts = async (req, res) => {
     }
 }
 
+export const buy = async (req, res) => {
+    // console.log(req)
+    try {
+
+        var mintKey = req.params.mint;
+        console.log('The id: ' + mintKey);
+        const nft = await Nft.findOne({
+            mintKey
+        })
+        if (nft) {
+            const { buyer } = req.body
+            nft.isListed = false;
+            nft.buyerWallet=buyer;
+            
+            nft.save();
+            return res.status(201).json({
+                success: true,
+               
+                message: "Status updated"
+            })
+
+
+        } else return res.status(404).json({
+            success: false,
+            message: "nft not found."
+        })
+    } catch (error) {
+        return res.status(409).json({ error: error.message })
+    }
+
+}
 //buying nfts
 export const createBuy = async (req, res) => {
     try {
