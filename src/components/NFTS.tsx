@@ -2,10 +2,16 @@
 import { produceWithPatches } from 'immer';
 import React, { useState } from 'react';
 import Link from "next/link";
+import axios from 'axios';
+
+
+const baseURL = "http://localhost:5000";
+
 
 export const NFTS = (props) => {
     const [image, setimage] = useState("")
     const [updated, setupdated] = useState(false);
+    const [listed, setListed] = useState(true);
     // console.log("props",props);
     const pic = async (data) => {
         let uri = await fetch(data);
@@ -22,6 +28,9 @@ export const NFTS = (props) => {
     //     console.log("res", res)
     //     return res;
     // }
+
+    axios.get(`${baseURL}/isListed`, {params : { mintKey : props.data.mint.toBase58() }})
+    .then(res => console.log("axios response is", res));
     
     return (
         <div className="column">
@@ -65,14 +74,22 @@ export const NFTS = (props) => {
                         {props.data.mint.toBase58()}
                     </p>
                     <button  className="pd group w-60 m-2 btn animate-pulse disabled:animate-none bg-gradient-to-r from-[#9945FF] to-[#14F195] hover:from-pink-500 hover:to-yellow-500 ... "            >
-
+                    {
+                        listed ? 
                         <Link 
-                              href={{
-                                pathname: "/nftdetails",
-                                query: { mint: props.data.mint.toString(), uri: props.data.uri},
-                              }}
-                       
-                         ><span   className="block group-disabled:hidden ">Sell</span></Link>
+                        href={{
+                          pathname: "/nftdetails",
+                          query: { mint: props.data.mint.toString(), uri: props.data.uri},
+                        }}
+                 
+                   ><span   className="block group-disabled:hidden ">Sell</span></Link>
+
+                   :
+
+                   <span   className="block group-disabled:hidden ">Listed for Sale</span>
+
+                    }
+
                     </button>
 
 

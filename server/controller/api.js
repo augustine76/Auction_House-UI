@@ -275,6 +275,31 @@ export const fetchAllNfts = async (req, res) => {
     }
 }
 
+export const isListed = async (req, res) => {
+    try{
+        const mintKey  = req.query.mintKey;
+        console.log("mint", mintKey);
+        if( mintKey ) {
+            const nft = await Nft.findOne({
+                mintKey: mintKey
+            })
+            if(nft.isListed == true){
+                res.status(200).json({
+                    success: true,
+                    message: true
+                })
+            }
+        }
+        else return res.status(404).json({
+            success: false,
+            message: "mintKey not found."
+        })
+    }
+    catch (error) {
+        res.status(409).json({ error: error.message })
+    }
+}
+
 //collections:- nfts owned
 export const fetchAllUserOwnedNfts = async (req, res) => {
     try {
