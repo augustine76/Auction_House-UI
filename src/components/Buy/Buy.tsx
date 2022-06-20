@@ -33,7 +33,11 @@ export const Buy: FC = () => {
         .catch(error => {
           console.error('There was an error!', error);
         });
-        buy({ auctionHouse: auctionHouseAddress, buyPrice: price, tokenSize: '1', mint: mint, env: 'devnet', wallet: wallet }).then(x => {
+        // buy({ auctionHouse: auctionHouseAddress, buyPrice: price, tokenSize: '1', mint: mint, env: 'devnet', wallet: wallet }).then(x => {
+        //     alert('Buy / offer Action'+'Offer: '+x);
+        // })
+
+        buy({ auctionHouse: auctionHouseAddress, buyPrice: 1, tokenSize: '1', mint: "BPBt7MxvbBAFkAxBVTX6YHLP22dVUFcA5q2YCmDPaNvB", env: 'devnet', wallet: wallet,sellerWallet : 'Ff8hAnXyPptRSXbCKTQwp3p4DYb8zrReMw18k4SLd7m7' }).then(x => {
             alert('Buy / offer Action'+'Offer: '+x);
         })
     }
