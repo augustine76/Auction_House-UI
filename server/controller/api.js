@@ -16,6 +16,7 @@ export const createUser = async (req, res) => {
         if (existingUser) {
 
             existingUser.signature = signature;
+            existingUser.isSigned=true;
             existingUser.save();
             return res.status(201).json({
                 success: true,
@@ -94,7 +95,7 @@ export const createListedNfts = async (req, res) => {
         const findMintKey = await Nft.findOne({
             publicKey, mintKey
         })
-        if (!user) {
+        if (user) {
             const { url, amount, auctionHouseKey, mintKey } = req.body
             const newNft = new Nft({
                 url, publicKey, mintKey, auctionHouseKey, amount

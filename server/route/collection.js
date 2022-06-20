@@ -6,6 +6,6 @@ const router = express.Router()
 router.post('/addCollection',addCollection);
 router.get('/fetchCollection',fetchCollection);
 router.get('/fetchAllCollection',fetchAllCollection);
-router.get('/FetchListedNftsOfCollection',FetchListedNftsOfCollection);
+router.get('/FetchListedNftsOfCollection/:name',FetchListedNftsOfCollection);
 
 export default router;

@@ -11,6 +11,8 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import axios from 'axios';
+import Link from "next/link";
+
 // import { signIn, signOut, useSession } from 'next-auth/client';
 const baseURL = "http://localhost:5000";
 export const UserDetails = () => {
@@ -118,8 +120,17 @@ export const UserDetails = () => {
         <div className="publicKey">{pubkey}</div>
         <button className="pd group w-60 m-2 btn animate-pulse disabled:animate-none bg-gradient-to-r from-[#9945FF] to-[#14F195] hover:from-pink-500 hover:to-yellow-500 ... "            >
           <span className="block group-disabled:hidden ">Edit Profile</span>
-        </button>
-
+        </button>        
+        {/* <Link href="/collectionForm">
+              <a className="btn btn-ghost btn-sm rounded-btn">Add Collection</a>
+            </Link> */}
+            <Link 
+                href={{
+                        pathname: "/collectionForm",
+                        query: { pubkey: pubkey }, //pubkey not available here now due to CORS
+                      }}
+                       
+            ><a   className="btn btn-ghost btn-sm rounded-btn">Add Collection</a></Link>
 
         {/* <div className="box">
           <a href="#m1-o" className="link-1" id="m1-c">Modal 1</a>

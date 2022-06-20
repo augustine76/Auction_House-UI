@@ -76,9 +76,9 @@ export const fetchAllCollection = async(req,res) => {
 // It after clicking on a particular collection it fetches its details as well
 // As all the listed nfts of that particular collection
 export const FetchListedNftsOfCollection = async(req,res) => {
-
-    const name = req.body.name
-
+   
+    const name = req.params.name
+    console.log(name)
     const collection = await Collection.findOne({name})
 
     if(collection == undefined) {
@@ -86,18 +86,25 @@ export const FetchListedNftsOfCollection = async(req,res) => {
     }
     const nfts = JSON.parse(collection.nfts);
     const length = nfts.length
-
+    // console.log("nft",nfts)
     let listedNfts = [];
     let i;
     for(i=0; i<length;i++){
-        const nft = await Nft.findOne({mintKey : nfts[i]})
-
+        const nft = await Nft.findOne({mintKey : nfts[i],isListed:true})
+        console.log(nft)
         if(!(nft == null)){
+            
             listedNfts.push(nft);
         }
     }
     if(listedNfts == []){
        return  res.status(200).send("There are No Nfts listed from this collection at the moment ");
     }
-    return res.status(200).json(`the collection :${collection} and the nfts are :${listedNfts}`);
+    
+    return res.status(200).json(
+        {
+            success: true,
+            message: "Listed Nfts fetched",
+            data:listedNfts
+        });
 }
