@@ -344,22 +344,31 @@ export const createExecuteSell = async (req, res) => {
 //fetch collection
 export const fetchUserCollectionNft = async (req, res) => {
     try {
-        const { collectionName } = req.body
-        const findCollection = await Collection.findOne({
-            collectionName
+        const { collectionName, publicKey } = req.body
+        const user = await User.findOne({
+            publicKey
         })
-        if (findCollection) {
-            res.status(200).json({
-                success: true,
-                data: findCollection.nfts
-            })
+        const findCollection = await Collection.findOne({
+            publicKey, collectionName
+        })
+        if (user) {
+            if (findCollection) {
+                res.status(200).json({
+                    success: true,
+                    data: findCollection.nfts
+                })
+            } else {
+                return res.status(404).json({
+                    success: false,
+                    message: "No collection exists for this publicKey."
+                })
+            }
         } else {
             return res.status(404).json({
                 success: false,
-                message: "No collection exists."
+                message: "User not found."
             })
         }
-
     } catch (error) {
         res.status(409).json({ error: error.message })
     }
