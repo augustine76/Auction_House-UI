@@ -8,3 +8,4 @@ export {ProfileView} from "./profile";
 export {NFTDetailView} from "./nftdetails"
 export {ListedNftsView} from "./listednfts"
 export {ListedCollectionsView} from "./ListedCollections"
+export {CollectionFormView} from "./collectionForm";

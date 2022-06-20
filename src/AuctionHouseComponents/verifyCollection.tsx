@@ -10,7 +10,7 @@ import Box from '@mui/material/Box';
 
 // import  FilePicker  from 'react-file-picker'
  
-const FilePicker = () => {
+export const FilePicker = () => {
   // <FilePicker
   //   extensions={['md']}
   //   onChange={FileObject =>console.log(FileObject)}
