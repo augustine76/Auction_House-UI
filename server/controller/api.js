@@ -39,7 +39,7 @@ export const createUser = async (req, res) => {
     }
 }
 export const getUserDetails = async (req, res) => {
-    console.log(req)
+    // console.log(req)
     try {
 
         var publicKey = req.params.id;
@@ -275,6 +275,34 @@ export const fetchAllNfts = async (req, res) => {
     }
 }
 
+
+
+export const getNFTDetails = async (req, res) => {
+    // console.log(req)
+    try {
+
+        var mintKey = req.params.mint;
+        console.log('The id: ' + mintKey);
+        const nft = await Nft.findOne({
+            mintKey
+        })
+        if (nft) {
+            return res.status(201).json({
+                success: true,
+                data: nft,
+                message: "nft Details fetched"
+            })
+
+
+        } else return res.status(404).json({
+            success: false,
+            message: "nft not found."
+        })
+    } catch (error) {
+        return res.status(409).json({ error: error.message })
+    }
+
+}
 //collections:- nfts owned
 export const fetchAllUserOwnedNfts = async (req, res) => {
     try {

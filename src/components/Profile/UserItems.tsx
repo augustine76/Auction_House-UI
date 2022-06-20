@@ -22,7 +22,7 @@ import {
     walletAdapterIdentity,
 } from "@metaplex-foundation/js-next";
 import { Connection, clusterApiUrl } from "@solana/web3.js";
-import { NFTS } from "../NFTS";
+import { NFTS } from "./NFTS";
 
 export const UserItems = () => {
     const [NFTList, setNFTList] = useState([]);
