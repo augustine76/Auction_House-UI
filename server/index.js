@@ -25,7 +25,7 @@ app.use(UserRoute);
 app.use(NftRoute);
 app.use(CollectionRoute);
 
-const PORT = 5001
+const PORT = 5000
 
 mongoose
     .connect("mongodb+srv://isha:isha2180@cluster0.govgi.mongodb.net/?retryWrites=true&w=majority", {

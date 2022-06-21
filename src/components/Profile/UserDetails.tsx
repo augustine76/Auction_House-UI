@@ -14,7 +14,7 @@ import axios from 'axios';
 import Link from "next/link";
 
 // import { signIn, signOut, useSession } from 'next-auth/client';
-const baseURL = "http://localhost:5001";
+const baseURL = "http://localhost:5000";
 export const UserDetails = () => {
 
 

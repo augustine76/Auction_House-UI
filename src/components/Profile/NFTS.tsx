@@ -11,7 +11,7 @@ const baseURL = "http://localhost:5000";
 export const NFTS = (props) => {
     const [image, setimage] = useState("")
     const [updated, setupdated] = useState(false);
-    const [listed, setListed] = useState(true);
+    const [listed, setListed] = useState(false);
     // console.log("props",props);
     const pic = async (data) => {
         let uri = await fetch(data);
@@ -29,8 +29,10 @@ export const NFTS = (props) => {
     //     return res;
     // }
 
-    axios.get(`${baseURL}/isListed`, {params : { mintKey : props.data.mint.toBase58() }})
-    .then(res => console.log("axios response is", res));
+    axios.post(`${baseURL}/isListed`,  { mintKey : props.data.mint.toBase58()})
+    .then(res => {console.log("axios response is [right file]", res.data.status)
+    setListed(res.data.status == 1);
+});
     
     return (
         <div className="column">
@@ -75,7 +77,7 @@ export const NFTS = (props) => {
                     </p>
                     <button  className="pd group w-60 m-2 btn animate-pulse disabled:animate-none bg-gradient-to-r from-[#9945FF] to-[#14F195] hover:from-pink-500 hover:to-yellow-500 ... "            >
                     {
-                        listed ? 
+                        !listed   ? 
                         <Link 
                         href={{
                           pathname: "/nftdetails",

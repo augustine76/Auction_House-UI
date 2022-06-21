@@ -5,7 +5,7 @@ import Link from "next/link";
 import axios from 'axios';
 
 
-const baseURL = "http://localhost:5001";
+const baseURL = "http://localhost:5000";
 
 
 export const NFTS = (props) => {
@@ -29,7 +29,7 @@ export const NFTS = (props) => {
     //     return res;
     // }
 
-    axios.get(`${baseURL}/isListed`, {params : { mintKey : props.data.mint.toBase58() }})
+    axios.post(`${baseURL}/isListed`, { data : { mintKey : props.data.mint.toBase58() }})
     .then(res => console.log("axios response is", res));
     
     return (

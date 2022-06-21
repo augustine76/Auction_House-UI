@@ -17,7 +17,7 @@ import Box from '@mui/material/Box';
 import { sell } from "../api/src/auction-house";
 import { useWallet } from '@solana/wallet-adapter-react';
 import  axios  from "axios";
-const baseURL = "http://localhost:5001"; 
+const baseURL = "http://localhost:5000"; 
 const useStyles = makeStyles(() => ({
     root: {
         maxWidth: 343,
