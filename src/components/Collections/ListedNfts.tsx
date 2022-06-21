@@ -11,7 +11,7 @@ import {
 import { Connection, clusterApiUrl } from "@solana/web3.js";
 import { Nfts } from "./Nfts";
 import axios from "axios";
-const baseURL = "http://localhost:5000";
+const baseURL = "http://localhost:5001";
 export const ListedNfts = () => {
     const router = useRouter()
     const {
