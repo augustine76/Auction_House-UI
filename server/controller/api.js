@@ -137,16 +137,15 @@ export const createCollection = async (req, res) => {
             publicKey
         })
         if (user) {
-            const { publicKey, collectionName, symbol, description, image, nfts, auctionHouseKey } = req.body
+            const { publicKey, collectionName, symbol, description, image, auctionHouseKey } = req.body
             const findCollection = await Collection.findOne({
                 collectionName
             })
             if (!findCollection) {
                 const newCollection = new Collection({
-                    publicKey, collectionName, symbol, description, image, nfts, auctionHouseKey
+                    publicKey, collectionName, symbol, description, image, auctionHouseKey
                 })
                 newCollection.isCollectionCreated = true;
-                newCollection.nfts = [];
                 const collection = await newCollection.save();
                 return res.status(201).json({
                     success: true,
@@ -175,8 +174,6 @@ export const createListedNfts = async (req, res) => {
     try {
 
         const { publicKey, mintKey, collectionName } = req.body
-        // var nfts = [];
-        // nfts = req.body
         const user = await User.findOne({
             publicKey
         })
@@ -192,15 +189,6 @@ export const createListedNfts = async (req, res) => {
                 const newNft = new Nft({
                     url, publicKey, mintKey, auctionHouseKey, amount, collectionName
                 })
-                // const insert = { $push:  [newNft]  };
-                // var myquery = {collectionName: findCollection.collectionName, nfts: findCollection.nfts };
-                // var newvalues = { $set: { nfts: [{insert}] } };
-                // const updateValues = await Collection.updateOne(myquery, newvalues, function (err, res) {
-                //     if (err) throw err;
-                //     console.log("1 document updated");
-                // });
-                // res.status(201).json(updateValues);
-                // console.log("insert ===>", insert)
                 if (newNft.mintKey && newNft.publicKey) {
                     if (!findMintKey) {
                         newNft.sellerWallet = user.publicKey;
@@ -341,34 +329,42 @@ export const createExecuteSell = async (req, res) => {
     }
 }
 
-//fetch collection
-export const fetchUserCollectionNft = async (req, res) => {
+//fetch user collection nft's
+export const fetchUserCollectionOwnedNft = async (req, res) => {
     try {
-        const { collectionName, publicKey } = req.body
+        const { publicKey, collectionName } = req.body
         const user = await User.findOne({
-            publicKey
-        })
-        const findCollection = await Collection.findOne({
-            publicKey, collectionName
+            publicKey, isSigned: true
         })
         if (user) {
-            if (findCollection) {
-                res.status(200).json({
-                    success: true,
-                    data: findCollection.nfts
+            const collection = await Collection.findOne({
+                publicKey, collectionName
+            })
+            if (collection) {
+                const nft = await Nft.find({
+                    publicKey, collectionName
                 })
+                if (nft) {
+                    res.status(200).json({
+                        success: true,
+                        message: nft
+                    })
+                } else {
+                    res.status(404).json({
+                        success: false,
+                        message: "No nft's found for this collection."
+                    })
+                }
             } else {
-                return res.status(404).json({
+                res.status(404).json({
                     success: false,
                     message: "No collection exists for this publicKey."
                 })
             }
-        } else {
-            return res.status(404).json({
-                success: false,
-                message: "User not found."
-            })
-        }
+        } else return res.status(404).json({
+            success: false,
+            message: "User not found."
+        })
     } catch (error) {
         res.status(409).json({ error: error.message })
     }
@@ -390,6 +386,30 @@ export const fetchAllCollections = async (req, res) => {
             })
         }
 
+    } catch (error) {
+        res.status(409).json({ error: error.message })
+    }
+}
+
+//fetch user collection
+export const fetchUserCollection = async (req, res) => {
+    try {
+        const { publicKey } = req.body
+        const user = await User.findOne({
+            publicKey, isSigned: true
+        })
+        if (user) {
+            const collection = await Collection.find({ publicKey: user.publicKey })
+            res.status(200).json({
+                success: true,
+                data: collection
+            })
+        } else {
+            return res.status(404).json({
+                success: false,
+                message: "User not found."
+            })
+        }
     } catch (error) {
         res.status(409).json({ error: error.message })
     }
@@ -439,8 +459,6 @@ export const fetchAllUserOwnedNfts = async (req, res) => {
             success: false,
             message: "User not found."
         })
-
-
     } catch (error) {
         res.status(409).json({ error: error.message })
     }

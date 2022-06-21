@@ -54,7 +54,6 @@ const collectionSchema = mongoose.Schema({
     symbol: String,
     description: String,
     image: String,
-    nfts: [],
     isCollectionCreated: {
         type: Boolean,
         default: false
