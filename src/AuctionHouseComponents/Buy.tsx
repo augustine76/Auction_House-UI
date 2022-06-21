@@ -29,7 +29,7 @@ export const Buy: FC = () => {
         >
           <Col>
             <Input
-              color="default"
+              color="primary"
               size="lg"
               clearable
               underlined
@@ -42,7 +42,7 @@ export const Buy: FC = () => {
           <Col>
             <Input
               labelPlaceholder="Mint Address"
-              color="default"
+              color="primary"
               size="lg"
               clearable
               underlined
@@ -54,7 +54,7 @@ export const Buy: FC = () => {
           <Col>
             <Input
               labelPlaceholder="Price"
-              color="default"
+              color="primary"
               size="lg"
               clearable
               underlined
