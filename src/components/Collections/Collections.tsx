@@ -21,7 +21,7 @@ export const Collections = (props) => {
                    <div className="bg-image hover-overlay pd" data-mdb-rippleripple rounded-0-color="light">
                         <img className="img-fluid  max_width image_width"
                        
-                         src="https://gateway.pinata.cloud/ipfs/QmYLxwKaXbuFiQm8N7FuAqUzwXz3o9tQDWB7WY2MniKL3j"
+                         src={props.data.image}
                             alt="NFT" />
 
                     </div>

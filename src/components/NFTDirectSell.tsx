@@ -57,7 +57,7 @@ export const NFTDetails = (props) => {
         if(!updated){
             setimage(res.image);
             setname(res.name);
-            setcollection(res.collection["name"]);
+           
         }
         setupdated(true);
         
@@ -80,14 +80,15 @@ export const NFTDetails = (props) => {
         sell({ auctionHouse: auctionHouseAddress, buyPrice: price, mint: mint, tokenSize: '1', wallet : wallet }).then(x => {
 
             alert('Create Sell Action'+'Account'+x.account+'MintAddress'+x.mintAddress+'Price'+x.price);
+            const insellnft = { owner: publicKey,mintKey:mint,priceAmount:price };
+            axios.post(`${baseURL}/listNFT`, insellnft)
+              .then(response => console.log("response",response))
+              .catch(error => {
+                console.error('There was an error!', error); 
+              });
+    
         })
-        const insellnft = { publicKey: publicKey,mintKey:mint,amount:price };
-        axios.post(`${baseURL}/createListedNfts`, insellnft)
-          .then(response => console.log("response",response))
-          .catch(error => {
-            console.error('There was an error!', error); 
-          });
-
+       
     }
     console.log("nft details", uri);
     return (

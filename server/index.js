@@ -1,7 +1,7 @@
 import express from "express"
 import mongoose from "mongoose"
 import dotenv from "dotenv"
-// import UserRoute from "./route/user.js";
+import UserRoute from "./route/user.js";
 import NftRoute from "./route/nft.js";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
@@ -21,7 +21,7 @@ app.use(function (req, res, next) { //allow cross origin requests
     next();
 });
 // Routes
-// app.use(UserRoute);
+app.use(UserRoute);
 app.use(NftRoute);
 app.use(CollectionRoute);
 

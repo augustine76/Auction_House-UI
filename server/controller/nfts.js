@@ -59,3 +59,92 @@ export const getNFTDetails = async (req, res) => {
     }
 
 }
+
+// //browse:- nfts listed for sale
+// export const fetchAllNfts = async (req, res) => {
+//     try {
+//         // const {isListed} = req.body
+//         const nfts = await NFTS.find({
+//             inSale: true
+//         })
+//         if (nfts) {
+//             res.status(200).json({
+//                 success: true,
+//                 message: nfts
+//             });
+//         } else {
+//             return res.status(404).json({
+//                 success: false,
+//                 message: "No nfts are on sale."
+//             })
+//         }
+
+
+//     } catch (error) {
+//         res.status(409).json({ error: error.message })
+//     }
+// }
+
+
+export const isListed = async (req, res) => {
+    try {
+        // const mintKey  = req.query.mintKey;
+        // console.log("mint", mintKey);
+        const { mintKey } = req.body
+        if (mintKey) {
+            const nft = await NFTS.findOne({
+                mintKey: mintKey
+            })
+            if(nft)
+            {
+                if (nft.inSale == true) {
+                    res.status(200).json({
+                        status: 1,
+                        message: "This NFT is Listed"
+                    })
+                }
+
+            }
+            else{
+                res.status(200).json({
+                    status: 0,
+                    message: "This NFT is not Listed"
+                })
+            }
+            
+        }
+        else return res.status(404).json({
+            success: false,
+            message: "mintKey not found."
+        })
+    }
+    catch (error) {
+        res.status(409).json({ error: error.message })
+    }
+}
+
+// //collections:- nfts owned
+// export const fetchAllUserOwnedNfts = async (req, res) => {
+//     try {
+//         const { publicKey } = req.body
+//         const user = await User.findOne({
+//             publicKey
+//         })
+//         if (user) {
+//             const nft = await Nft.find({
+//                 publicKey
+//             })
+//             res.status(200).json({
+//                 success: true,
+//                 message: nft
+//             })
+//         } else return res.status(404).json({
+//             success: false,
+//             message: "User not found."
+//         })
+
+
+//     } catch (error) {
+//         res.status(409).json({ error: error.message })
+//     }
+// }

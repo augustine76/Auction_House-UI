@@ -16,8 +16,9 @@
 
 // export default router;
 import express from "express"
-import {listNFT,getNFTDetails} from "../controller/nfts.js"
+import {listNFT,getNFTDetails,isListed} from "../controller/nfts.js"
 const router = express.Router()
 router.post('/listNFT', listNFT);
 router.get("/getNFTDetails/:mint",getNFTDetails);
+router.post("/isListed", isListed)
 export default router;

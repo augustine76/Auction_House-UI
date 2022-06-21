@@ -5,7 +5,7 @@ import { useState } from 'react';
 import  axios  from "axios";
 import { useRouter } from "next/router";
 import TextareaAutosize from '@mui/material/TextareaAutosize';
-
+import { useWallet } from "@solana/wallet-adapter-react";
 
 
 const baseURL = "http://localhost:5000"; 
@@ -15,6 +15,7 @@ let li;
 
 
 const FilePicker = () => {
+  
   const [hash, setHash] = useState(null);
   const [list, setList] = useState(null);
   const [createObjectURL, setCreateObjectURL] = useState(null);
@@ -56,17 +57,14 @@ const FilePicker = () => {
 }
 
 export function CollectionForm() {
+  const { publicKey } = useWallet();
   const [name, setName] = useState("");
   const [symbol, setSymbol] = useState("");
   const [imageURL, setImageURL] = useState("");
   const [desc, setdesc] = useState("");
   const router = useRouter()
 
-  const {
-    query : { pubkey },
-} = router
-
- console.log("pubkey is", pubkey);
+   console.log("pubkey is", publicKey);
 
  const makeColl = () => {;
   let collection = {
@@ -75,7 +73,7 @@ export function CollectionForm() {
     image: imageURL,
     description: desc,
     hash: li,
-    creator:"HAekfA31B92bVyvWMjAV6Wk3XatCAhSdttaoZvjyteQw"
+    creator:publicKey
   }
   axios.post(`${baseURL}/addCollection`, collection)
     .then(response => console.log("response",response))

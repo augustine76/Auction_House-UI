@@ -25,9 +25,9 @@ export const Buy: FC = () => {
         axios.get(`${baseURL}/getNFTDetails/${mint}`)
         .then(response => {
           console.log("user details", response)
-          console.log("pub key", response.data.data.amount)
-          setPrice(response.data.data.amount);
-          setSellerWallet(response.data.data.sellerWallet)
+          console.log("pub key", response.data.data.owner)
+          setPrice(response.data.data.priceAmount);
+          setSellerWallet(response.data.data.owner)
           
         }
 
