@@ -49,7 +49,7 @@ export const SignMessage: FC = () => {
           align="center"
         >
           <Input
-            color="default"
+            color="primary"
             size="lg"
             clearable
             underlined

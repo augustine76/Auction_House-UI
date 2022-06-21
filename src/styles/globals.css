@@ -38,6 +38,9 @@ input[type="text"]
 {
     color: #fff ;
 }
+textarea{
+  color: #fff !important;
+}
 input[type="number"]
 {
     color: black !important;

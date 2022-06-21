@@ -1,18 +1,22 @@
-import { FormContainer, TextFieldElement } from 'react-hook-form-mui'
-import TextField from '@mui/material/TextField';
-import Box from '@mui/material/Box';
-import { useState } from 'react';
-import  axios  from "axios";
+import { FormContainer, TextFieldElement } from "react-hook-form-mui";
+import TextField from "@mui/material/TextField";
+import Box from "@mui/material/Box";
+import { useState } from "react";
+import axios from "axios";
 import { useRouter } from "next/router";
-import TextareaAutosize from '@mui/material/TextareaAutosize';
+import TextareaAutosize from "@mui/material/TextareaAutosize";
+import {
+  Input,
+  Container,
+  Row,
+  Col,
+  Textarea,
+  Button,
+} from "@nextui-org/react";
 
-
-
-const baseURL = "http://localhost:5000"; 
+const baseURL = "http://localhost:5000";
 
 let li;
-
-
 
 const FilePicker = () => {
   const [hash, setHash] = useState(null);
@@ -32,103 +36,164 @@ const FilePicker = () => {
     let data = await res.json();
     setTimeout(() => {
       setList(data);
-    }, 1000)
+    }, 1000);
     li = data;
     // setList(data);
     console.log("json is", li);
     sethashLoaded(true);
-  }
+  };
   const getList = () => {
     return list;
-  }
+  };
   return (
     <>
       <input type="file" name="myImage" onChange={uploadToClient} />
-          <button
-          className="btn btn-primary"
-          type="submit"
-          onClick={uploadToServer}
+      <button
+        className="btn btn-primary"
+        type="submit"
+        onClick={uploadToServer}
       >
         {!hashLoaded ? "Load Hash-List" : "Hash-List loaded!"}
       </button>
     </>
-  )
-}
+  );
+};
 
 export function CollectionForm() {
   const [name, setName] = useState("");
   const [symbol, setSymbol] = useState("");
   const [imageURL, setImageURL] = useState("");
   const [desc, setdesc] = useState("");
-  const router = useRouter()
+  const router = useRouter();
 
   const {
-    query : { pubkey },
-} = router
+    query: { pubkey },
+  } = router;
 
- console.log("pubkey is", pubkey);
+  console.log("pubkey is", pubkey);
 
- const makeColl = () => {;
-  let collection = {
-    name: name,
-    symbol: symbol,
-    image: imageURL,
-    description: desc,
-    hash: li,
-    creator:"HAekfA31B92bVyvWMjAV6Wk3XatCAhSdttaoZvjyteQw"
-  }
-  axios.post(`${baseURL}/addCollection`, collection)
-    .then(response => console.log("response",response))
-    .catch(error => {
-      console.error('There was an error!', error); 
-    });
-  }
+  const makeColl = () => {
+    let collection = {
+      name: name,
+      symbol: symbol,
+      image: imageURL,
+      description: desc,
+      hash: li,
+      creator: "HAekfA31B92bVyvWMjAV6Wk3XatCAhSdttaoZvjyteQw",
+    };
+    axios
+      .post(`${baseURL}/addCollection`, collection)
+      .then((response) => console.log("response", response))
+      .catch((error) => {
+        console.error("There was an error!", error);
+      });
+  };
   return (
-<div>
-            <Box
-                component="form"
-                sx={{
-                    '& > :not(style)': { m: 2, width: '60ch' },
-                    input: {
-                        background: "white"
-                    }
-                }}
-                noValidate
-                autoComplete="off"
-            >
-                <TextField
-                    label="Collection Name"
-                    variant='filled'
-                    color='success'
-                    onChange={(e) => { setName(e.target.value) }}
-                    size='small'
-                />
-                <TextField
-                    label="Symbol"
-                    variant='filled'
-                    color='success'
-                    onChange={(e) => { setSymbol(e.target.value) }}
-                    size='small'
-                />
-                <TextField
-                    label="Image URL"
-                    variant='filled'
-                    color='success'
-                    onChange={(e) => { setImageURL(e.target.value) }}
-                    size='small'
-                />
-                    <TextareaAutosize
-      maxRows={4}
-      aria-label="maximum height"
-      placeholder="Description"
-      style={{ width: "60ch", color: 'black', height: "6ch" }}
-      onChange={(e) => { setdesc(e.target.value) }}
-    />              
-            </Box>
-            <FilePicker />  
-            <br></br>
-            <button className="btn btn-primary"
-          type="submit" onClick={makeColl}>Add</button>
-        </div>
-  )
+    <>
+      <Container>
+        <Row
+          fluid
+          gap={1}
+          css={{ padding: "50px 0" }}
+          justify="center"
+          align="center"
+        >
+          <Col span={3}>
+            <Input
+              css={{ w: "100%" }}
+              color="primary"
+              size="lg"
+              clearable
+              underlined
+              labelPlaceholder="Name"
+              onChange={(e) => {
+                setName(e.target.value);
+              }}
+            />
+          </Col>
+        </Row>
+        <Row
+          gap={1}
+          css={{ padding: "30px 0" }}
+          justify="center"
+          align="center"
+        >
+          <Col span={3}>
+            <Input
+              css={{ w: "100%" }}
+              labelPlaceholder="Symbol"
+              color="primary"
+              size="lg"
+              clearable
+              underlined
+              onChange={(e) => {
+                setSymbol(e.target.value);
+              }}
+            />
+          </Col>
+        </Row>
+        <Row
+          gap={1}
+          css={{ padding: "30px 0" }}
+          justify="center"
+          align="center"
+        >
+          <Col span={3}>
+            <Input
+              css={{ w: "100%" }}
+              labelPlaceholder="Image URL"
+              color="primary"
+              size="lg"
+              clearable
+              underlined
+              onChange={(e) => {
+                setImageURL(e.target.value);
+              }}
+            />
+          </Col>
+        </Row>
+        <Row
+          gap={1}
+          css={{ padding: "30px 0" }}
+          justify="center"
+          align="center"
+        >
+          <Col span={3}>
+            <Textarea
+              css={{ w: "100%" }}
+              labelPlaceholder="Description"
+              color="primary"
+              size="lg"
+              underlined
+              onChange={(e) => {
+                setdesc(e.target.value);
+              }}
+            />
+          </Col>
+        </Row>
+        <Row
+          gap={1}
+          css={{ padding: "30px 0" }}
+          justify="center"
+          align="center"
+        >
+          <Col css={{ w: "100%" }} align="center" span={3}>
+            <FilePicker />
+          </Col>
+        </Row>
+        <Row
+          gap={1}
+          css={{ padding: "30px 0" }}
+          justify="center"
+          align="center"
+        >
+          <Col span={3} align="center">
+            <Button color="gradient" type="submit" onClick={makeColl}>
+              Add Collection
+            </Button>
+          </Col>
+        </Row>
+      </Container>
+    </>
+  );
 }

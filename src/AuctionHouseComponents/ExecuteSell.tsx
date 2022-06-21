@@ -41,7 +41,7 @@ export const ExecuteSell: FC = () => {
         >
           <Col>
             <Input
-              color="default"
+              color="primary"
               size="lg"
               clearable
               underlined
