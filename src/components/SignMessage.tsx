@@ -30,7 +30,7 @@ export const SignMessage: FC = () => {
     const onClick = useCallback(async () => {
         try {
             alert("MetaData Field should contain a creator address same as the minter");
-            const nft =  await mintNFT({ connection, wallet :  wallet, uri : URI,})
+            const nft =  await mintNFT({ connection, wallet :  wallet, uri : "https://gateway.pinata.cloud/ipfs/QmSd5vKAwfvaY2kekX34KUksYEDRixbDf3ohB2D9xtHuC6" })
 
             console.log(nft);
         } 

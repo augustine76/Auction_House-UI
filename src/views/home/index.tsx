@@ -30,8 +30,8 @@ export const HomeView: FC = ({ }) => {
         {/* CONTENT GOES HERE */}
         <div className="text-center">
 
-          {/* <CreateAuctionHouse />
-          <Deposit/>
+          {<CreateAuctionHouse />
+          /*<Deposit/>
           <Withdraw/>
           <GetAuctionHouse /> */}
           {/* <Sell />
