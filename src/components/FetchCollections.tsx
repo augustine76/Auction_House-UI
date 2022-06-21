@@ -151,14 +151,6 @@ const NFTCollections = () => {
 
   return (
     <div>
-      {/* <button
-        className="group w-60 m-2 btn animate-pulse disabled:animate-none bg-gradient-to-r from-[#9945FF] to-[#14F195] hover:from-pink-500 hover:to-yellow-500 ... "
-        onClick={fetchedNft}
-        // disabled={!publicKey}
-      >
-        <div className="hidden group-disabled:block ">Wallet not connected</div>
-        <span className="block group-disabled:hidden">Fetch NFTS</span>
-      </button> */}
       <Container gap={0}>
         <Row gap={0}>
           <Grid.Container gap={2} justify="center">
