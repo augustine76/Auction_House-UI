@@ -81,7 +81,7 @@ export const NFTDetails = (props) => {
 
             alert('Create Sell Action'+'Account'+x.account+'MintAddress'+x.mintAddress+'Price'+x.price);
         })
-        const insellnft = { publicKey: publicKey,mintKey:mint };
+        const insellnft = { publicKey: publicKey,mintKey:mint,amount:price };
         axios.post(`${baseURL}/createListedNfts`, insellnft)
           .then(response => console.log("response",response))
           .catch(error => {

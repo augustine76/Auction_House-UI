@@ -16,7 +16,7 @@ export const createUser = async (req, res) => {
         if (existingUser) {
 
             existingUser.signature = signature;
-            existingUser.isSigned=true;
+            existingUser.isSigned = true;
             existingUser.save();
             return res.status(201).json({
                 success: true,
@@ -39,7 +39,7 @@ export const createUser = async (req, res) => {
     }
 }
 export const getUserDetails = async (req, res) => {
-    console.log(req)
+    // console.log(req)
     try {
 
         var publicKey = req.params.id;
@@ -135,6 +135,37 @@ export const createListedNfts = async (req, res) => {
     }
 }
 
+export const buy = async (req, res) => {
+    // console.log(req)
+    try {
+
+        var mintKey = req.params.mint;
+        console.log('The id: ' + mintKey);
+        const nft = await Nft.findOne({
+            mintKey
+        })
+        if (nft) {
+            const { buyer } = req.body
+            nft.isListed = false;
+            nft.buyerWallet = buyer;
+
+            nft.save();
+            return res.status(201).json({
+                success: true,
+
+                message: "Status updated"
+            })
+
+
+        } else return res.status(404).json({
+            success: false,
+            message: "nft not found."
+        })
+    } catch (error) {
+        return res.status(409).json({ error: error.message })
+    }
+
+}
 //buying nfts
 export const createBuy = async (req, res) => {
     try {
@@ -275,20 +306,60 @@ export const fetchAllNfts = async (req, res) => {
     }
 }
 
+
+
+export const getNFTDetails = async (req, res) => {
+    // console.log(req)
+    try {
+
+        var mintKey = req.params.mint;
+        console.log('The id: ' + mintKey);
+        const nft = await Nft.findOne({
+            mintKey
+        })
+        if (nft) {
+            return res.status(201).json({
+                success: true,
+                data: nft,
+                message: "nft Details fetched"
+            })
+
+
+        } else return res.status(404).json({
+            success: false,
+            message: "nft not found."
+        })
+    } catch (error) {
+        return res.status(409).json({ error: error.message })
+    }
+
+}
 export const isListed = async (req, res) => {
-    try{
-        const mintKey  = req.query.mintKey;
-        console.log("mint", mintKey);
-        if( mintKey ) {
+    try {
+        // const mintKey  = req.query.mintKey;
+        // console.log("mint", mintKey);
+        const { mintKey } = req.body
+        if (mintKey) {
             const nft = await Nft.findOne({
                 mintKey: mintKey
             })
-            if(nft.isListed == true){
+            if(nft)
+            {
+                if (nft.isListed == true) {
+                    res.status(200).json({
+                        status: 1,
+                        message: "This NFT is Listed"
+                    })
+                }
+
+            }
+            else{
                 res.status(200).json({
-                    success: true,
-                    message: true
+                    status: 0,
+                    message: "This NFT is not Listed"
                 })
             }
+            
         }
         else return res.status(404).json({
             success: false,
