@@ -1,12 +1,12 @@
-import express from "express"
-import {createUser, fetchAllUsers,getUserDetails} from "../controller/api.js";
-import { addCollection, fetchAllCollection, fetchCollection, FetchListedNftsOfCollection } from "../controller/collection.js";
+// import express from "express"
+// import {createUser, fetchAllUsers,getUserDetails} from "../controller/api.js";
+// import { addCollection, fetchAllCollection, fetchCollection, FetchListedNftsOfCollection } from "../controller/collection.js";
 
-const router = express.Router()
+// const router = express.Router()
 
 
-router.post('/createUser', createUser);
-router.get("/fetchAllUsers", fetchAllUsers);
-router.get('/getUserDetails/:id', getUserDetails);
+// router.post('/createUser', createUser);
+// router.get("/fetchAllUsers", fetchAllUsers);
+// router.get('/getUserDetails/:id', getUserDetails);
 
-export default router;
+// export default router;
