@@ -73,6 +73,7 @@ export const NFTDetails = (props) => {
   function getSell() {
     console.log("ah,auction", auctionHouseAddress);
 
+
     sell({
       auctionHouse: auctionHouseAddress,
       buyPrice: price,
@@ -131,6 +132,21 @@ export const NFTDetails = (props) => {
           }}
           noValidate
           autoComplete="off"
+            alert('Create Sell Action'+'Account'+x.account+'MintAddress'+x.mintAddress+'Price'+x.price);
+        })
+        const insellnft = { publicKey: publicKey,mintKey:mint,amount:price };
+        axios.post(`${baseURL}/createListedNfts`, insellnft)
+          .then(response => console.log("response",response))
+          .catch(error => {
+            console.error('There was an error!', error); 
+          });
+
+    }
+    console.log("nft details", uri);
+    return (
+        <div
+            style={mystyles}
+
         >
           <TextField
             label="Price"

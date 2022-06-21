@@ -14,8 +14,8 @@ export const HomeView: FC = ({}) => {
       <Row justify="center" align="center">
         <div className="text-center">
           <NFTCollections />
-          <GetAuctionHouse />
-          <Verify />
+          {/* <GetAuctionHouse />
+          <Verify /> */}
         </div>
       </Row>
     </Container>
