@@ -392,7 +392,7 @@ export const fetchAllCollections = async (req, res) => {
 }
 
 //fetch user collection
-export const fetchUserCollection = async (req, res) => {
+export const fetchUserCollections = async (req, res) => {
     try {
         const { publicKey } = req.body
         const user = await User.findOne({

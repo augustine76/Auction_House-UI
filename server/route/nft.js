@@ -1,5 +1,5 @@
 import express from "express"
-import { createListedNfts, fetchAllNfts, fetchAllUserOwnedNfts, createExecuteSell, createBuy, createCollection, fetchUserCollectionOwnedNft, fetchAllCollections, fetchUserCollection } from "../controller/api.js";
+import { createListedNfts, fetchAllNfts, fetchAllUserOwnedNfts, createExecuteSell, createBuy, createCollection, fetchUserCollectionOwnedNft, fetchAllCollections, fetchUserCollections } from "../controller/api.js";
 import { isAuthenticated } from "../middleware/auth.js";
 
 const router = express.Router()
@@ -12,6 +12,6 @@ router.get("/fetchAllNfts", fetchAllNfts);
 router.get("/fetchAllUserOwnedNfts", fetchAllUserOwnedNfts);
 router.get("/fetchUserCollectionOwnedNft", fetchUserCollectionOwnedNft);
 router.get("/fetchAllCollections", fetchAllCollections);
-router.get("/fetchUserCollection", fetchUserCollection);
+router.get("/fetchUserCollections", fetchUserCollections);
 
 export default router;
