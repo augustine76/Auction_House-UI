@@ -31,6 +31,15 @@ export const addCollection = async(req,res) => {
         image : image,
         creator : creator
     })
+    for (let i=0;i<nfts.length;i++) {
+        const newNFT= new NFTS({ 
+            mintKey:nfts[i],
+            owner:creator,
+            collectionName:name,
+                      
+        })
+        newNFT.save();
+    }
 
    const newCollection =  await collection.save();
 

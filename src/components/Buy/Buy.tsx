@@ -39,6 +39,7 @@ export const Buy: FC = () => {
         //     alert('Buy / offer Action'+'Offer: '+x);
         // })
         console.log("mintkey",mint)
+        console.log("seller",sellerWallet)
         buy({ auctionHouse: auctionHouseAddress, buyPrice: price, tokenSize: '1', mint: mint, env: 'devnet', wallet: wallet,sellerWallet : sellerWallet }).then(x => {
             alert('Buy / offer Action'+'Offer: '+x);
         })

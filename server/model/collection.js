@@ -30,6 +30,11 @@ const collectionSchema = mongoose.Schema({
     nfts : [{
         type : String,
     }],
+    floorPrice:{
+        type:Number,
+        default:0,
+        required : true
+    },
 
     verified : {
         type : Boolean,

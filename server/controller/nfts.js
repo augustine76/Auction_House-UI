@@ -5,29 +5,46 @@ export const listNFT = async (req, res) => {
 
         const { owner, mintKey, priceAmount } = req.body
 
-        const findMintKey = await NFTS.findOne({
+        const Nft = await NFTS.findOne({
             mintKey
         })
+        console.log(Nft)
+        const nftCollection = Nft.collectionName
 
-        if (!findMintKey) {
-
+        const collection = await Collection.findOne({
+            name:nftCollection
+        })
+        console.log(collection)
+        if (Nft && collection) {
             try {
-                const newNft = new NFTS({
-                    mintKey, owner, priceAmount
-                })
-                newNft.save(async (_, nft) => {
-                    return res.status(201).json(nft);
-                })
-            }
-            catch (error) {
+
+                Nft.inSale = true;
+                Nft.priceAmount = priceAmount;
+                Nft.owner = owner;
+                Nft.save();
+                if (collection.floorPrice == 0) {
+                    collection.floorPrice = priceAmount;
+                    await collection.save();
+                }
+                
+                 if (priceAmount < collection.floorPrice) {
+                    collection.floorPrice = priceAmount;
+                    await collection.save();
+
+
+                }
+
+                return res.status(201).json({ message: "Nft is listed ", data: collection })
+            } catch (error) {
                 return res.status(400).json({ message: error.message })
             }
+
 
         }
         else {
             return res.status(404).json({
                 success: false,
-                message: "NFT is already listed"
+                message: "NFT is not part of any collection or collection does not exits"
             })
         }
     } catch (error) {
@@ -90,29 +107,28 @@ export const listedNFTS = async (req, res) => {
     try {
         const { owner } = req.body
         console.log("owner", owner);
-        
+
         if (owner) {
             const nft = await NFTS.find({
                 owner
             })
-            if(nft)
-            {
-                
-                    return res.status(200).json({
-                        status: 1,
-                        data:nft,
-                        message: "This NFT is Listed"
-                    })
-                
+            if (nft) {
+
+                return res.status(200).json({
+                    status: 1,
+                    data: nft,
+                    message: "This NFT is Listed"
+                })
+
 
             }
-            else{
+            else {
                 return res.status(200).json({
                     status: 0,
                     message: "No NFT is not Listed"
                 })
             }
-            
+
         }
         else return res.status(404).json({
             success: false,
@@ -133,24 +149,23 @@ export const isListed = async (req, res) => {
             const nft = await NFTS.findOne({
                 mintKey: mintKey
             })
-            if(nft)
-            {
+            if (nft) {
                 if (nft.inSale == true) {
                     res.status(200).json({
                         status: 1,
-                        data:nft,
+                        data: nft,
                         message: "This NFT is Listed"
                     })
                 }
 
             }
-            else{
+            else {
                 res.status(200).json({
                     status: 0,
                     message: "This NFT is not Listed"
                 })
             }
-            
+
         }
         else return res.status(404).json({
             success: false,
@@ -190,37 +205,37 @@ export const fetchAllUserOwnedNfts = async (req, res) => {
 
 // It after clicking on a particular collection it fetches its details as well
 // As all the listed nfts of that particular collection
-export const FetchListedNftsOfCollection = async(req,res) => {
-   
+export const FetchListedNftsOfCollection = async (req, res) => {
+
     const name = req.params.name
     console.log(name)
-    const collection = await Collection.findOne({name})
+    const collection = await Collection.findOne({ name })
 
-    if(collection == undefined) {
-       return  res.status(400).json(`collection name ${name} does not exist`);
+    if (collection == undefined) {
+        return res.status(400).json(`collection name ${name} does not exist`);
     }
-    
+
     const nfts = JSON.parse(collection.nfts);
     const length = nfts.length
     // console.log("nft",nfts)
     let listedNfts = [];
     let i;
-    for(i=0; i<length;i++){
-        const nft = await NFTS.findOne({mintKey : nfts[i],inSale:true})
+    for (i = 0; i < length; i++) {
+        const nft = await NFTS.findOne({ mintKey: nfts[i], inSale: true })
         console.log(nft)
-        if(!(nft == null)){
-            
+        if (!(nft == null)) {
+
             listedNfts.push(nft);
         }
     }
-    if(listedNfts == []){
-       return  res.status(200).send("There are No Nfts listed from this collection at the moment ");
+    if (listedNfts == []) {
+        return res.status(200).send("There are No Nfts listed from this collection at the moment ");
     }
-    
+
     return res.status(200).json(
         {
             success: true,
             message: "Listed Nfts fetched",
-            data:listedNfts
+            data: listedNfts
         });
 }

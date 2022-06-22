@@ -9,20 +9,27 @@ const nftSchema = mongoose.Schema({
         unique: true,
         // validate: [isBase58, "invalid mintkey"]
     },
+
     owner: {
         type: String,
         required: true,
         // validate: [isBase58, "invalid publickey"]
     },
+
     buyerWallet: String,
 
     inSale: {
         type: Boolean,
-        default: true
+        default: false
     },
 
     priceAmount: {
         type: Number,
+        required: false,
+    },
+
+    collectionName:{
+        type: String,
         required: true,
     },
 
@@ -31,7 +38,7 @@ const nftSchema = mongoose.Schema({
         required: true,
         default: new Date()
     },
-    priceAmount: Number
+   
 
 })
 export const NFTS = mongoose.model("nfts", nftSchema)

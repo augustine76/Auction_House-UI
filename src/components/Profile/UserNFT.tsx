@@ -73,6 +73,7 @@ export const UserNFT = (props: any) => {
             let res = await uri.json();
             console.log("image",res.image)
             console.log("name",nft.name)
+            console.log("collection",nft.collectionName)
             console.log("des",res.description);
             setName(nft.name)
             setImage(res.image)
