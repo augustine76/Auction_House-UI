@@ -1,48 +1,59 @@
 // import { FC } from 'react';
-import { produceWithPatches } from 'immer';
-import React from 'react';
+import { produceWithPatches } from "immer";
+import React from "react";
 import Link from "next/link";
+import { Card, Col, Row, Text, Button } from "@nextui-org/react";
 
 export const Collections = (props) => {
-    console.log("props",props);
-    
-    
-    return (
-        <div className="column">
-            <section className="mx-auto my-5 max_width abc">
-                <div className="card">
-                  <br />
-                    <div>
-                        <h5 className="card-title font-weight-bold mb-2 text-center">
-                            {props.data.name}
-                        </h5>
-                    </div>
-                    {/* {let abc1 = abc(props.data.uri)} */}
-                   <div className="bg-image hover-overlay pd" data-mdb-rippleripple rounded-0-color="light">
-                        <img className="img-fluid  max_width image_width"
-                       
-                         src={props.data.image}
-                            alt="NFT" />
+  console.log("props", props);
 
-                    </div>
-                    <br />
-                    <p className="card-text" id="collapseContent" >
-                        {props.data.description}
-                    </p>
-                    
-                    <button  className="pd group w-60 m-2 btn animate-pulse disabled:animate-none bg-gradient-to-r from-[#9945FF] to-[#14F195] hover:from-pink-500 hover:to-yellow-500 ... "            >
-                    <Link 
-                              href={{
-                                pathname: "/listednfts",
-                                query: { collectionName: props.data.name},
-                              }}
-                       
-                         ><span   className="block group-disabled:hidden ">Go to NFTS</span></Link>
-                        
-                    </button>
-                </div>
-            </section>
-        </div>
-
-    );
+  return (
+    <>
+      <Card css={{ w: "100%", h: "300px" }}>
+        <Card.Header css={{ position: "absolute", zIndex: 1, top: 0 }}>
+          <Col></Col>
+        </Card.Header>
+        <Card.Body css={{ p: 0 }}>
+          <Card.Image
+            src="https://gateway.pinata.cloud/ipfs/QmYLxwKaXbuFiQm8N7FuAqUzwXz3o9tQDWB7WY2MniKL3j"
+            width="100%"
+            height="100%"
+            objectFit="cover"
+            alt="Card example background"
+          />
+        </Card.Body>
+        <Card.Footer
+          css={{
+            background: "#181818",
+            borderTop: "$borderWeights$light solid rgba(255, 255, 255, 0.2)",
+            bottom: 0,
+            zIndex: 1,
+          }}
+        >
+          <Row>
+            <Col
+              css={{
+                padding: "10px 0",
+              }}
+            >
+              <Text
+                css={{ w: "100%" }}
+                size={12}
+                weight="bold"
+                transform="uppercase"
+                color="#fff"
+              >
+                {props.data.name}
+              </Text>
+              <Text color="#fff">{props.collection}</Text>
+              <Text color="#fff" size={12}>
+                {props.data.description}
+              </Text>
+              <Button color={"gradient"}> View NFT</Button>
+            </Col>
+          </Row>
+        </Card.Footer>
+      </Card>
+    </>
+  );
 };

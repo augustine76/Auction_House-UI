@@ -78,13 +78,13 @@ export const UserItems = () => {
 
     return (
         <div>
-            MyNFTS
+            {/* MyNFTS
             <div className="row">
  
                 { NFTList.map((x) => {
                     return <NFTS data={x} key={indexKeys++} />
                 })}
-            </div>
+            </div> */}
         </div>
     );
 }
