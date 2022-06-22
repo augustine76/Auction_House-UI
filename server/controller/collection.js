@@ -85,7 +85,8 @@ export const FetchListedNftsOfCollection = async(req,res) => {
        return  res.status(400).json(`collection name ${name} does not exist`);
     }
     
-    const nfts = JSON.parse(collection.nfts);
+    // const nfts = JSON.parse(collection.nfts);
+    const nfts=collection.nfts;
     const length = nfts.length
     // console.log("nft",nfts)
     let listedNfts = [];

@@ -1,4 +1,5 @@
 import { NFTS } from "../model/nfts.js";
+import { Collection } from "../model/collection.js";
 export const listNFT = async (req, res) => {
     try {
 
@@ -185,4 +186,41 @@ export const fetchAllUserOwnedNfts = async (req, res) => {
     } catch (error) {
         res.status(409).json({ error: error.message })
     }
+}
+
+// It after clicking on a particular collection it fetches its details as well
+// As all the listed nfts of that particular collection
+export const FetchListedNftsOfCollection = async(req,res) => {
+   
+    const name = req.params.name
+    console.log(name)
+    const collection = await Collection.findOne({name})
+
+    if(collection == undefined) {
+       return  res.status(400).json(`collection name ${name} does not exist`);
+    }
+    
+    const nfts = JSON.parse(collection.nfts);
+    const length = nfts.length
+    // console.log("nft",nfts)
+    let listedNfts = [];
+    let i;
+    for(i=0; i<length;i++){
+        const nft = await NFTS.findOne({mintKey : nfts[i],inSale:true})
+        console.log(nft)
+        if(!(nft == null)){
+            
+            listedNfts.push(nft);
+        }
+    }
+    if(listedNfts == []){
+       return  res.status(200).send("There are No Nfts listed from this collection at the moment ");
+    }
+    
+    return res.status(200).json(
+        {
+            success: true,
+            message: "Listed Nfts fetched",
+            data:listedNfts
+        });
 }

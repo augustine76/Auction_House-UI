@@ -15,7 +15,7 @@ export const Collections = (props) => {
         </Card.Header>
         <Card.Body css={{ p: 0 }}>
           <Card.Image
-            src="https://gateway.pinata.cloud/ipfs/QmYLxwKaXbuFiQm8N7FuAqUzwXz3o9tQDWB7WY2MniKL3j"
+            src={props.data.image}
             width="100%"
             height="100%"
             objectFit="cover"
@@ -49,7 +49,14 @@ export const Collections = (props) => {
               <Text color="#fff" size={12}>
                 {props.data.description}
               </Text>
-              <Button color={"gradient"}> View NFT</Button>
+              <Button color={"gradient"}> <Link 
+                              href={{
+                                pathname: "/listednfts",
+                                query: { collectionName: props.data.name},
+                              }}>
+                                 View NFT
+                                 </Link>
+                                 </Button>
             </Col>
           </Row>
         </Card.Footer>
