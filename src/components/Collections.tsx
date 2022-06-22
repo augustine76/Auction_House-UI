@@ -3,7 +3,6 @@ import cx from "clsx";
 import { Card, Col, Row, Text } from "@nextui-org/react";
 
 export const Collections = React.memo(function MusicCard(props) {
-  console.log(props.collection)
   return (
     <>
       <Card css={{ w: "100%", h: "200px" }}>

@@ -10,9 +10,9 @@ export const Profile = () => {
       <Row justify="center" align="center">
         <UserDetails />
       </Row>
-      <Row justify="center" align="center">
+      {/* <Row justify="center" align="center">
         <UserItems />
-      </Row>
+      </Row> */}
     </Container>
   );
 };

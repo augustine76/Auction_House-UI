@@ -1,6 +1,6 @@
-import { circularProgressClasses } from "@mui/material";
+
 import { Collection } from "../model/collection.js";
-import { Nft } from "../model/schema.js";
+import { NFTS } from "../model/nfts.js";
 
 // To Add a new collection of nfts
 
@@ -84,13 +84,14 @@ export const FetchListedNftsOfCollection = async(req,res) => {
     if(collection == undefined) {
        return  res.status(400).json(`collection name ${name} does not exist`);
     }
+    
     const nfts = JSON.parse(collection.nfts);
     const length = nfts.length
     // console.log("nft",nfts)
     let listedNfts = [];
     let i;
     for(i=0; i<length;i++){
-        const nft = await Nft.findOne({mintKey : nfts[i],isListed:true})
+        const nft = await NFTS.findOne({mintKey : nfts[i],inSale:true})
         console.log(nft)
         if(!(nft == null)){
             

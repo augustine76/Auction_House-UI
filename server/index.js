@@ -28,7 +28,7 @@ app.use(CollectionRoute);
 const PORT = process.env.PORT || 5000
 
 mongoose
-    .connect("mongodb+srv://isha:isha2180@cluster0.govgi.mongodb.net/?retryWrites=true&w=majority", {
+    .connect("mongodb+srv://isha:isha2180@cluster0.govgi.mongodb.net/nftmarketplace", {
         useNewUrlParser: true,
         useUnifiedTopology: true,
     })

@@ -4,6 +4,7 @@ import Box from "@mui/material/Box";
 import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
+
 import TextareaAutosize from "@mui/material/TextareaAutosize";
 import {
   Input,
@@ -16,9 +17,17 @@ import {
 
 const baseURL = "http://localhost:5000";
 
+import TextareaAutosize from '@mui/material/TextareaAutosize';
+import { useWallet } from "@solana/wallet-adapter-react";
+
+
+const baseURL = "http://localhost:5000"; 
+
+
 let li;
 
 const FilePicker = () => {
+  
   const [hash, setHash] = useState(null);
   const [list, setList] = useState(null);
   const [createObjectURL, setCreateObjectURL] = useState(null);
@@ -60,11 +69,13 @@ const FilePicker = () => {
 };
 
 export function CollectionForm() {
+  const { publicKey } = useWallet();
   const [name, setName] = useState("");
   const [symbol, setSymbol] = useState("");
   const [imageURL, setImageURL] = useState("");
   const [desc, setdesc] = useState("");
   const router = useRouter();
+
 
   const {
     query: { pubkey },
@@ -88,6 +99,25 @@ export function CollectionForm() {
         console.error("There was an error!", error);
       });
   };
+=======
+   console.log("pubkey is", publicKey);
+
+ const makeColl = () => {;
+  let collection = {
+    name: name,
+    symbol: symbol,
+    image: imageURL,
+    description: desc,
+    hash: li,
+    creator:publicKey
+  }
+  axios.post(`${baseURL}/addCollection`, collection)
+    .then(response => console.log("response",response))
+    .catch(error => {
+      console.error('There was an error!', error); 
+    });
+  }
+
   return (
     <>
       <Container>

@@ -66,7 +66,11 @@ export const Nfts = (props) => {
                     
                     <button  className="pd group w-60 m-2 btn animate-pulse disabled:animate-none bg-gradient-to-r from-[#9945FF] to-[#14F195] hover:from-pink-500 hover:to-yellow-500 ... "            >
                     <Link 
-                              href="#"
+                              
+                              href={{
+                                pathname: "/buy",
+                                query: { mint: props.data.mintKey.toString()},
+                              }}
                        
                          ><span   className="block group-disabled:hidden ">Buy</span></Link>
                         

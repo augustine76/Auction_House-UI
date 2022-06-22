@@ -1,27 +1,42 @@
 import React, { useEffect, useState } from "react";
 import { Grid, Container, Row } from "@nextui-org/react";
 import { Collections } from "../Collections";
-
+import { useWallet } from "@solana/wallet-adapter-react";
 const axios = require("axios").default;
 const truncate = (str, n) => {
   return str?.length > n ? str.substr(0, n - 1) + "..." : str;
 };
+import {
+  Metaplex,
+  bundlrStorage,
+  walletAdapterIdentity,
+} from "@metaplex-foundation/js-next";
+import { Connection, clusterApiUrl,PublicKey } from "@solana/web3.js";
 
+const baseURL = "http://localhost:5000";
 export const UserNFT = (props: any) => {
   let res = [];
   let Ikey = 0;
   const [collectionList, setCollectionList] = useState([]);
   const [updated, setupdated] = useState(false);
+  console.log("props", props)
+  const { publicKey } = useWallet();
 
+
+  
+  
   const getCollections = async () => {
     try {
-      const response = await axios(
-        "https://api-mainnet.magiceden.dev/v2/collections?offset=0&limit=30"
-      );
-      console.log("Inside Fetch");
+      console.log("abc", publicKey)
+      const response = await axios.post(`${baseURL}/listedNFTS`, { owner: "DZMj6Bf2qw5RRZjqKzyZmrRKPdzc2mXoc1fUkL4PDkK5" })
+        .then(res => { return res.data });
+      // const response = await axios(
+      //   "https://api-mainnet.magiceden.dev/v2/collections?offset=0&limit=30"
+      // );
+      console.log("Inside Fetch2", response.data);
       return response.data;
       let data = await response.data;
-      await setCollectionList(data);
+       setCollectionList(data);
     } catch (error) {
       console.log("ERROR", error);
     }
@@ -29,30 +44,58 @@ export const UserNFT = (props: any) => {
 
   const fetchedNft = async () => {
     res = await getCollections();
+    console.log("res", res)
     setupdated(true);
     setCollectionList(res);
-    console.log(collectionList);
+    console.log("collection", collectionList);
   };
 
   useEffect(() => {
     fetchedNft();
   }, []);
+  const [image, setImage] = useState('');
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('')
+  const findNft = async (mintKey) => {
+    const connection = new Connection(clusterApiUrl("devnet"));
+        const { publicKey } = useWallet();
+        const wallet = useWallet();
+        const metaplex = Metaplex.make(connection)
+            //@ts-ignore
+            .use(walletAdapterIdentity(wallet))
+            .use(bundlrStorage());
+            const mint = new PublicKey(mintKey);
 
+            const nft = await metaplex.nfts().findByMint(mint);
+            console.log("nftdata",nft.uri)
+            let uri = await fetch(nft.uri);
+            let res = await uri.json();
+            console.log("image",res.image)
+            console.log("name",nft.name)
+            console.log("des",res.description);
+            setName(nft.name)
+            setImage(res.image)
+            setDescription(res.description)
+            
+            
+  }
   return (
     <div>
       <Container gap={0}>
-          <p>{props.type}</p>
+        <p>{props.type}</p>
         <Row gap={0}>
           <Grid.Container gap={2} justify="center">
             {updated ? collectionList.map((x) => {
+              findNft(x.mintKey)
+              
               return (
                 <Grid xs={12} md={2} lg={2}>
                   <Collections
-                    name={truncate(x.name, 8)}
+                    name={name}
                     collection={truncate(x.symbol, 6)}
-                    image={x.image}
+                    image={image}
                     key={Ikey++}
-                    body={truncate(x.description, 10)}
+                    body={description}
                   />
                 </Grid>
               );
