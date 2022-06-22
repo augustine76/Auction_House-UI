@@ -49,14 +49,16 @@ export const Collections = (props) => {
               <Text color="#fff" size={12}>
                 {props.data.description}
               </Text>
-              <Button color={"gradient"}> <Link 
-                              href={{
-                                pathname: "/listednfts",
-                                query: { collectionName: props.data.name},
-                              }}>
-                                 View NFT
-                                 </Link>
-                                 </Button>
+              <Button color={"gradient"} css={{margin: "auto"}}>
+                <Link
+                  href={{
+                    pathname: "/listednfts",
+                    query: { collectionName: props.data.name },
+                  }}
+                >
+                  View NFT
+                </Link>
+              </Button>
             </Col>
           </Row>
         </Card.Footer>
