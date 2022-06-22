@@ -27,8 +27,9 @@ export const UserNFT = (props: any) => {
   
   const getCollections = async () => {
     try {
-      console.log("abc", publicKey)
-      const response = await axios.post(`${baseURL}/listedNFTS`, { owner: "DZMj6Bf2qw5RRZjqKzyZmrRKPdzc2mXoc1fUkL4PDkK5" })
+      console.log("abc", publicKey.toBase58())
+      const owner=publicKey.toBase58()
+      const response = await axios.post(`${baseURL}/listedNFTS`, { owner: owner })
         .then(res => { return res.data });
       // const response = await axios(
       //   "https://api-mainnet.magiceden.dev/v2/collections?offset=0&limit=30"

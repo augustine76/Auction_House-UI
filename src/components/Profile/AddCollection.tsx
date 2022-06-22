@@ -5,7 +5,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 
-import TextareaAutosize from "@mui/material/TextareaAutosize";
+
 import {
   Input,
   Container,
@@ -15,7 +15,7 @@ import {
   Button,
 } from "@nextui-org/react";
 
-const baseURL = "http://localhost:5000";
+
 
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 import { useWallet } from "@solana/wallet-adapter-react";
@@ -83,23 +83,23 @@ export function CollectionForm() {
 
   console.log("pubkey is", pubkey);
 
-  const makeColl = () => {
-    let collection = {
-      name: name,
-      symbol: symbol,
-      image: imageURL,
-      description: desc,
-      hash: li,
-      creator: "HAekfA31B92bVyvWMjAV6Wk3XatCAhSdttaoZvjyteQw",
-    };
-    axios
-      .post(`${baseURL}/addCollection`, collection)
-      .then((response) => console.log("response", response))
-      .catch((error) => {
-        console.error("There was an error!", error);
-      });
-  };
-=======
+  // const makeColl = () => {
+  //   let collection = {
+  //     name: name,
+  //     symbol: symbol,
+  //     image: imageURL,
+  //     description: desc,
+  //     hash: li,
+  //     creator: "HAekfA31B92bVyvWMjAV6Wk3XatCAhSdttaoZvjyteQw",
+  //   };
+  //   axios
+  //     .post(`${baseURL}/addCollection`, collection)
+  //     .then((response) => console.log("response", response))
+  //     .catch((error) => {
+  //       console.error("There was an error!", error);
+  //     });
+  // };
+
    console.log("pubkey is", publicKey);
 
  const makeColl = () => {;
