@@ -49,7 +49,7 @@ export const ListedCollections = () => {
     <>
       <Container>
         <Row gap={2} justify="center" align="center">
-          <Grid.Container gap={2} justify="center" align="center">
+          <Grid.Container gap={2} justify="center">
             {collectionList.map((x) => {
               return (
                 <Grid justify="center" xs={12} md={2} lg={2}>
