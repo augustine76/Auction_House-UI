@@ -52,6 +52,7 @@ const collectionSchema = mongoose.Schema({
         type: String,
     },
     symbol: String,
+    floorPrice: Number,
     description: String,
     image: String,
     isCollectionCreated: {

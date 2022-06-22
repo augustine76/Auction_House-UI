@@ -1,3 +1,4 @@
+import { Console } from "console";
 import { User, Nft, Collection } from "../model/schema.js";
 import sendToken from "../utils/jwtToken.js";
 
@@ -146,6 +147,7 @@ export const createCollection = async (req, res) => {
                     publicKey, collectionName, symbol, description, image, auctionHouseKey
                 })
                 newCollection.isCollectionCreated = true;
+                newCollection.floorPrice = 0;
                 const collection = await newCollection.save();
                 return res.status(201).json({
                     success: true,
@@ -183,6 +185,9 @@ export const createListedNfts = async (req, res) => {
         const findCollection = await Collection.findOne({
             publicKey, collectionName
         })
+        const findNft = await Nft.findOne({
+            publicKey, collectionName
+        })
         if (user) {
             if (findCollection) {
                 const { url, amount, auctionHouseKey, mintKey } = req.body
@@ -197,6 +202,16 @@ export const createListedNfts = async (req, res) => {
                         newNft.save(async (_, nft) => {
                             res.status(201).json(nft);
                         })
+                        if (findNft.amount < amount) {
+                            findCollection.floorPrice = amount;
+                            console.log("findCollection.floorPrice ===>", findCollection.floorPrice)
+                            var myquery = { publicKey: user.publicKey, collectionName: findCollection.collectionName, floorPrice: findCollection.floorPrice };
+                            var newvalues = { $set: { floorPrice: amount } };
+                            const updateValues = await Collection.updateOne(myquery, newvalues, function (err, res) {
+                                if (err) throw err;
+                                console.log("Floor Price for collection updated properly.");
+                            });
+                        }
                     }
                     else {
                         return res.status(404).json({
