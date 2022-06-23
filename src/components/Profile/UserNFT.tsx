@@ -73,7 +73,7 @@ export const UserNFT = (props: any) => {
             let res = await uri.json();
             console.log("image",res.image)
             console.log("name",nft.name)
-            console.log("collection",nft.collectionName)
+            console.log("collection",nft)
             console.log("des",res.description);
             setName(nft.name)
             setImage(res.image)
@@ -94,7 +94,7 @@ export const UserNFT = (props: any) => {
                 <Grid xs={12} md={2} lg={2}>
                   <Collections
                     name={name}
-                    collection={truncate(x.symbol, 6)}
+                    collection={x.collectionName}
                     image={image}
                     key={Ikey++}
                     body={description}

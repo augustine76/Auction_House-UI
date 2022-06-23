@@ -110,7 +110,7 @@ export const listedNFTS = async (req, res) => {
 
         if (owner) {
             const nft = await NFTS.find({
-                owner
+                owner,inSale: true
             })
             if (nft) {
 

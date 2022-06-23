@@ -1,14 +1,7 @@
-import { useWallet } from "@solana/wallet-adapter-react";
+
 import { FC, useCallback, useState } from "react";
 import React, { useEffect } from "react";
 import { useRouter } from "next/router";
-import { notify } from "../../utils/notifications";
-import {
-  Metaplex,
-  bundlrStorage,
-  walletAdapterIdentity,
-} from "@metaplex-foundation/js-next";
-import { Connection, clusterApiUrl } from "@solana/web3.js";
 import { Nfts } from "./Nfts";
 import axios from "axios";
 import { Container, Row, Col, Avatar, Grid, Spacer } from "@nextui-org/react";
@@ -22,32 +15,48 @@ export const ListedNfts = () => {
 
   let res = [];
   let Ikey = 0;
+  let res2;
   const [collectionList, setCollectionList] = useState([]);
   const [updated, setupdated] = useState(false);
-  const getCollections = async () => {
+  const getCollectionNFtS = async () => {
     try {
-      setTimeout(() => {}, 10000);
-
+      
       const response = await axios(
         `${baseURL}/FetchListedNftsOfCollection/${collectionName}`
       );
-      // const result = await response.json();
+      
       console.log("Inside Fetch");
       console.log(response.data);
       return response.data.data;
-      let data = await response.data;
-      await setCollectionList(data);
-      console.log(collectionList);
+     
+    } catch (error) {
+      console.log("ERROR", error);
+    }
+  };
+  const [collectionImage, setCollectionImage] = useState(false);
+  const getCollectionInfo = async () => {
+    try {
+      
+      const response = await axios(
+        `${baseURL}/getCollectionInfo/${collectionName}`
+      );
+      
+      console.log("Inside Fetch");
+      console.log(response.data);
+      return response.data.data.image;
+     
     } catch (error) {
       console.log("ERROR", error);
     }
   };
   const onClick = async () => {
-    res = await getCollections();
-    console.log("res mintkey", res);
-
+    res = await getCollectionNFtS();
+    console.log("collection nft", res);
+    res2 = await getCollectionInfo();
+    console.log("collection info", res2);
     setupdated(true);
     setCollectionList(res);
+    setCollectionImage(res2)
     console.log("collectionList", collectionList);
   };
 
@@ -74,8 +83,8 @@ export const ListedNfts = () => {
           <Avatar
             color="gradient"
             bordered
-            src="https://i.pravatar.cc/150?u=a04258114e29026702d"
-            css={{ size: "$50" }}
+            src={collectionImage}
+            css={{ size: "$50" ,width:"250px"}}
           />
         </Row>
         <Row justify="center" align="center">

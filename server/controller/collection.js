@@ -119,3 +119,22 @@ export const FetchListedNftsOfCollection = async(req,res) => {
             data:listedNfts
         });
 }
+
+export const getCollectionInfo = async(req,res) => {
+   
+    const name = req.params.name
+    console.log(name)
+    const collection = await Collection.findOne({name})
+
+    if(collection == undefined) {
+       return  res.status(400).json(`collection name ${name} does not exist`);
+    }
+    
+    
+    return res.status(200).json(
+        {
+            success: true,
+            message: "Collection info fetched",
+            data:collection
+        });
+}
