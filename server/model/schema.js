@@ -53,6 +53,7 @@ const collectionSchema = mongoose.Schema({
     },
     symbol: String,
     floorPrice: Number,
+    totalListedNfts: Number,
     description: String,
     image: String,
     isCollectionCreated: {
