@@ -19,9 +19,15 @@ export const ListedCollections = () => {
   const [updated, setupdated] = useState(false);
   const getCollections = async () => {
     try {
-      const response = await axios(`${baseURL}/fetchAllCollection`);
+      const response = await axios.post(`${baseURL}/fetchAllCollection`)
+        .then(res => { 
+                   return res;
+          
+        
+        });
+      // const response = await axios(`${baseURL}/fetchAllCollection`);
       // const result = await response.json();
-      console.log("Inside Fetch");
+      console.log("Inside Fetch",response);
       // console.log(response.data);
       return response.data;
       let data = await response.data;

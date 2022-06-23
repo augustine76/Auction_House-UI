@@ -12,7 +12,7 @@ export const listNFT = async (req, res) => {
         const nftCollection = Nft.collectionName
 
         const collection = await Collection.findOne({
-            name:nftCollection
+            name: nftCollection
         })
         console.log(collection)
         if (Nft && collection) {
@@ -26,8 +26,8 @@ export const listNFT = async (req, res) => {
                     collection.floorPrice = priceAmount;
                     await collection.save();
                 }
-                
-                 if (priceAmount < collection.floorPrice) {
+
+                if (priceAmount < collection.floorPrice) {
                     collection.floorPrice = priceAmount;
                     await collection.save();
 
@@ -110,7 +110,7 @@ export const listedNFTS = async (req, res) => {
 
         if (owner) {
             const nft = await NFTS.find({
-                owner,inSale: true
+                owner, inSale: true
             })
             if (nft) {
 
@@ -246,46 +246,58 @@ export const FetchListedNftsOfCollection = async (req, res) => {
 
 export const FetchListedOwnedNFTsInCollection = async (req, res) => {
 
-    const {owner, collectionName} = req.body;
+    const { owner, collectionName } = req.body;
     console.log(owner, collectionName);
 
 
-    const NFTs = await NFTS.find({ owner : owner, collectionName : collectionName });
+    const NFTs = await NFTS.find({ owner: owner, collectionName: collectionName });
 
     if (NFTs == undefined) {
         return res.status(400).json(`NFT doesn't exist in this collection ${collectionName} for this owner ${owner}`);
     }
-    // const nfts = JSON.parse(NFTS.nfts);
-    // const length = nfts.length
-    // console.log("nft",nfts)
+
     let listedNFTs = [];
-    for(let i=0; i<NFTs.length; i++){
+    for (let i = 0; i < NFTs.length; i++) {
         console.log("NFTS", NFTs[i]);
-        if(NFTs[i].inSale == true){
+        if (NFTs[i].inSale == true) {
             listedNFTs.push(NFTs[i]);
         }
     }
     console.log("listedNFTs", listedNFTs);
 
-    // let listedNfts = [];
-    // let i;
-    // for (i = 0; i < length; i++) {
-    //     const nft = await NFTS.findOne({ mintKey: nfts[i], inSale: true })
-    //     console.log(nft)
-    //     if (!(nft == null)) {
-
-    //         listedNfts.push(nft);
-    //     }
-    // }
     if (listedNFTs == []) {
         return res.status(200).send("There are No Nfts listed from this collection at the moment ");
     }
 
-    return res.status(200).json(
-        {
-            success: true,
-            message: "Listed Nfts fetched",
-            data: listedNFTs
-        });
+    return res.send(listedNFTs);
+}
+
+
+export const FetchOwnedNFTsInCollection = async (req, res) => {
+
+    const { owner, collectionName } = req.body;
+    console.log(owner, collectionName);
+
+
+    const NFTs = await NFTS.find({ owner: owner, collectionName: collectionName });
+
+    if (NFTs == undefined) {
+        return res.status(400).json(`NFT doesn't exist in this collection ${collectionName} for this owner ${owner}`);
+    }
+
+    let ownedNFTs = [];
+    for (let i = 0; i < NFTs.length; i++) {
+        console.log("NFTS", NFTs[i]);
+        if (NFTs[i].inSale == false) {
+            ownedNFTs.push(NFTs[i]);
+        }
+    }
+    
+
+    if (ownedNFTs == []) {
+        return res.status(200).send("There are No Nfts listed from this collection at the moment ");
+    }
+
+    return res.send(ownedNFTs);
 }
 

@@ -14,7 +14,7 @@
 
 import React, { useEffect } from "react";
 import { FC, useCallback, useState } from "react";
-import { notify } from "../../utils/notifications";
+import { notify } from "../utils/notifications";
 import { useWallet } from "@solana/wallet-adapter-react";
 import {
     Metaplex,
@@ -22,7 +22,7 @@ import {
     walletAdapterIdentity,
 } from "@metaplex-foundation/js-next";
 import { Connection, clusterApiUrl } from "@solana/web3.js";
-import { NFTS } from "./NFTS";
+import { NFTS } from "./Profile/NFTS";
 
 export const UserItems = () => {
     const [NFTList, setNFTList] = useState([]);

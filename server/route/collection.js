@@ -5,7 +5,7 @@ const router = express.Router()
 
 router.post('/addCollection',addCollection);
 router.get('/fetchCollection',fetchCollection);
-router.get('/fetchAllCollection',fetchAllCollection);
+router.post('/fetchAllCollection',fetchAllCollection);
 router.get('/FetchListedNftsOfCollection/:name',FetchListedNftsOfCollection);
 router.get('/getCollectionInfo/:name',getCollectionInfo);
 router.post('/FetchCollectionsByAddress',FetchCollectionsByAddress);
