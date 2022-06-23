@@ -14,30 +14,45 @@ import {
 import { Connection, clusterApiUrl,PublicKey } from "@solana/web3.js";
 
 const baseURL = "http://localhost:5000";
+
+let collectionNames = [];
+
 export const UserNFT = (props: any) => {
   let res = [];
   let Ikey = 0;
-  const [collectionList, setCollectionList] = useState([]);
+  const [NFTList, setNFTList] = useState([]);
   const [updated, setupdated] = useState(false);
   console.log("props", props)
   const { publicKey } = useWallet();
 
-
-  
-  
   const getCollections = async () => {
     try {
       console.log("abc", publicKey.toBase58())
       const owner=publicKey.toBase58()
-      const response = await axios.post(`${baseURL}/listedNFTS`, { owner: owner })
-        .then(res => { return res.data });
+      const response = await axios.post(`${baseURL}/FetchCollectionsByAddress`, { owner: owner })
+        .then(res => { 
+          // console.log("res data is", res.data.data[0].collectionName)
+          return res.data;
+          // res.map(x => {
+          //   if(collectionNames.indexOf(x.collectionName) == -1){
+          //       collectionNames.push(x.collectionName);
+          //   }
+          // })
+        });
+      console.log("collectionList", res);
+        
       // const response = await axios(
       //   "https://api-mainnet.magiceden.dev/v2/collections?offset=0&limit=30"
       // );
-      console.log("Inside Fetch2", response.data);
-      return response.data;
-      let data = await response.data;
-       setCollectionList(data);
+      console.log("Inside Fetch2", response);
+      return response;
+      response.map(x => {
+        if(collectionNames.indexOf(x.collectionName) == -1){
+            collectionNames.push(x.collectionName);
+        }
+      });
+      console.log("collectionNames", collectionNames);
+      return collectionNames;
     } catch (error) {
       console.log("ERROR", error);
     }
@@ -45,10 +60,16 @@ export const UserNFT = (props: any) => {
 
   const fetchedNft = async () => {
     res = await getCollections();
+    res.map(x => {
+      if(collectionNames.indexOf(x.collectionName) == -1){
+          collectionNames.push(x.collectionName);
+      }
+    });
+    console.log("collection list 2", collectionNames);
     console.log("res", res)
     setupdated(true);
-    setCollectionList(res);
-    console.log("collection", collectionList);
+    setNFTList(res);
+    console.log("collection", NFTList);
   };
 
   useEffect(() => {
@@ -78,8 +99,7 @@ export const UserNFT = (props: any) => {
             setName(nft.name)
             setImage(res.image)
             setDescription(res.description)
-            
-            
+  
   }
   return (
     <div>
@@ -87,7 +107,18 @@ export const UserNFT = (props: any) => {
         <p>{props.type}</p>
         <Row gap={0}>
           <Grid.Container gap={2} justify="center">
-            {updated ? collectionList.map((x) => {
+            {
+            updated ?
+              collectionNames.map((x) => {
+                return (
+                  <h1>{x}</h1>
+                  )
+              })
+              :
+              <></>
+
+            }
+            {/* {updated ? NFTList.map((x) => {
               findNft(x.mintKey)
               
               return (
@@ -101,7 +132,7 @@ export const UserNFT = (props: any) => {
                   />
                 </Grid>
               );
-            }) : "not Updated"}
+            }) : "not Updated"} */}
           </Grid.Container>
         </Row>
       </Container>

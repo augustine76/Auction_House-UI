@@ -239,3 +239,53 @@ export const FetchListedNftsOfCollection = async (req, res) => {
             data: listedNfts
         });
 }
+
+//1st API Collections owned by the address
+//2nd API NFTs owned by the address in those Collections
+
+
+export const FetchListedOwnedNFTsInCollection = async (req, res) => {
+
+    const {owner, collectionName} = req.body;
+    console.log(owner, collectionName);
+
+
+    const NFTs = await NFTS.find({ owner : owner, collectionName : collectionName });
+
+    if (NFTs == undefined) {
+        return res.status(400).json(`NFT doesn't exist in this collection ${collectionName} for this owner ${owner}`);
+    }
+    // const nfts = JSON.parse(NFTS.nfts);
+    // const length = nfts.length
+    // console.log("nft",nfts)
+    let listedNFTs = [];
+    for(let i=0; i<NFTs.length; i++){
+        console.log("NFTS", NFTs[i]);
+        if(NFTs[i].inSale == true){
+            listedNFTs.push(NFTs[i]);
+        }
+    }
+    console.log("listedNFTs", listedNFTs);
+
+    // let listedNfts = [];
+    // let i;
+    // for (i = 0; i < length; i++) {
+    //     const nft = await NFTS.findOne({ mintKey: nfts[i], inSale: true })
+    //     console.log(nft)
+    //     if (!(nft == null)) {
+
+    //         listedNfts.push(nft);
+    //     }
+    // }
+    if (listedNFTs == []) {
+        return res.status(200).send("There are No Nfts listed from this collection at the moment ");
+    }
+
+    return res.status(200).json(
+        {
+            success: true,
+            message: "Listed Nfts fetched",
+            data: listedNFTs
+        });
+}
+

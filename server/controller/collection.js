@@ -67,7 +67,7 @@ export const fetchCollection = async(req,res) => {
 // after clicking on collection we can use fetch collection method
 export const fetchAllCollection = async(req,res) => {
 
-    const collection =await Collection.find();
+    const collection = await Collection.find();
 
     if(collection == undefined) {
         return res.status(401).json("No collection at the moment to fetch");
@@ -137,4 +137,20 @@ export const getCollectionInfo = async(req,res) => {
             message: "Collection info fetched",
             data:collection
         });
+}
+export const FetchCollectionsByAddress = async(req,res) => {
+
+    const { owner } = req.body
+
+    const NFTCollections = await NFTS.find( {owner : owner} );
+    // const collection = await Collection.find({creator : creator, name : name});
+
+    console.log("collection by address", NFTCollections);
+
+    if(NFTCollections == undefined) {
+        return res.status(401).json("No collection at the moment to fetch");
+    }
+
+    return res.send(NFTCollections);
+
 }
