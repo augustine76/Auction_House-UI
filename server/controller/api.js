@@ -185,9 +185,6 @@ export const createListedNfts = async (req, res) => {
         const findCollection = await Collection.findOne({
             publicKey, collectionName
         })
-        const findNft = await Nft.findOne({
-            publicKey, collectionName
-        })
         if (user) {
             if (findCollection) {
                 const { url, amount, auctionHouseKey, mintKey } = req.body
@@ -195,28 +192,42 @@ export const createListedNfts = async (req, res) => {
                     url, publicKey, mintKey, auctionHouseKey, amount, collectionName
                 })
                 if (newNft.mintKey && newNft.publicKey) {
-                    if (!findMintKey) {
-                        newNft.sellerWallet = user.publicKey;
-                        newNft.buyerWallet = "";
-                        newNft.isListed = true;
-                        newNft.save(async (_, nft) => {
-                            res.status(201).json(nft);
-                        })
-                        if (findNft.amount < amount) {
-                            findCollection.floorPrice = amount;
-                            console.log("findCollection.floorPrice ===>", findCollection.floorPrice)
+                    if (amount != 0) {
+                        if (!findMintKey) {
+                            newNft.sellerWallet = user.publicKey;
+                            newNft.buyerWallet = "";
+                            newNft.isListed = true;
+                            newNft.save(async (_, nft) => {
+                                res.status(201).json(nft);
+                            })
+                            const findNft = await Nft.findOne({
+                                publicKey, collectionName
+                            }).sort({ amount: +1 }).limit(1)
+                            if (findNft.amount > amount) {
+                                var myquery = { publicKey: user.publicKey, collectionName: findCollection.collectionName, floorPrice: findCollection.floorPrice };
+                                var newvalues = { $set: { floorPrice: amount } };
+                                const updateValues = await Collection.updateOne(myquery, newvalues, function (err, res) {
+                                    if (err) throw err;
+                                    console.log("Floor Price for collection updated properly!");
+                                });
+                            }
                             var myquery = { publicKey: user.publicKey, collectionName: findCollection.collectionName, floorPrice: findCollection.floorPrice };
-                            var newvalues = { $set: { floorPrice: amount } };
+                            var newvalues = { $set: { floorPrice: findNft.amount } };
                             const updateValues = await Collection.updateOne(myquery, newvalues, function (err, res) {
                                 if (err) throw err;
                                 console.log("Floor Price for collection updated properly.");
                             });
                         }
-                    }
-                    else {
+                        else {
+                            return res.status(404).json({
+                                success: false,
+                                message: "Cannot list the nft twice."
+                            })
+                        }
+                    } else {
                         return res.status(404).json({
                             success: false,
-                            message: "Cannot list the nft twice."
+                            message: "Amount cannot be 0."
                         })
                     }
                 } else {
