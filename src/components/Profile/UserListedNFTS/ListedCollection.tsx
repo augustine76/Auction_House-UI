@@ -66,17 +66,17 @@ export const UserNFT = (props: any) => {
     <div>
       <Container gap={0}>
         <p>{props.type}</p>
-        <Row gap={0}>
-          <Grid.Container gap={2} justify="center">
+        
+          {/* <Grid.Container gap={2} justify="center"> */}
             {
               updated && collectionNames ?
                 collectionNames.map((x) => {
                   return (
-                    <div>
+                    <Row gap={0}>
                       <h1>{x}</h1>
 
                       <UserListedNFTs data={x} />
-                    </div>
+                      </Row>
 
                   )
                 })
@@ -85,8 +85,8 @@ export const UserNFT = (props: any) => {
 
             }
            
-          </Grid.Container>
-        </Row>
+          {/* </Grid.Container> */}
+       
       </Container>
     </div>
   );
