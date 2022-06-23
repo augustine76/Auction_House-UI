@@ -54,6 +54,7 @@ const collectionSchema = mongoose.Schema({
     symbol: String,
     floorPrice: Number,
     totalListedNfts: Number,
+    tradingVolume: Number,
     description: String,
     image: String,
     isCollectionCreated: {

@@ -149,6 +149,7 @@ export const createCollection = async (req, res) => {
                 newCollection.isCollectionCreated = true;
                 newCollection.floorPrice = 0;
                 newCollection.totalListedNfts = 0;
+                newCollection.tradingVolume = 0;
                 const collection = await newCollection.save();
                 return res.status(201).json({
                     success: true,
@@ -190,9 +191,11 @@ export const createListedNfts = async (req, res) => {
             if (findCollection) {
                 const { url, amount, auctionHouseKey, mintKey } = req.body
                 var totalListedNft = findCollection.totalListedNfts
+                var tradingVolumeOfListedNfts = findCollection.tradingVolume
                 const newNft = new Nft({
                     url, publicKey, mintKey, auctionHouseKey, amount, collectionName
                 }, totalListedNft++)
+                tradingVolumeOfListedNfts += amount
                 if (newNft.mintKey && newNft.publicKey) {
                     if (amount != 0) {
                         if (!findMintKey) {
@@ -205,8 +208,8 @@ export const createListedNfts = async (req, res) => {
                             const findNft = await Nft.findOne({
                                 publicKey, collectionName
                             }).sort({ amount: +1 }).limit(1)
-                            var myquery = { publicKey: user.publicKey, collectionName: findCollection.collectionName, totalListedNfts: findCollection.totalListedNfts };
-                            var newvalues = { $set: { totalListedNfts: totalListedNft } };
+                            var myquery = { publicKey: user.publicKey, collectionName: findCollection.collectionName, totalListedNfts: findCollection.totalListedNfts, tradingVolume: findCollection.tradingVolume };
+                            var newvalues = { $set: { totalListedNfts: totalListedNft, tradingVolume: tradingVolumeOfListedNfts } };
                             Collection.updateOne(myquery, newvalues, function (err, res) {
                                 if (err) throw err;
                             });
@@ -276,6 +279,13 @@ export const createBuy = async (req, res) => {
                 const { amount, mintKey } = req.body
                 if (findMintKey.sellerWallet != publicKey) {
                     if (findMintKey.mintKey == mintKey && findMintKey.amount == amount && findMintKey.isListed == true && findMintKey.isBuy == false && findMintKey.isExecuteSell == false) {
+                        var tradingVolumeOfBuyingNfts = findCollection.tradingVolume
+                        tradingVolumeOfBuyingNfts += amount
+                        var myquery = { collectionName: findCollection.collectionName, tradingVolume: findCollection.tradingVolume };
+                        var newvalues = { $set: { tradingVolume: tradingVolumeOfBuyingNfts } };
+                        Collection.updateOne(myquery, newvalues, function (err, res) {
+                            if (err) throw err;
+                        });
                         var myquery = { mintKey: findMintKey.mintKey, buyerWallet: "", isBuy: false };
                         var newvalues = { $set: { buyerWallet: user.publicKey, isBuy: true } };
                         const updateValues = await Nft.updateOne(myquery, newvalues, function (err, res) {
@@ -283,7 +293,6 @@ export const createBuy = async (req, res) => {
                             console.log("User bought Nft successfly.");
                         });
                         res.status(201).json(updateValues);
-
                     } else {
                         return res.status(404).json({
                             success: false,
