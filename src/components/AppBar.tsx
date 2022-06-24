@@ -49,28 +49,14 @@ export const AppBar: FC = props => {
         </div>
 
         {/* Nav Links */}
-        <div className="hidden md:inline md:navbar-center">
+        {/* <div className="hidden md:inline md:navbar-center">
           <div className="flex items-stretch">
             <Link href="/">
               <a className="btn btn-ghost btn-sm rounded-btn">Home</a>
             </Link>
-            <Link href="/basics">
-              <a className="btn btn-ghost btn-sm rounded-btn">NFTs</a>
-            </Link>
-            <Link href="/buy">
-              <a className="btn btn-ghost btn-sm rounded-btn">Buy</a>
-            </Link>
-            <Link href="/sell">
-              <a className="btn btn-ghost btn-sm rounded-btn">Sell</a>
-            </Link>
-            <Link href="/execute">
-              <a className="btn btn-ghost btn-sm rounded-btn">Execute Sale</a>
-            </Link>
-            <Link href="/collections">
-              <a className="btn btn-ghost btn-sm rounded-btn"> Collections</a>
-            </Link>
+            
           </div>
-        </div>
+        </div> */}
 
         {/* Wallet & Settings */}
         <div className="navbar-end">

@@ -4,7 +4,7 @@ export const ContentContainer: FC = props => {
 
   return (
     <div className="flex-1 drawer h-52">
-     {/* <div className="h-screen drawer drawer-mobile w-full"> */}
+      {/* <div className="h-screen drawer drawer-mobile w-full"> */}
       <input id="my-drawer" type="checkbox" className="grow drawer-toggle" />
       <div className="items-center  drawer-content">
         {props.children}
@@ -14,30 +14,19 @@ export const ContentContainer: FC = props => {
       <div className="drawer-side">
         <label htmlFor="my-drawer" className="drawer-overlay"></label>
         <ul className="p-4 overflow-y-auto menu w-80 bg-base-100">
-          <li>
-            <h1>Menu</h1>
-          </li>
+
+
           <li>
             <Link href="/">
-              <a>Home</a>
+              <a >Home</a>
             </Link>
-          </li>
-          <li>
-            <Link href="/basics">
-              <a>Basics</a>
-            </Link>
-          </li>
-          <li>
-            <Link href="/listednfts">
-              <a>Listed NFTs</a>
-            </Link>
-          </li>
-          <li>
-            <Link href="/listedcollection">
-              <a>Listed Collections</a>
-            </Link>
-          </li>
-          
+            </li >
+            <li>
+              <Link href="/listedcollection">
+                <a >Listed Collections</a>
+              </Link>
+            </li>
+
         </ul>
       </div>
     </div>

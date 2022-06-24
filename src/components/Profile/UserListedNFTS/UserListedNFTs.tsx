@@ -38,11 +38,13 @@ export const UserListedNFTs = (props) => {
   const fetchedNft = async () => {
     res = await getListedNFTS();
 
-    console.log("res f", res);
+    
+    console.log("res f", res)
+
     setupdated(true);
-    setNFTList(res);
+    setNFTList(res);}
     console.log("collection", NFTList);
-  };
+  
 
   useEffect(() => {
     setTimeout(() => {}, 10000);
