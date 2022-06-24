@@ -148,8 +148,9 @@ export const UserDetails = () => {
                     </Button>
                   </Grid>
                   <Grid xs={4} justify="center">
-                    <Button onClick={getSignout} color="gradient">
-                      SignOut
+                    <Button  color="gradient">
+                    <Link href="/">SignOut</Link>
+                  
                     </Button>
                   </Grid>
                 </Grid.Container>

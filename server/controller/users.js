@@ -17,6 +17,39 @@ export const createUser = async (req, res) => {
             existingUser.save();
             return res.status(201).json({
                 success: true,
+                data: existingUser,
+                message: "User Details fetched"
+            })
+
+
+        } else {
+            await newUser.save()
+            return res.status(201).json({
+                success: true,
+                message: "User not found.",
+                data:newUser
+            })
+        }
+    } catch (error) {
+        return res.status(409).json({ error: error.message })
+    }
+
+}
+
+
+
+export const getUserDetails = async (req, res) => {
+    // console.log(req)
+    try {
+
+        var publicKey = req.params.id;
+        console.log('The id: ' + publicKey);
+        const user = await User.findOne({
+            publicKey
+        })
+        if (user) {
+            return res.status(201).json({
+                success: true,
                 data: user,
                 message: "User Details fetched"
             })
@@ -31,33 +64,3 @@ export const createUser = async (req, res) => {
     }
 
 }
-
-
-
-export const getUserDetails = async (req, res) => {
-        // console.log(req)
-        try {
-    
-            var publicKey = req.params.id;
-            console.log('The id: ' + publicKey);
-            const user = await User.findOne({
-                publicKey
-            })
-            if (user) {
-                return res.status(201).json({
-                    success: true,
-                    data: user,
-                    message: "User Details fetched"
-                })
-    
-    
-            } else return res.status(404).json({
-                success: false,
-                message: "User not found."
-            })
-        } catch (error) {
-            return res.status(409).json({ error: error.message })
-        }
-    
-    }
-    

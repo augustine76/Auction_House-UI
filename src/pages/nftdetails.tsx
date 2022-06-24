@@ -1,4 +1,4 @@
-import { Sell } from "AuctionHouseComponents/Sell";
+
 import type { NextPage } from "next";
 import Head from "next/head";
 import  {NFTDetailView} from "../views";

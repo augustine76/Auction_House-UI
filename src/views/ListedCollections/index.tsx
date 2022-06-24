@@ -1,6 +1,5 @@
 import { FC } from "react";
-import { SignMessage } from "../../components/SignMessage";
-import { FetchNFTS } from "../../components/FetchNFTS";
+
 import { Container, Row } from "@nextui-org/react";
 import { ListedCollections } from "../../components/Collections/ListedCollections";
 export const ListedCollectionsView: FC = ({}) => {
