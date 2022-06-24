@@ -4,6 +4,7 @@ import Box from "@mui/material/Box";
 import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
+import { Candy } from "components/Collections/Candy";
 
 
 import {
@@ -208,7 +209,7 @@ export function CollectionForm() {
           align="center"
         >
           <Col css={{ w: "100%" }} align="center" span={3}>
-            <FilePicker />
+            {/* <FilePicker /> */}
           </Col>
         </Row>
         <Row
@@ -217,12 +218,19 @@ export function CollectionForm() {
           justify="center"
           align="center"
         >
+        {/* <button
+        className="btn btn-primary"
+        type="submit"
+      >
+      Load Hash-List
+      </button> */}
           <Col span={3} align="center">
-            <Button color="gradient" type="submit" onClick={makeColl}>
-              Add Collection
+            <Button color="gradient" type="submit">
+              Add Collection Candy
             </Button>
           </Col>
         </Row>
+        <Candy />
       </Container>
     </>
   );
