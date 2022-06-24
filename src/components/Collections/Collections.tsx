@@ -49,7 +49,7 @@ export const Collections = (props) => {
               <Text color="#fff" size={12}>
                 {props.data.description}
               </Text>
-              <Button color={"gradient"} css={{margin: "auto"}}>
+              <Button size="sm" color={"gradient"} css={{ margin: "auto" }}>
                 <Link
                   href={{
                     pathname: "/listednfts",

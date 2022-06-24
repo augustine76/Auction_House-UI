@@ -133,10 +133,10 @@ export const UserDetails = () => {
               <Col span={5}>
                 <Grid.Container gap={2} justify="center">
                   <Grid xs={4} justify="center">
-                    <Button color="gradient">Edit Profile</Button>
+                    <Button size="sm" color="gradient">Edit Profile</Button>
                   </Grid>
                   <Grid xs={4} justify="center">
-                    <Button color="gradient">
+                    <Button size="sm" color="gradient">
                       <Link
                         href={{
                           pathname: "/collectionForm",
@@ -148,7 +148,7 @@ export const UserDetails = () => {
                     </Button>
                   </Grid>
                   <Grid xs={4} justify="center">
-                    <Button onClick={getSignout} color="gradient">
+                    <Button size="sm" onClick={getSignout} color="gradient">
                       SignOut
                     </Button>
                   </Grid>
@@ -167,7 +167,7 @@ export const UserDetails = () => {
               />
             </Row>
             <Row justify="center" align="center" css={{padding: "30px 0"}}>
-              <Button color="gradient" onClick={getSignIn}>
+              <Button size="sm" color="gradient" onClick={getSignIn}>
                 SignIn
               </Button>
             </Row>

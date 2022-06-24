@@ -10,7 +10,7 @@ export const TabGroup = () => {
     <>
       <Container>
         <Row justify="center" align="center">
-          <Button.Group color="gradient" ghost>
+          <Button.Group size="sm" color="gradient" ghost>
             {types.map((type) => (
               <Button key={type} onClick={() => setActive(type)}>
                 {type}
