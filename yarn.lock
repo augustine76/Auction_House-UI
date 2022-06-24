@@ -1744,6 +1744,15 @@
     bn.js "^5.2.0"
     debug "^4.3.3"
 
+"@metaplex-foundation/beet@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@metaplex-foundation/beet/-/beet-0.2.0.tgz#e543e17fd1c4dc1251e9aea481a7429bc73f70b8"
+  integrity sha512-H570hkJxmx/FxET1OggPPLkPL7psYQa71rNI9NJjYRM8WXdrEvmI/IRIEUW2KR6RqwWWN3FvlRHnKoQUV/lQtA==
+  dependencies:
+    ansicolors "^0.3.2"
+    bn.js "^5.2.0"
+    debug "^4.3.3"
+
 "@metaplex-foundation/cusper@^0.0.2":
   version "0.0.2"
   resolved "https://registry.npmjs.org/@metaplex-foundation/cusper/-/cusper-0.0.2.tgz"
@@ -1763,6 +1772,31 @@
     "@solana/spl-token" "^0.2.0"
     "@solana/wallet-adapter-base" "^0.9.3"
     "@solana/web3.js" "^1.37.0"
+    abort-controller "^3.0.0"
+    bignumber.js "^9.0.2"
+    bn.js "^5.2.0"
+    bs58 "^5.0.0"
+    buffer "^6.0.3"
+    cross-fetch "^3.1.5"
+    debug "^4.3.4"
+    eventemitter3 "^4.0.7"
+    lodash.clonedeep "^4.5.0"
+    mime "^3.0.0"
+    tweetnacl "^1.0.3"
+
+"@metaplex-foundation/js@^0.11.6":
+  version "0.11.6"
+  resolved "https://registry.yarnpkg.com/@metaplex-foundation/js/-/js-0.11.6.tgz#f64d31be922dd6faf79f2fd8df62232cc3858e79"
+  integrity sha512-WV61Ncsr00ok9WezRjZ3ryq8UIj7Ji//yREkZDtOkINeAITlYPPkPWP/6bhUF14YD8NdP8mRm6/M6rUV2Zf9Pw==
+  dependencies:
+    "@aws-sdk/client-s3" "^3.54.1"
+    "@bundlr-network/client" "^0.7.3"
+    "@metaplex-foundation/beet" "^0.2.0"
+    "@metaplex-foundation/beet-solana" "^0.1.1"
+    "@metaplex-foundation/mpl-candy-machine" "^4.2.0"
+    "@metaplex-foundation/mpl-token-metadata" "^2.1.2"
+    "@solana/spl-token" "^0.2.0"
+    "@solana/web3.js" "^1.44.0"
     abort-controller "^3.0.0"
     bignumber.js "^9.0.2"
     bn.js "^5.2.0"
@@ -2186,7 +2220,7 @@
 
 "@project-serum/anchor@^0.25.0-beta.1":
   version "0.25.0-beta.1"
-  resolved "https://registry.npmjs.org/@project-serum/anchor/-/anchor-0.25.0-beta.1.tgz"
+  resolved "https://registry.yarnpkg.com/@project-serum/anchor/-/anchor-0.25.0-beta.1.tgz#7b113fb6604483d6740c8da9c6d86e9a5d5f6cf7"
   integrity sha512-edesFlclgQzIluD2mC0xrGPnABBllKvbGd6MOtNZMCauUnx1Xbu073um8O6mrCeuZrz4PG9AhwAp1y5cOl3R4A==
   dependencies:
     "@project-serum/borsh" "^0.2.5"
@@ -3059,6 +3093,28 @@
     fast-stable-stringify "^1.0.0"
     jayson "^3.4.4"
     js-sha3 "^0.8.0"
+    rpc-websockets "^7.4.2"
+    secp256k1 "^4.0.2"
+    superstruct "^0.14.2"
+    tweetnacl "^1.0.0"
+
+"@solana/web3.js@^1.44.0":
+  version "1.44.2"
+  resolved "https://registry.yarnpkg.com/@solana/web3.js/-/web3.js-1.44.2.tgz#5303efd94a7f2d6054a1483a4b4db4a26eb2a392"
+  integrity sha512-DvrJMoKonLuaX0/KyyJXcP/+w+9q8mve4gN3hC2Ptg51K/Gi1/cx6oQN2lbRZb4wYPBd2s2GDAJAJUAwZGsEug==
+  dependencies:
+    "@babel/runtime" "^7.12.5"
+    "@ethersproject/sha2" "^5.5.0"
+    "@solana/buffer-layout" "^4.0.0"
+    bigint-buffer "^1.1.5"
+    bn.js "^5.0.0"
+    borsh "^0.7.0"
+    bs58 "^4.0.1"
+    buffer "6.0.1"
+    fast-stable-stringify "^1.0.0"
+    jayson "^3.4.4"
+    js-sha3 "^0.8.0"
+    node-fetch "2"
     rpc-websockets "^7.4.2"
     secp256k1 "^4.0.2"
     superstruct "^0.14.2"
@@ -6270,17 +6326,17 @@ node-addon-api@^2.0.0:
   resolved "https://registry.npmjs.org/node-addon-api/-/node-addon-api-2.0.2.tgz"
   integrity sha512-Ntyt4AIXyaLIuMHF6IOoTakB3K+RWxwtsHNRxllEoA6vPwP9o4866g6YWDLUdnucilZhmkxiHwHr11gAENw+QA==
 
-node-fetch@2.6.1, node-fetch@^2.6.1:
-  version "2.6.1"
-  resolved "https://registry.npmjs.org/node-fetch/-/node-fetch-2.6.1.tgz"
-  integrity sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==
-
-node-fetch@2.6.7:
+node-fetch@2, node-fetch@2.6.7:
   version "2.6.7"
   resolved "https://registry.npmjs.org/node-fetch/-/node-fetch-2.6.7.tgz"
   integrity sha512-ZjMPFEfVx5j+y2yF35Kzx5sF7kDzxuDj6ziH4FFbOp87zKDZNx8yExJIb05OGF4Nlt9IHFIMBkRl41VdvcNdbQ==
   dependencies:
     whatwg-url "^5.0.0"
+
+node-fetch@2.6.1, node-fetch@^2.6.1:
+  version "2.6.1"
+  resolved "https://registry.npmjs.org/node-fetch/-/node-fetch-2.6.1.tgz"
+  integrity sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==
 
 node-gyp-build@^3.8.0:
   version "3.9.0"
