@@ -32,9 +32,60 @@ const baseURL = "http://localhost:5000";
 
 let li;
 
-const Candy = () => {
+
+
+export function CollectionForm() {
+  const { publicKey } = useWallet();
+  const [name, setName] = useState("");
+  const [symbol, setSymbol] = useState("");
+  const [imageURL, setImageURL] = useState("");
+  const [desc, setdesc] = useState("");
+  const router = useRouter();
+
+
+  const {
+    query: { pubkey },
+  } = router;
+
+  console.log("pubkey is", pubkey);
+
+  // const makeColl = () => {
+  //   let collection = {
+  //     name: name,
+  //     symbol: symbol,
+  //     image: imageURL,
+  //     description: desc,
+  //     hash: li,
+  //     creator: "HAekfA31B92bVyvWMjAV6Wk3XatCAhSdttaoZvjyteQw",
+  //   };
+  //   axios
+  //     .post(`${baseURL}/addCollection`, collection)
+  //     .then((response) => console.log("response", response))
+  //     .catch((error) => {
+  //       console.error("There was an error!", error);
+  //     });
+  // };
+
+   console.log("pubkey is", publicKey);
   let arr = [];
   const [list, setList] = useState([]);
+
+ const makeColl = () => {;
+  let collection = {
+    name: name,
+    symbol: symbol,
+    image: imageURL,
+    description: desc,
+    hash: list,
+    creator:publicKey
+  }
+  axios.post(`${baseURL}/addCollection`, collection)
+    .then(response => console.log("response",response))
+    .catch(error => {
+      console.error('There was an error!', error); 
+    });
+  }
+
   const click = () => {
       console.log(
           'inside click', list
@@ -88,135 +139,6 @@ const Candy = () => {
       }
     }
     findCandyMachine();
-  return(
-  <Grid.Container gap={2}>
-      <Grid>
-      {
-          arrLoaded ?       
-          <div>    
-              <button
-              className="btn btn-primary"
-              type="submit"
-              >
-              Loaded NFT List
-              </button>
-
-              {list.map((x) => {
-                  return (
-                      <li>
-                          {x}
-                      </li>
-                  )
-              })}
-              
-          </div>
-        :
-        <Button disabled auto bordered color="success" css={{ px: "$13" }}>
-        <Loading type="points" color="currentColor" size="sm" />
-      </Button>
-
-      }
-
-      <button onClick={click}>
-          Show List
-      </button>
-
-       </Grid>
-      </Grid.Container>
-  )
-}
-
-const FilePicker = () => {
-  
-  const [hash, setHash] = useState(null);
-  const [list, setList] = useState(null);
-  const [createObjectURL, setCreateObjectURL] = useState(null);
-  const [hashLoaded, sethashLoaded] = useState(false);
-  const uploadToClient = (event) => {
-    if (event.target.files && event.target.files[0]) {
-      const i = event.target.files[0];
-      setHash(i);
-      setCreateObjectURL(URL.createObjectURL(i));
-    }
-  };
-  const uploadToServer = async () => {
-    console.log("url is", createObjectURL);
-    let res = await fetch(createObjectURL);
-    let data = await res.json();
-    setTimeout(() => {
-      setList(data);
-    }, 1000);
-    li = data;
-    // setList(data);
-    console.log("json is", li);
-    sethashLoaded(true);
-  };
-  const getList = () => {
-    return list;
-  };
-  return (
-    <>
-      <input type="file" name="myImage" onChange={uploadToClient} />
-      <button
-        className="btn btn-primary"
-        type="submit"
-        onClick={uploadToServer}
-      >
-        {!hashLoaded ? "Load Hash-List" : "Hash-List loaded!"}
-      </button>
-    </>
-  );
-};
-
-export function CollectionForm() {
-  const { publicKey } = useWallet();
-  const [name, setName] = useState("");
-  const [symbol, setSymbol] = useState("");
-  const [imageURL, setImageURL] = useState("");
-  const [desc, setdesc] = useState("");
-  const router = useRouter();
-
-
-  const {
-    query: { pubkey },
-  } = router;
-
-  console.log("pubkey is", pubkey);
-
-  // const makeColl = () => {
-  //   let collection = {
-  //     name: name,
-  //     symbol: symbol,
-  //     image: imageURL,
-  //     description: desc,
-  //     hash: li,
-  //     creator: "HAekfA31B92bVyvWMjAV6Wk3XatCAhSdttaoZvjyteQw",
-  //   };
-  //   axios
-  //     .post(`${baseURL}/addCollection`, collection)
-  //     .then((response) => console.log("response", response))
-  //     .catch((error) => {
-  //       console.error("There was an error!", error);
-  //     });
-  // };
-
-   console.log("pubkey is", publicKey);
-
- const makeColl = () => {;
-  let collection = {
-    name: name,
-    symbol: symbol,
-    image: imageURL,
-    description: desc,
-    hash: li,
-    creator:publicKey
-  }
-  axios.post(`${baseURL}/addCollection`, collection)
-    .then(response => console.log("response",response))
-    .catch(error => {
-      console.error('There was an error!', error); 
-    });
-  }
 
   return (
     <>
@@ -324,12 +246,46 @@ export function CollectionForm() {
       Load Hash-List
       </button> */}
           <Col span={3} align="center">
-            <Button color="gradient" type="submit">
-              Add Collection Candy
+            <Button color="gradient" type="submit" onClick={makeColl}>
+              Add Collection 
             </Button>
           </Col>
         </Row>
-        <Candy />
+        <Grid.Container gap={2}>
+        <Grid>
+        {
+            arrLoaded ?       
+            <div>    
+                <button
+                className="btn btn-primary"
+                type="submit"
+                >
+                Loaded NFT List
+                </button>
+
+                {list.map((x) => {
+                    return (
+                        <li>
+                            {x}
+                        </li>
+                    )
+                })}
+                
+            </div>
+          :
+          <Button disabled auto bordered color="success" css={{ px: "$13" }}>
+          <Loading type="points" color="currentColor" size="sm" />
+        </Button>
+
+        }
+
+        <button>
+            Show List
+        </button>
+
+         </Grid>
+        </Grid.Container>
+        {/* <Candy /> */}
       </Container>
     </>
   );
