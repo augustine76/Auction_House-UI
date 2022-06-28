@@ -16,10 +16,10 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import { sell } from "../../api/src/auction-house";
 import { useWallet } from '@solana/wallet-adapter-react';
-import { useHistory } from "react-router-dom";
+
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-const baseURL = "http://localhost:5000";
+const baseURL = "http://localhost:5100";
 const useStyles = makeStyles(() => ({
     root: {
         maxWidth: 343,

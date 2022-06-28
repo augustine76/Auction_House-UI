@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Grid, Container, Row, Col } from "@nextui-org/react";
+import { Grid, Col, Row, Text } from "@nextui-org/react";
 // import { Collections } from "../../Collections";
 import { useWallet } from "@solana/wallet-adapter-react";
 const axios = require("axios").default;
@@ -13,7 +13,7 @@ import {
 } from "@metaplex-foundation/js-next";
 import { Connection, clusterApiUrl, PublicKey } from "@solana/web3.js";
 import { UserListedNFTs } from "./UserListedNFTs";
-const baseURL = "http://localhost:5000";
+const baseURL = "http://localhost:5100";
 
 let collectionNames = [];
 
@@ -62,27 +62,63 @@ export const UserNFT = (props: any) => {
   }, []);
 
   return (
-    <div>
-      <Container gap={0}>
-        <p>{props.type}</p>
-        {updated && collectionNames
-          ? collectionNames.map((nft) => {
-              return (
-                <>
-                  <Row>
-                    <h1>{nft}</h1>
-                  </Row>
-                  <Row>
-                    <UserListedNFTs data={nft} />
-                  </Row>
-                </>
-                // </Row>
-              );
-            })
-          : "not Updated"}
+    <>
+      {updated && collectionNames
+        ? collectionNames.map((nft) => {
+            return (
+              <>
+                <Row
+                  gap={1}
+                  css={{
+                    borderBottom: "1px solid #fff",
+                    padding: "16px 0 8px 0 ",
+                  }}
+                >
+                  <Col span={1}>
+                    <Text color="#ffffff">
+                      {nft}
+                      {"   "}
+                    </Text>
+                  </Col>
+                  <Col span={1}>
+                    <Text>
+                      <code
+                        style={{
+                          color: "#ff4ecd",
+                          background: "#363636",
+                          padding: "5px",
+                          borderRadius: "5px",
+                        }}
+                      >
+                        Price:20
+                      </code>
+                    </Text>
+                  </Col>
+                  <Col span={2}>
+                    <Text>
+                      <code
+                        style={{
+                          color: "#0072f5",
+                          background: "#363636",
+                          padding: "5px",
+                          borderRadius: "5px",
+                        }}
+                      >
+                        Trade Volume: 20
+                      </code>
+                    </Text>
+                  </Col>
+                </Row>
+                <Row>
+                  <UserListedNFTs data={nft} />
+                </Row>
+              </>
+              // </Row>
+            );
+          })
+        : "not Updated"}
 
-        {/* </Grid.Container> */}
-      </Container>
-    </div>
+      {/* </Grid.Container> */}
+    </>
   );
 };

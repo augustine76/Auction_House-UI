@@ -25,7 +25,7 @@ app.use(UserRoute);
 app.use(NftRoute);
 app.use(CollectionRoute);
 
-const PORT = process.env.PORT || 5000
+const PORT = process.env.PORT || 5100
 
 mongoose
     .connect("mongodb+srv://isha:isha2180@cluster0.govgi.mongodb.net/nftmarketplace", {

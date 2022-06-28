@@ -2,49 +2,69 @@ import mongoose from "mongoose";
 
 const collectionSchema = mongoose.Schema({
 
-    collectionId : {
-        type : String,
-        required : false
+    collectionId: {
+        type: String,
+        required: false
     },
 
-    name : {
-        type : String,
-        required : true
+    name: {
+        type: String,
+        required: true
     },
 
-    symbol : {
-        type : String,
-        required : true
+    symbol: {
+        type: String,
+        required: true
     },
 
-    description : {
-        type : String,
-        required : true
+    description: {
+        type: String,
+        required: true
     },
 
-    image : {
-        type : String,
-        required : true
+    image: {
+        type: String,
+        required: true
     },
 
-    nfts : [{
-        type : String,
+    nfts: [{
+        type: String,
     }],
-    floorPrice:{
-        type:Number,
-        default:0,
-        required : true
+
+    floorPrice: {
+        type: Number,
+        default: 0,
+        required: true
     },
 
-    verified : {
-        type : Boolean,
-        required : false,
-        default : false
+    totalListedNfts: {
+        type: Number,
+        default: 0,
+        required: true
     },
-    creator:{
-        type : String,
-        required : true
+
+    totalUniqueHolders: {
+        type: Number,
+        default: 0,
+        required: true
+    },
+
+    tradingVolume: {
+        type: Number,
+        default: 0,
+        required: true
+    },
+
+    verified: {
+        type: Boolean,
+        required: false,
+        default: false
+    },
+    
+    creator: {
+        type: String,
+        required: true
     }
 })
 
-export const Collection = mongoose.model('collections',collectionSchema);
+export const Collection = mongoose.model('collections', collectionSchema);

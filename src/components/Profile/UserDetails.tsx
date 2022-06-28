@@ -24,7 +24,7 @@ import {
 } from "@nextui-org/react";
 
 // import { signIn, signOut, useSession } from 'next-auth/client';
-const baseURL = "http://localhost:5000";
+const baseURL = "http://localhost:5100";
 export const UserDetails = () => {
   const [issignin, setIssignin] = useState(false);
   // const [session] = useSession();
@@ -150,7 +150,7 @@ export const UserDetails = () => {
                     </Button>
                   </Grid>
                   <Grid xs={4} justify="center">
-                    <Button color="gradient">
+                    <Button size="sm" color="gradient">
                       <Link href="/">SignOut</Link>
                     </Button>
                   </Grid>

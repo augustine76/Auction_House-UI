@@ -24,16 +24,13 @@ export const listNFT = async (req, res) => {
                 Nft.save();
                 if (collection.floorPrice == 0) {
                     collection.floorPrice = priceAmount;
-                    await collection.save();
-                }
 
+                }
                 if (priceAmount < collection.floorPrice) {
                     collection.floorPrice = priceAmount;
-                    await collection.save();
-
-
                 }
-
+                collection.totalListedNfts=collection.totalListedNfts+1;
+                await collection.save();
                 return res.status(201).json({ message: "Nft is listed ", data: collection })
             } catch (error) {
                 return res.status(400).json({ message: error.message })
@@ -292,7 +289,7 @@ export const FetchOwnedNFTsInCollection = async (req, res) => {
             ownedNFTs.push(NFTs[i]);
         }
     }
-    
+
 
     if (ownedNFTs == []) {
         return res.status(200).send("There are No Nfts listed from this collection at the moment ");

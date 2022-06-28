@@ -435,7 +435,7 @@ export const setAndVerifyCollectionAll = async (
       log.error(
         `\nFailed in set and verify collection for ${mint}: ${err.message}`,
       );
-      await sleep(5000);
+      await sleep(5100);
     })
     .process(async mint => {
       try {
