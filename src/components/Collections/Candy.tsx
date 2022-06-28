@@ -11,12 +11,9 @@ export const Candy = () => {
     const [list, setList] = useState([]);
     const click = () => {
         console.log(
-            'inside click'
+            'inside click', list
         )
-     
-        list.map(x => 
-         <li>{x}</li>    
-        )
+
     }
     const [arrLoaded, setarrLoaded] = useState(false);
 
@@ -77,6 +74,14 @@ export const Candy = () => {
                 >
                 Loaded NFT List
                 </button>
+
+                {list.map((x) => {
+                    return (
+                        <li>
+                            {x}
+                        </li>
+                    )
+                })}
                 
             </div>
           :
