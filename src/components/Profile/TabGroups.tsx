@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, Container, Row, Text } from "@nextui-org/react";
-import { UserNFT } from "./UserNFT";
+import { StateHandle } from "./StateHandle";
 
 const types = ["Listed NFTs", "Owned NFTs", "Collection", "Unverified"];
 
@@ -10,7 +10,7 @@ export const TabGroup = () => {
     <>
       <Container>
         <Row justify="center" align="center">
-          <Button.Group color="gradient" ghost>
+          <Button.Group size="sm" color="gradient" ghost>
             {types.map((type) => (
               <Button key={type} onClick={() => setActive(type)}>
                 {type}
@@ -19,7 +19,7 @@ export const TabGroup = () => {
           </Button.Group>
         </Row>
         <Row justify="center" align="center">
-          <UserNFT type={active}/>
+          <StateHandle type={active}/>
         </Row>
       </Container>
     </>

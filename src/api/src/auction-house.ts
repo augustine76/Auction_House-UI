@@ -801,7 +801,7 @@ export const buy = async (cmd : any ) => {
     const tMint: web3.PublicKey = auctionHouseObj.treasuryMint;
 
     const instruction0 = await anchorProgram.instruction.executeSale(
-      escrowBump,
+      bump,
       freeTradeStateBump,
       programAsSignerBump,
       buyPriceAdjusted,

@@ -1,8 +1,6 @@
 import { FC } from "react";
 import { Container, Row } from "@nextui-org/react";
-import { GetAuctionHouse } from "../../AuctionHouseComponents/GetAuctionHouse";
-import NFTCollections from "../../components/FetchCollections";
-import { Verify } from "../../AuctionHouseComponents/verifyCollection";
+import { ListedCollections } from "../../components/Collections/ListedCollections";
 export const HomeView: FC = ({}) => {
   return (
     <Container>
@@ -12,11 +10,7 @@ export const HomeView: FC = ({}) => {
         </h1>
       </Row>
       <Row justify="center" align="center">
-        <div className="text-center">
-          <NFTCollections />
-          <GetAuctionHouse />
-          <Verify />
-        </div>
+        <ListedCollections />
       </Row>
     </Container>
   );

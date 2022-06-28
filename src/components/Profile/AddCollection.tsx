@@ -4,7 +4,9 @@ import Box from "@mui/material/Box";
 import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
-import TextareaAutosize from "@mui/material/TextareaAutosize";
+import { Candy } from "components/Collections/Candy";
+
+
 import {
   Input,
   Container,
@@ -14,11 +16,19 @@ import {
   Button,
 } from "@nextui-org/react";
 
-const baseURL = "http://localhost:5000";
+
+
+import TextareaAutosize from '@mui/material/TextareaAutosize';
+import { useWallet } from "@solana/wallet-adapter-react";
+
+
+const baseURL = "http://localhost:5000"; 
+
 
 let li;
 
 const FilePicker = () => {
+  
   const [hash, setHash] = useState(null);
   const [list, setList] = useState(null);
   const [createObjectURL, setCreateObjectURL] = useState(null);
@@ -60,11 +70,13 @@ const FilePicker = () => {
 };
 
 export function CollectionForm() {
+  const { publicKey } = useWallet();
   const [name, setName] = useState("");
   const [symbol, setSymbol] = useState("");
   const [imageURL, setImageURL] = useState("");
   const [desc, setdesc] = useState("");
   const router = useRouter();
+
 
   const {
     query: { pubkey },
@@ -72,22 +84,41 @@ export function CollectionForm() {
 
   console.log("pubkey is", pubkey);
 
-  const makeColl = () => {
-    let collection = {
-      name: name,
-      symbol: symbol,
-      image: imageURL,
-      description: desc,
-      hash: li,
-      creator: "HAekfA31B92bVyvWMjAV6Wk3XatCAhSdttaoZvjyteQw",
-    };
-    axios
-      .post(`${baseURL}/addCollection`, collection)
-      .then((response) => console.log("response", response))
-      .catch((error) => {
-        console.error("There was an error!", error);
-      });
-  };
+  // const makeColl = () => {
+  //   let collection = {
+  //     name: name,
+  //     symbol: symbol,
+  //     image: imageURL,
+  //     description: desc,
+  //     hash: li,
+  //     creator: "HAekfA31B92bVyvWMjAV6Wk3XatCAhSdttaoZvjyteQw",
+  //   };
+  //   axios
+  //     .post(`${baseURL}/addCollection`, collection)
+  //     .then((response) => console.log("response", response))
+  //     .catch((error) => {
+  //       console.error("There was an error!", error);
+  //     });
+  // };
+
+   console.log("pubkey is", publicKey);
+
+ const makeColl = () => {;
+  let collection = {
+    name: name,
+    symbol: symbol,
+    image: imageURL,
+    description: desc,
+    hash: li,
+    creator:publicKey
+  }
+  axios.post(`${baseURL}/addCollection`, collection)
+    .then(response => console.log("response",response))
+    .catch(error => {
+      console.error('There was an error!', error); 
+    });
+  }
+
   return (
     <>
       <Container>
@@ -178,7 +209,7 @@ export function CollectionForm() {
           align="center"
         >
           <Col css={{ w: "100%" }} align="center" span={3}>
-            <FilePicker />
+            {/* <FilePicker /> */}
           </Col>
         </Row>
         <Row
@@ -187,12 +218,19 @@ export function CollectionForm() {
           justify="center"
           align="center"
         >
+        {/* <button
+        className="btn btn-primary"
+        type="submit"
+      >
+      Load Hash-List
+      </button> */}
           <Col span={3} align="center">
-            <Button color="gradient" type="submit" onClick={makeColl}>
-              Add Collection
+            <Button color="gradient" type="submit">
+              Add Collection Candy
             </Button>
           </Col>
         </Row>
+        <Candy />
       </Container>
     </>
   );

@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import  {BuyView} from "../views";
 
-const Basics: NextPage = (props) => {
+const CollectionForm: NextPage = (props) => {
   return (
     <div>
       <Head>
@@ -18,4 +18,4 @@ const Basics: NextPage = (props) => {
   );
 };
 
-export default Basics;
+export default CollectionForm;

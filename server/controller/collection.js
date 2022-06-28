@@ -1,6 +1,6 @@
-import { circularProgressClasses } from "@mui/material";
+
 import { Collection } from "../model/collection.js";
-import { Nft } from "../model/schema.js";
+import { NFTS } from "../model/nfts.js";
 
 // To Add a new collection of nfts
 
@@ -31,6 +31,15 @@ export const addCollection = async(req,res) => {
         image : image,
         creator : creator
     })
+    for (let i=0;i<nfts.length;i++) {
+        const newNFT= new NFTS({ 
+            mintKey:nfts[i],
+            owner:creator,
+            collectionName:name,
+                      
+        })
+        newNFT.save();
+    }
 
    const newCollection =  await collection.save();
 
@@ -58,7 +67,7 @@ export const fetchCollection = async(req,res) => {
 // after clicking on collection we can use fetch collection method
 export const fetchAllCollection = async(req,res) => {
 
-    const collection =await Collection.find();
+    const collection = await Collection.find();
 
     if(collection == undefined) {
         return res.status(401).json("No collection at the moment to fetch");
@@ -84,13 +93,15 @@ export const FetchListedNftsOfCollection = async(req,res) => {
     if(collection == undefined) {
        return  res.status(400).json(`collection name ${name} does not exist`);
     }
-    const nfts = JSON.parse(collection.nfts);
+    
+    // const nfts = JSON.parse(collection.nfts);
+    const nfts=collection.nfts;
     const length = nfts.length
     // console.log("nft",nfts)
     let listedNfts = [];
     let i;
     for(i=0; i<length;i++){
-        const nft = await Nft.findOne({mintKey : nfts[i],isListed:true})
+        const nft = await NFTS.findOne({mintKey : nfts[i],inSale:true})
         console.log(nft)
         if(!(nft == null)){
             
@@ -107,4 +118,39 @@ export const FetchListedNftsOfCollection = async(req,res) => {
             message: "Listed Nfts fetched",
             data:listedNfts
         });
+}
+
+export const getCollectionInfo = async(req,res) => {
+   
+    const name = req.params.name
+    console.log(name)
+    const collection = await Collection.findOne({name})
+
+    if(collection == undefined) {
+       return  res.status(400).json(`collection name ${name} does not exist`);
+    }
+    
+    
+    return res.status(200).json(
+        {
+            success: true,
+            message: "Collection info fetched",
+            data:collection
+        });
+}
+export const FetchCollectionsByAddress = async(req,res) => {
+
+    const { owner } = req.body
+
+    const NFTCollections = await NFTS.find( {owner : owner} );
+    // const collection = await Collection.find({creator : creator, name : name});
+
+    console.log("collection by address", NFTCollections);
+
+    if(NFTCollections == undefined) {
+        return res.status(401).json("No collection at the moment to fetch");
+    }
+
+    return res.send(NFTCollections);
+
 }

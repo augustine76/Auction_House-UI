@@ -9,6 +9,7 @@ import {
 } from "@metaplex-foundation/js-next";
 import { Connection, clusterApiUrl } from "@solana/web3.js";
 import { Collections } from "./Collections";
+import { Container, Card, Col, Row, Grid } from "@nextui-org/react";
 import axios from "axios";
 const baseURL = "http://localhost:5000";
 export const ListedCollections = () => {
@@ -18,9 +19,15 @@ export const ListedCollections = () => {
   const [updated, setupdated] = useState(false);
   const getCollections = async () => {
     try {
-      const response = await axios(`${baseURL}/fetchAllCollection`);
+      const response = await axios.post(`${baseURL}/fetchAllCollection`)
+        .then(res => { 
+                   return res;
+          
+        
+        });
+      // const response = await axios(`${baseURL}/fetchAllCollection`);
       // const result = await response.json();
-      console.log("Inside Fetch");
+      console.log("Inside Fetch",response);
       // console.log(response.data);
       return response.data;
       let data = await response.data;
@@ -45,23 +52,20 @@ export const ListedCollections = () => {
   }, []);
 
   return (
-    <div>
-      {/* <button
-                className="group w-60 m-2 btn animate-pulse disabled:animate-none bg-gradient-to-r from-[#9945FF] to-[#14F195] hover:from-pink-500 hover:to-yellow-500 ... "
-                onClick={up}
-               
-            >
-               
-                <span className="block group-disabled:hidden">Fetch NFTS</span>
-            </button><br /><br /><br />
-            <h1 className="text-center text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-tr from-[#9945FF] to-[#14F195]">
-               Your listed collection
-            </h1><br /> */}
-      <div className="row">
-        {collectionList.map((x) => {
-          return <Collections data={x} key={Ikey++} />;
-        })}
-      </div>
-    </div>
+    <>
+      <Container>
+        <Row gap={2} justify="center" align="center">
+          <Grid.Container gap={2} justify="center">
+            {collectionList.map((x) => {
+              return (
+                <Grid justify="center" xs={12} md={2} lg={2}>
+                  <Collections data={x} key={Ikey++} />
+                </Grid>
+              );
+            })}
+          </Grid.Container>
+        </Row>
+      </Container>
+    </>
   );
 };
