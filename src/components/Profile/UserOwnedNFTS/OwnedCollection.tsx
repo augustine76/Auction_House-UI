@@ -13,7 +13,7 @@ import {
 } from "@metaplex-foundation/js-next";
 import { Connection, clusterApiUrl, PublicKey } from "@solana/web3.js";
 import { UserOwnedNFTs } from "./OwnedNFTs"
-const baseURL = "http://localhost:5000";
+const baseURL = "http://localhost:5100";
 
 let collectionNames = [];
 

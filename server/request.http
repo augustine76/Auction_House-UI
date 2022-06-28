@@ -1,4 +1,4 @@
-@base_url = http://localhost:5000
+@base_url = http://localhost:5100
 
 ### Create user signup
 POST {{base_url}}/createSignUp
