@@ -10,7 +10,9 @@ export const HomeView: FC = ({}) => {
         </h1>
       </Row>
       <Row justify="center" align="center">
-        <ListedCollections />
+        <div className="text-center">
+          <ListedCollections />
+        </div>
       </Row>
     </Container>
   );

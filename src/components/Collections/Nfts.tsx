@@ -2,7 +2,6 @@
 import { produceWithPatches } from "immer";
 import React from "react";
 import Link from "next/link";
-import { Card, Col, Row, Text, Button } from "@nextui-org/react";
 import {
   Metaplex,
   bundlrStorage,
@@ -11,6 +10,17 @@ import {
 import { Connection, clusterApiUrl, PublicKey } from "@solana/web3.js";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { FC, useCallback, useState } from "react";
+import {
+  Container,
+  Row,
+  Col,
+  Card,
+  Grid,
+  Modal,
+  Text,
+  Image,
+  Button,
+} from "@nextui-org/react";
 
 export const Nfts = (props) => {
   console.log("props", props);
@@ -18,6 +28,12 @@ export const Nfts = (props) => {
   const [name, setName] = useState("");
   const [updated, setupdated] = useState(false);
   // console.log("props",props);
+  const [visible, setVisible] = React.useState(false);
+  const handler = () => setVisible(true);
+  const closeHandler = () => {
+    setVisible(false);
+    console.log("closed");
+  };
 
   const pic = async (data) => {
     console.log("data", data);
@@ -67,7 +83,7 @@ export const Nfts = (props) => {
             <Col
               css={{
                 padding: "10px 0",
-                textAlign: "center"
+                textAlign: "center",
               }}
             >
               <Text
@@ -85,20 +101,49 @@ export const Nfts = (props) => {
               <Text size={12} weight="bold" transform="uppercase" color="#fff">
                 {props.collection}
               </Text>
-              <Link
-                href={{
-                  pathname: "/buy",
-                  query: { mint: props.data.mintKey.toString() },
-                }}
+              <Button
+                size="sm"
+                color="gradient"
+                css={{ margin: "auto" }}
+                onClick={handler}
               >
-                <Button size="sm" color="gradient" css={{margin: "auto"}}>
-                  <span className="block group-disabled:hidden ">Buy</span>
-                </Button>
-              </Link>
+                <span className="block group-disabled:hidden ">Buy</span>
+              </Button>
             </Col>
           </Row>
         </Card.Footer>
       </Card>
+
+      <Modal
+        css={{ padding: "10px" }}
+        blur
+        aria-labelledby="modal-title"
+        noPadding
+        open={visible}
+        onClose={closeHandler}
+      >
+        <Modal.Header>
+          <Text h2 id="modal-title">
+            {name}
+          </Text>
+        </Modal.Header>
+        <Modal.Body>
+          <Row>
+            <Image showSkeleton src={image} />
+          </Row>
+        </Modal.Body>
+        <Modal.Footer>
+          <Row>
+            <Col>
+              <Row justify="center">
+                <Button color={"gradient"} auto onClick={() => alert("Buy option")}>
+                  Buy For {props.data.amount} SOL
+                </Button>
+              </Row>
+            </Col>
+          </Row>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 };

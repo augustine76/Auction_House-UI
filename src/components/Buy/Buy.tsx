@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import { useRouter } from "next/router";
 import { buy } from "../../api/src/auction-house";
 import axios from "axios";
-const baseURL = "http://localhost:5000";
+const baseURL = "http://localhost:5100";
 
 export const Buy: FC = () => {
     const router = useRouter()
