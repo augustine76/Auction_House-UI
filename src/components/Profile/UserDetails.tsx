@@ -133,7 +133,9 @@ export const UserDetails = () => {
               <Col span={5}>
                 <Grid.Container gap={2} justify="center">
                   <Grid xs={4} justify="center">
-                    <Button size="sm" color="gradient">Edit Profile</Button>
+                    <Button size="sm" color="gradient">
+                      Edit Profile
+                    </Button>
                   </Grid>
                   <Grid xs={4} justify="center">
                     <Button size="sm" color="gradient">
@@ -148,11 +150,8 @@ export const UserDetails = () => {
                     </Button>
                   </Grid>
                   <Grid xs={4} justify="center">
-
-
-                    <Button  color="gradient">
-                    <Link href="/">SignOut</Link>
-
+                    <Button color="gradient">
+                      <Link href="/">SignOut</Link>
                     </Button>
                   </Grid>
                 </Grid.Container>
@@ -169,7 +168,7 @@ export const UserDetails = () => {
                 css={{ size: "$50" }}
               />
             </Row>
-            <Row justify="center" align="center" css={{padding: "30px 0"}}>
+            <Row justify="center" align="center" css={{ padding: "30px 0" }}>
               <Button size="sm" color="gradient" onClick={getSignIn}>
                 SignIn
               </Button>

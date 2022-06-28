@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Grid, Container, Row } from "@nextui-org/react";
-import { Collections } from "../../Collections";
+import { Grid, Container, Row, Col } from "@nextui-org/react";
+// import { Collections } from "../../Collections";
 import { useWallet } from "@solana/wallet-adapter-react";
 const axios = require("axios").default;
 const truncate = (str, n) => {
@@ -12,7 +12,7 @@ import {
   walletAdapterIdentity,
 } from "@metaplex-foundation/js-next";
 import { Connection, clusterApiUrl, PublicKey } from "@solana/web3.js";
-import { UserListedNFTs } from "./UserListedNFTs"
+import { UserListedNFTs } from "./UserListedNFTs";
 const baseURL = "http://localhost:5000";
 
 let collectionNames = [];
@@ -22,21 +22,20 @@ export const UserNFT = (props: any) => {
   let Ikey = 0;
   const [NFTList, setNFTList] = useState([]);
   const [updated, setupdated] = useState(false);
-  console.log("props", props)
+  console.log("props", props);
   const { publicKey } = useWallet();
 
   const getCollections = async () => {
     try {
-      console.log("abc", publicKey.toBase58())
-      const owner = publicKey.toBase58()
-      const response = await axios.post(`${baseURL}/FetchCollectionsByAddress`, { owner: owner })
-        .then(res => {
+      console.log("abc", publicKey.toBase58());
+      const owner = publicKey.toBase58();
+      const response = await axios
+        .post(`${baseURL}/FetchCollectionsByAddress`, { owner: owner })
+        .then((res) => {
           return res.data;
-          
         });
-      
+
       return response;
-     
     } catch (error) {
       console.log("ERROR", error);
     }
@@ -44,52 +43,45 @@ export const UserNFT = (props: any) => {
 
   const fetchedNft = async () => {
     res = await getCollections();
-  try{
-      res.map(x => {
+    try {
+      res.map((x) => {
         if (collectionNames.indexOf(x.collectionName) == -1) {
           collectionNames.push(x.collectionName);
         }
       });
       console.log("collection list 2", collectionNames);
-      console.log("res", res)
+      console.log("res", res);
       setupdated(true);
       setNFTList(res);
-    }catch{
-      
-    }
-      console.log("collection", NFTList);
-    
+    } catch {}
+    console.log("collection", NFTList);
   };
 
   useEffect(() => {
     fetchedNft();
   }, []);
-  
+
   return (
     <div>
       <Container gap={0}>
         <p>{props.type}</p>
-        
-          {/* <Grid.Container gap={2} justify="center"> */}
-            {
-              updated && collectionNames ?
-                collectionNames.map((x) => {
-                  return (
-                    <Row gap={0}>
-                      <h1>{x}</h1>
+        {updated && collectionNames
+          ? collectionNames.map((nft) => {
+              return (
+                <>
+                  <Row>
+                    <h1>{nft}</h1>
+                  </Row>
+                  <Row>
+                    <UserListedNFTs data={nft} />
+                  </Row>
+                </>
+                // </Row>
+              );
+            })
+          : "not Updated"}
 
-                      <UserListedNFTs data={x} />
-                      </Row>
-
-                  )
-                })
-                :
-                "not Updated"
-
-            }
-           
-          {/* </Grid.Container> */}
-       
+        {/* </Grid.Container> */}
       </Container>
     </div>
   );

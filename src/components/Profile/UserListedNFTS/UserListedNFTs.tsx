@@ -38,13 +38,12 @@ export const UserListedNFTs = (props) => {
   const fetchedNft = async () => {
     res = await getListedNFTS();
 
-    
-    console.log("res f", res)
+    console.log("res f", res);
 
     setupdated(true);
-    setNFTList(res);}
-    console.log("collection", NFTList);
-  
+    setNFTList(res);
+  };
+  console.log("collection", NFTList);
 
   useEffect(() => {
     setTimeout(() => {}, 10000);
@@ -56,7 +55,7 @@ export const UserListedNFTs = (props) => {
       <Container gap={0}>
         <p>{props.type}</p>
         <Row gap={0}>
-          <Grid.Container gap={2} justify="center">
+          <Grid.Container gap={2} >
             {NFTList.map((x) => {
               return (
                 <>
