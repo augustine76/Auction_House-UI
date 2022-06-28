@@ -140,9 +140,9 @@ export const getCollectionInfo = async(req,res) => {
 }
 export const FetchCollectionsByAddress = async(req,res) => {
 
-    const { owner } = req.body
+    const { owner,inSale } = req.body
 
-    const NFTCollections = await NFTS.find( {owner : owner} );
+    const NFTCollections = await NFTS.find( {owner : owner,inSale: inSale} );
     // const collection = await Collection.find({creator : creator, name : name});
 
     console.log("collection by address", NFTCollections);

@@ -17,7 +17,7 @@ export const Nfts = (props) => {
   const [image, setimage] = useState("");
   const [name, setName] = useState("");
   const [updated, setupdated] = useState(false);
-  // console.log("props",props);
+  
 
   const pic = async (data) => {
     console.log("data", data);
@@ -80,7 +80,7 @@ export const Nfts = (props) => {
                 {name}
               </Text>
               <Text size={12} weight="bold" transform="uppercase" color="#fff">
-                Price: {props.data.amount}
+                Price: {props.data.priceAmount}
               </Text>
               <Text size={12} weight="bold" transform="uppercase" color="#fff">
                 {props.collection}

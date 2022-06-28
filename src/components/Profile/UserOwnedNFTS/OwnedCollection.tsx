@@ -29,7 +29,7 @@ export const UserOwnedCollection = (props: any) => {
     try {
       console.log("abc", publicKey.toBase58())
       const owner = publicKey.toBase58()
-      const response = await axios.post(`${baseURL}/FetchCollectionsByAddress`, { owner: owner })
+      const response = await axios.post(`${baseURL}/FetchCollectionsByAddress`, { owner: owner,inSale:false })
         .then(res => {
           return res.data;
           

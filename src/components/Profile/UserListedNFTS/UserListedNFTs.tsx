@@ -60,7 +60,7 @@ export const UserListedNFTs = (props) => {
               return (
                 <>
                   <Grid xs={12} md={2} lg={2}>
-                    <ListedNFTS mintKey={x.mintKey} price={x.price} />
+                    <ListedNFTS mintKey={x.mintKey} price={x.priceAmount} />
                   </Grid>
                 </>
               );

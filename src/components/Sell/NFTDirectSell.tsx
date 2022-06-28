@@ -16,7 +16,9 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import { sell } from "../../api/src/auction-house";
 import { useWallet } from '@solana/wallet-adapter-react';
+import { useHistory } from "react-router-dom";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 const baseURL = "http://localhost:5000";
 const useStyles = makeStyles(() => ({
     root: {
@@ -64,10 +66,14 @@ export const NFTDetails = (props) => {
 
         sell({ auctionHouse: auctionHouseAddress, buyPrice: price, mint: mint, tokenSize: '1', wallet: wallet }).then(x => {
 
-            alert('Create Sell Action' + 'Account' + x.account + 'MintAddress' + x.mintAddress + 'Price' + x.price);
+            // alert('Create Sell Action' + 'Account' + x.account + 'MintAddress' + x.mintAddress + 'Price' + x.price);
             const nft = { owner: publicKey, mintKey: mint, priceAmount: price };
             axios.post(`${baseURL}/listNFT`, nft)
-            .then(response => console.log("response", response))
+            .then(response => {console.log("response", response)
+            window.location.href = "http://localhost:3000/";
+           
+        }
+            )
             .catch(error => {
                 console.error('There was an error!', error);
             });

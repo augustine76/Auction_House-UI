@@ -30,7 +30,7 @@ export const UserNFT = (props: any) => {
       console.log("abc", publicKey.toBase58());
       const owner = publicKey.toBase58();
       const response = await axios
-        .post(`${baseURL}/FetchCollectionsByAddress`, { owner: owner })
+        .post(`${baseURL}/FetchCollectionsByAddress`, { owner: owner ,inSale:true})
         .then((res) => {
           return res.data;
         });
