@@ -150,7 +150,7 @@ export const UserDetails = () => {
                   <Grid xs={4} justify="center">
 
 
-                    <Button  color="gradient">
+                    <Button size="sm" color="gradient" >
                     <Link href="/">SignOut</Link>
 
                     </Button>

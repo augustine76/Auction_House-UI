@@ -82,16 +82,16 @@ export const NFTS = (props) => {
               <Text size={12} weight="bold" transform="uppercase" color="#fff">
                 {description}
               </Text>
-              {/* <Link
+              <Link
                 href={{
-                  pathname: "/sell",
-                  query: { mint: props.data.mintKey.toString() },
+                  pathname: "/nftdetails",
+                  query: { mint: props.mintKey.toString() ,image:image,name:name},
                 }}
-              > */}
+              >
                 <Button size="sm" color="gradient" css={{margin: "auto"}}>
                   <span className="block group-disabled:hidden ">Sell</span>
                 </Button>
-              {/* </Link> */}
+              </Link>
             </Col>
           </Row>
         </Card.Footer>

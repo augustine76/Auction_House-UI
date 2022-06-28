@@ -1,7 +1,7 @@
 
 import { FC } from "react";
 
-import { NFTDetails } from '../../components/NFTDirectSell';
+import { NFTDetails } from '../../components/Sell/NFTDirectSell';
 export const NFTDetailView : FC = ({ }) => {
 
 return (

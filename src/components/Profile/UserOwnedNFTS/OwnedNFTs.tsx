@@ -65,7 +65,8 @@ export const UserOwnedNFTs = (props) => {
                   <NFTS
                     
                     mintKey={x.mintKey}
-                    price={x.price}
+                    
+                    
                     
                   />
                 </Grid>
