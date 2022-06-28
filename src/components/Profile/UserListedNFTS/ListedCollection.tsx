@@ -74,39 +74,41 @@ export const UserNFT = (props: any) => {
                     padding: "16px 0 8px 0 ",
                   }}
                 >
-                  <Col span={1}>
-                    <Text color="#ffffff">
-                      {nft}
-                      {"   "}
-                    </Text>
-                  </Col>
-                  <Col span={1}>
-                    <Text>
-                      <code
-                        style={{
-                          color: "#ff4ecd",
-                          background: "#363636",
-                          padding: "5px",
-                          borderRadius: "5px",
-                        }}
-                      >
-                        Price: 20
-                      </code>
-                    </Text>
-                  </Col>
-                  <Col span={2}>
-                    <Text>
-                      <code
-                        style={{
-                          color: "#0072f5",
-                          background: "#363636",
-                          padding: "5px",
-                          borderRadius: "5px",
-                        }}
-                      >
-                        Trade Volume: 20
-                      </code>
-                    </Text>
+                  <Col>
+                    <Col>
+                      <Text color="#ffffff">
+                        {nft}
+                        {"   "}
+                      </Text>
+                    </Col>
+                    <Col>
+                      <Text>
+                        <code
+                          style={{
+                            color: "#ff4ecd",
+                            background: "#363636",
+                            padding: "5px",
+                            borderRadius: "5px",
+                          }}
+                        >
+                          Price: 20
+                        </code>
+                      </Text>
+                    </Col>
+                    <Col>
+                      <Text>
+                        <code
+                          style={{
+                            color: "#0072f5",
+                            background: "#363636",
+                            padding: "5px",
+                            borderRadius: "5px",
+                          }}
+                        >
+                          Trade Volume: 20
+                        </code>
+                      </Text>
+                    </Col>
                   </Col>
                 </Row>
                 <Row>
