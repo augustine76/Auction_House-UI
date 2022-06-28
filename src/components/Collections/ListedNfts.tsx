@@ -41,6 +41,10 @@ export const ListedNfts = () => {
     }
   };
   const [collectionImage, setCollectionImage] = useState(false);
+  const [floorPrice, setFloorPrice] = useState(0);
+  const [totalListedNfts, setTotalListedNfts] = useState(0);
+  const [totalUniqueHolders, setTotalUniqueHolders] = useState(0);
+  const [tradingVolume, setTradingVolume] = useState(0);
   const getCollectionInfo = async () => {
     try {
       const response = await axios(
@@ -49,7 +53,7 @@ export const ListedNfts = () => {
 
       console.log("Inside Fetch");
       console.log(response.data);
-      return response.data.data.image;
+      return response.data.data;
     } catch (error) {
       console.log("ERROR", error);
     }
@@ -61,7 +65,11 @@ export const ListedNfts = () => {
     console.log("collection info", res2);
     setupdated(true);
     setCollectionList(res);
-    setCollectionImage(res2);
+    setCollectionImage(res2.image);
+    setFloorPrice(res2.floorPrice);
+    setTotalListedNfts(res2.totalListedNfts)
+    setTotalUniqueHolders(res2.totalUniqueHolders)
+    setTradingVolume(res2.tradingVolume);
     console.log("collectionList", collectionList);
   };
 
@@ -107,25 +115,25 @@ export const ListedNfts = () => {
               <Grid xs={6} md={4} lg={4} justify="center">
                 <div style={gridCardStyle}>
                   <p>FLOOR PRICE</p>
-                  <p>0.03</p>
+                  <p>{floorPrice}</p>
                 </div>
               </Grid>
               <Grid xs={6} md={4} lg={4} justify="center">
                 <div style={gridCardStyle}>
-                  <p>FLOOR PRICE</p>
-                  <p>0.03</p>
+                  <p>Total Liste NFTS</p>
+                  <p>{totalListedNfts}</p>
                 </div>
               </Grid>
               <Grid xs={6} md={4} lg={4} justify="center">
                 <div style={gridCardStyle}>
-                  <p>FLOOR PRICE</p>
-                  <p>0.03</p>
+                  <p>Total Unique Holders</p>
+                  <p>{totalUniqueHolders}</p>
                 </div>
               </Grid>
               <Grid xs={6} md={4} lg={4} justify="center">
                 <div style={gridCardStyle}>
-                  <p>FLOOR PRICE</p>
-                  <p>0.03</p>
+                  <p>Trading Volume</p>
+                  <p>{tradingVolume}</p>
                 </div>
               </Grid>
               <Grid xs={6} md={4} lg={4} justify="center">

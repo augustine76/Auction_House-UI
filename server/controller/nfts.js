@@ -29,7 +29,7 @@ export const listNFT = async (req, res) => {
                 if (priceAmount < collection.floorPrice) {
                     collection.floorPrice = priceAmount;
                 }
-                collection.totalListedNfts=collection.totalListedNfts+1;
+                collection.totalListedNfts = collection.totalListedNfts + 1;
                 await collection.save();
                 return res.status(201).json({ message: "Nft is listed ", data: collection })
             } catch (error) {
@@ -74,31 +74,6 @@ export const getNFTDetails = async (req, res) => {
     }
 
 }
-
-// //browse:- nfts listed for sale
-// export const fetchAllNfts = async (req, res) => {
-//     try {
-//         // const {isListed} = req.body
-//         const nfts = await NFTS.find({
-//             inSale: true
-//         })
-//         if (nfts) {
-//             res.status(200).json({
-//                 success: true,
-//                 message: nfts
-//             });
-//         } else {
-//             return res.status(404).json({
-//                 success: false,
-//                 message: "No nfts are on sale."
-//             })
-//         }
-
-
-//     } catch (error) {
-//         res.status(409).json({ error: error.message })
-//     }
-// }
 
 export const listedNFTS = async (req, res) => {
     try {
@@ -159,7 +134,7 @@ export const isListed = async (req, res) => {
             else {
                 res.status(200).json({
                     status: 0,
-                    message: "This NFT is not Listed"
+                    message: "This NFT is not found"
                 })
             }
 
@@ -298,3 +273,48 @@ export const FetchOwnedNFTsInCollection = async (req, res) => {
     return res.send(ownedNFTs);
 }
 
+export const buyNft = async (req, res) => {
+    try {
+
+        const { mintKey,owner,buyer } = req.body
+        if (mintKey) {
+            const nft = await NFTS.findOne({
+                mintKey: mintKey,
+                owner: owner
+            })
+            if (nft) {
+                if (nft.inSale == true) {
+                    nft.inSale = false,
+                    nft.owner=buyer,
+                    nft.save()
+                    res.status(200).json({
+                        status: 1,
+                        data: nft,
+                        message: "This NFT is sold"
+                    })
+                }
+                else{
+                    res.status(200).json({
+                        
+                        message: "This NFT is notListed"
+                    })
+                }
+
+            }
+            else {
+                res.status(200).json({
+                    status: 0,
+                    message: "This NFT is not found"
+                })
+            }
+
+        }
+        else return res.status(404).json({
+            success: false,
+            message: "Nft is not found"
+        })
+    }
+    catch (error) {
+        res.status(409).json({ error: error.message })
+    }
+}

@@ -16,7 +16,7 @@
 
 // export default router;
 import express from "express"
-import {listNFT,getNFTDetails,isListed,listedNFTS,fetchAllUserOwnedNfts, FetchListedOwnedNFTsInCollection,FetchOwnedNFTsInCollection} from "../controller/nfts.js"
+import {listNFT,getNFTDetails,isListed,listedNFTS,fetchAllUserOwnedNfts, FetchListedOwnedNFTsInCollection,FetchOwnedNFTsInCollection,buyNft} from "../controller/nfts.js"
 const router = express.Router()
 router.post('/listNFT', listNFT);
 router.get("/getNFTDetails/:mint",getNFTDetails);
@@ -24,5 +24,6 @@ router.post("/isListed", isListed);
 router.post("/listedNFTS",listedNFTS)
 router.get("/fetchAllUserOwnedNfts", fetchAllUserOwnedNfts);
 router.post("/FetchListedOwnedNFTsInCollection", FetchListedOwnedNFTsInCollection);
-router.post("/FetchOwnedNFTsInCollection",FetchOwnedNFTsInCollection)
+router.post("/FetchOwnedNFTsInCollection",FetchOwnedNFTsInCollection);
+router.post("/buyNft",buyNft)
 export default router;
