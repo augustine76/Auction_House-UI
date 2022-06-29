@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from "react";
-import { Grid, Col, Row, Text } from "@nextui-org/react";
+import { Card, Col, Row, Text } from "@nextui-org/react";
 // import { Collections } from "../../Collections";
 import { useWallet } from "@solana/wallet-adapter-react";
 const axios = require("axios").default;
