@@ -58,7 +58,7 @@ export const NFTDetails = (props) => {
 
     const { publicKey } = useWallet();
     const wallet = useWallet();
-    let auctionHouseAddress = "4kAkuX3eqqb6dFnpbBtbAi9g3tswyAEyns8kDE4nYuvo";
+    let auctionHouseAddress = "BnHNmwRwMHpjq9LBkvQYTkMGRAY4yuWcT5nnGhVq4SBr";
     const [price, setPrice] = useState(''); // '' is the initial state value
     function getSell() {
         console.log("ah,auction", auctionHouseAddress);

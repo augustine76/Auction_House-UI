@@ -66,31 +66,31 @@ export const UserNFT = (props: any) => {
     fetchedNft();
   }, []);
 
-  const [collectionImage, setCollectionImage] = useState("");
-  const [floorPrice, setFloorPrice] = useState(0);
-  const [tradingVolume, setTradingVolume] = useState(0);
-  const getCollectionInfo = async (collectionName) => {
-    try {
-      const response = await axios(
-        `${baseURL}/getCollectionInfo/${collectionName}`
-      );
+  // const [collectionImage, setCollectionImage] = useState("");
+  // const [floorPrice, setFloorPrice] = useState(0);
+  // const [tradingVolume, setTradingVolume] = useState(0);
+  // const getCollectionInfo = async (collectionName) => {
+  //   try {
+  //     const response = await axios(
+  //       `${baseURL}/getCollectionInfo/${collectionName}`
+  //     );
 
-      console.log("Inside Fetch");
-      console.log(response.data);
-      setCollectionImage(response.data.data.image);
-      setFloorPrice(response.data.data.floorPrice);
+  //     console.log("Inside Fetch");
+  //     console.log(response.data);
+  //     setCollectionImage(response.data.data.image);
+  //     setFloorPrice(response.data.data.floorPrice);
 
-      setTradingVolume(response.data.data.tradingVolume);
-    } catch (error) {
-      console.log("ERROR", error);
-    }
-  };
+  //     setTradingVolume(response.data.data.tradingVolume);
+  //   } catch (error) {
+  //     console.log("ERROR", error);
+  //   }
+  // };
   return (
     <>
       {updated && collectionNames
         ? collectionNames.map((nft) => {
 
-          getCollectionInfo(nft)
+          // getCollectionInfo(nft)
 
           return (
             <>
@@ -104,7 +104,7 @@ export const UserNFT = (props: any) => {
               >
                 <Col span={1}>
                   <Card.Image
-                    src={collectionImage}
+                    src={"collectionImage"}
 
                     width="40%"
                     height="40%"
@@ -128,7 +128,7 @@ export const UserNFT = (props: any) => {
                       }}
                     >
 
-                      Floor Price :{floorPrice}
+                      Floor Price :{10}
                     </code>
                   </Text>
                 </Col>
@@ -142,7 +142,7 @@ export const UserNFT = (props: any) => {
                         borderRadius: "5px",
                       }}
                     >
-                      Trade Volume:{tradingVolume}
+                      Trade Volume:{10}
                     </code>
                   </Text>
                 </Col>

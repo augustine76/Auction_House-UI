@@ -41,7 +41,7 @@ export const Nfts = (props) => {
   const connection = new Connection(clusterApiUrl("devnet"));
   const { publicKey } = useWallet();
   const wallet = useWallet();
-  let auctionHouseAddress = "4kAkuX3eqqb6dFnpbBtbAi9g3tswyAEyns8kDE4nYuvo";
+  let auctionHouseAddress = "BnHNmwRwMHpjq9LBkvQYTkMGRAY4yuWcT5nnGhVq4SBr";
 
   const pic = async (data) => {
     console.log("data", data);

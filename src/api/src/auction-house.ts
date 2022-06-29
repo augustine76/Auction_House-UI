@@ -711,13 +711,13 @@ export const buy = async (cmd : any ) => {
             ),
           ]),
     ];
-    await sendTransactionWithRetryWithKeypair(
-      anchorProgram.provider.connection,
-      walletKeyPair,
-      instructions,
-      signers,
-      'max',
-    );
+    // await sendTransactionWithRetryWithKeypair(
+    //   anchorProgram.provider.connection,
+    //   walletKeyPair,
+    //   instructions,
+    //   signers,
+    //   'max',
+    // );
 
   //Sale Execution
 
@@ -847,13 +847,13 @@ export const buy = async (cmd : any ) => {
     if (auctionHouseKeypairLoaded) {
       signersforSale.push(auctionHouseKeypairLoaded);
 
-      instruction.keys
+      instruction0.keys
         .filter(k => k.pubkey.equals(auctionHouseKeypairLoaded.publicKey))
         .map(k => (k.isSigner = true));
     }
 
     if (!auctionHouseSigns) {
-      instruction.keys
+      instruction0.keys
         .filter(k => k.pubkey.equals(walletKeyPair.publicKey))
         .map(k => (k.isSigner = true));
     }
@@ -861,7 +861,7 @@ export const buy = async (cmd : any ) => {
     await sendTransactionWithRetryWithKeypair(
       anchorProgram.provider.connection,
       auctionHouseSigns ? auctionHouseKeypairLoaded : walletKeyPair,
-      [instruction0],
+      [instruction,instruction0],
       signersforSale,
       'max',
     );

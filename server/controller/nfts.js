@@ -284,10 +284,15 @@ export const buyNft = async (req, res) => {
             })
             if (nft) {
                 if (nft.inSale == true) {
-                    nft.inSale = false,
-                    nft.owner=buyer,
-                    nft.totalListedNfts=nft.totalListedNfts-1;
-                    nft.save()
+                    nft.inSale = false
+                    nft.owner=buyer
+                    const collectionName = nft.collectionName
+                    const collection = await Collection({ name : collectionName})
+
+                    let totalListedNfts = collection.totalListedNfts;
+                    collection.totalListedNfts = --totalListedNfts;
+                    await collection.save();
+                    await nft.save();
                     res.status(200).json({
                         status: 1,
                         data: nft,
