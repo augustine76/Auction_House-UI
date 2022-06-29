@@ -9,6 +9,7 @@ import {
   fetchUserCollectionOwnedNft,
   fetchAllCollections,
   fetchUserCollections,
+  fetchTotalTradingVolume
 } from '../controller/api.js'
 import { isAuthenticated } from '../middleware/auth.js'
 
@@ -23,5 +24,6 @@ router.get('/fetchAllUserOwnedNfts', fetchAllUserOwnedNfts)
 router.get('/fetchUserCollectionOwnedNft', fetchUserCollectionOwnedNft)
 router.get('/fetchAllCollections', fetchAllCollections)
 router.get('/fetchUserCollections', fetchUserCollections)
+router.get('/fetchTotalTradingVolume', fetchTotalTradingVolume)
 
 export default router
