@@ -10,7 +10,9 @@ import {
   fetchAllCollections,
   fetchUserCollections,
   fetchTotalTradingVolume,
-  fetchTotalTradingVolumeBasedOnTimestamp
+  fetchTotalTradingVolumeBasedOnTimestamp,
+  fetchUserCollectionTradingHistory,
+  fetchMarketplaceTradingHistory
 } from '../controller/api.js'
 import { isAuthenticated } from '../middleware/auth.js'
 
@@ -27,5 +29,6 @@ router.get('/fetchAllCollections', fetchAllCollections)
 router.get('/fetchUserCollections', fetchUserCollections)
 router.get('/fetchTotalTradingVolume', fetchTotalTradingVolume)
 router.get('/fetchTotalTradingVolumeBasedOnTimestamp', fetchTotalTradingVolumeBasedOnTimestamp)
-
+router.get('/fetchUserCollectionTradingHistory', fetchUserCollectionTradingHistory)
+router.get('/fetchMarketplaceTradingHistory', fetchMarketplaceTradingHistory)
 export default router

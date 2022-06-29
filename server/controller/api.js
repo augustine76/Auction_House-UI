@@ -506,7 +506,7 @@ export const createExecuteSale = async (req, res) => {
             newvalues,
             function (err, res) {
               if (err) throw err
-              console.log('Sell executed successfully.')
+              console.log('Sale executed successfully.')
             },
           )
           res.status(201).json(updateValues)
@@ -724,24 +724,24 @@ export const fetchTotalTradingVolumeBasedOnTimestamp = async (req, res) => {
   try {
     const totalTradingVolume1 = Collection.aggregate([
       {
-        "$match": {
-          "createdAt": { $gt: new Date(Date.now() - 24*60*60 * 1000) //For production: last 24 hours
-          // "createdAt": { $gt: new Date(Date.now() -  1000 * 60 * 1) //For development: last 1 mins
-         }
-        }
+        $match: {
+          createdAt: {
+            $gt: new Date(Date.now() - 24 * 60 * 60 * 1000), //For production: last 24 hours
+            // "createdAt": { $gt: new Date(Date.now() -  1000 * 60 * 1) //For development: last 1 mins
+          },
+        },
       },
       {
         $group: {
           _id: '',
           tradingVolume: { $sum: '$tradingVolume' },
-          "first":{"$first":"$$ROOT"},
-          "last":{"$last":"$$ROOT"}
+          first: { $first: '$$ROOT' },
+          last: { $last: '$$ROOT' },
         },
       },
       {
         $project: {
           _id: 0,
-          "h": {"$hour" : "$createdAt"},
           totalTradingVolume: '$tradingVolume',
         },
       },
@@ -751,6 +751,74 @@ export const fetchTotalTradingVolumeBasedOnTimestamp = async (req, res) => {
       success: true,
       message: JSONobject,
     })
+  } catch (error) {
+    res.status(409).json({ error: error.message })
+  }
+}
+
+//user trading history
+export const fetchUserCollectionTradingHistory = async (req, res) => {
+  try {
+    const { publicKey, collectionName } = req.body
+    const user = await User.findOne({
+      publicKey,
+      isSigned: true,
+    })
+    if (user) {
+      const collection = await Collection.findOne({
+        publicKey,
+        collectionName,
+      })
+      if (collection) {
+        const nft = await Nft.find({
+          publicKey,
+          collectionName,
+          isExecuteSale: true,
+        })
+        if (nft) {
+          res.status(200).json({
+            success: true,
+            message: nft
+          })
+        } else {
+          res.status(404).json({
+            success: false,
+            message: "No nft's are sold for this collection",
+          })
+        }
+      } else {
+        res.status(404).json({
+          success: false,
+          message: 'No collection exists for this publicKey.',
+        })
+      }
+    } else
+      return res.status(404).json({
+        success: false,
+        message: 'User not found.',
+      })
+  } catch (error) {
+    res.status(409).json({ error: error.message })
+  }
+}
+
+//marketplace trading history
+export const fetchMarketplaceTradingHistory = async (req, res) => {
+  try {
+    const nft = await Nft.find({
+      isExecuteSale: true,
+    })
+    if (nft) {
+      res.status(200).json({
+        success: true,
+        message: nft,
+      })
+    } else {
+      res.status(404).json({
+        success: false,
+        message: "No nft's are sold for this collection",
+      })
+    }
   } catch (error) {
     res.status(409).json({ error: error.message })
   }
