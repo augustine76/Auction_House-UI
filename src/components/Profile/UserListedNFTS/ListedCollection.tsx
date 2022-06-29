@@ -102,7 +102,7 @@ export const UserNFT = (props: any) => {
                   padding: "16px 0 8px 0 ",
                 }}
               >
-                <Col span={1}>
+                {/* <Col span={1}>
                   <Card.Image
                     src={"collectionImage"}
 
@@ -110,7 +110,7 @@ export const UserNFT = (props: any) => {
                     height="40%"
                     objectFit="cover"
                              alt="Card example background"
-                  /></Col>
+                  /></Col> */}
                 <Col span={1}>
                   <Text color="#ffffff">
                     {nft}

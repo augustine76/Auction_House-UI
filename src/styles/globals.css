@@ -36,10 +36,10 @@ a {
 }
 input[type="text"]
 {
-    color: rgb(255, 255, 255) !important;
+    color: rgb(26, 24, 24) !important;
 }
 textarea{
-  color: #fff !important;
+  color: rgb(20, 19, 19) !important;
 }
 input[type="number"]
 {
@@ -99,11 +99,11 @@ input[type="number"]
   border: 3px solid #f3eded;
 }
 .profileName{
-  font-size: 30px;
+  font-size: 10px;
   font-weight: bold;
   font-family: Arial, Helvetica, sans-serif;
   padding-top: 0.5rem;
-  color:#f3eded;
+  color:#d8cdcd;
 }
 .profileNameB{
   font-size: 20px;

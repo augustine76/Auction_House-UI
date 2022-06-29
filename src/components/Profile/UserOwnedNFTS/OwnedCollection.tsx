@@ -60,26 +60,26 @@ export const UserOwnedCollection = (props: any) => {
     } catch {}
     console.log("collection", NFTList);
   };
-  const [collectionImage, setCollectionImage] = useState("");
-  const [floorPrice, setFloorPrice] = useState(0);
-  const [tradingVolume, setTradingVolume] = useState(0);
-  const getCollectionInfo = async (collectionName) => {
-    try {
-      const response = await axios(
-        `${baseURL}/getCollectionInfo/${collectionName}`
-      );
+  // const [collectionImage, setCollectionImage] = useState("");
+  // const [floorPrice, setFloorPrice] = useState(0);
+  // const [tradingVolume, setTradingVolume] = useState(0);
+  // const getCollectionInfo = async (collectionName) => {
+  //   try {
+  //     const response = await axios(
+  //       `${baseURL}/getCollectionInfo/${collectionName}`
+  //     );
 
-      console.log("Inside Fetch");
-      console.log(response.data);
-      setCollectionImage(response.data.data.image);
-      setFloorPrice(response.data.data.floorPrice);
+  //     console.log("Inside Fetch");
+  //     console.log(response.data);
+  //     setCollectionImage(response.data.data.image);
+  //     setFloorPrice(response.data.data.floorPrice);
 
-      setTradingVolume(response.data.data.tradingVolume);
-    } catch (error) {
-      console.log("ERROR", error);
-    }
+  //     setTradingVolume(response.data.data.tradingVolume);
+  //   } catch (error) {
+  //     console.log("ERROR", error);
+  //   }
 
-  };
+  // };
 
   useEffect(() => {
     fetchedNft();
@@ -90,7 +90,7 @@ export const UserOwnedCollection = (props: any) => {
     <>
       {updated && collectionNames
         ? collectionNames.map((nft) => {
-          getCollectionInfo(nft)
+          // getCollectionInfo(nft)
             return (
               <>
                 <Row
@@ -100,15 +100,15 @@ export const UserOwnedCollection = (props: any) => {
                     padding: "16px 0 8px 0 ",
                   }}
                 >
-                  <Col span={1}>
+                  {/* <Col span={1}>
                   <Card.Image
-                    src={collectionImage}
+                    src={"collectionImage"}
 
                     width="40%"
                     height="40%"
                     objectFit="cover"
                              alt="Card example background"
-                  /></Col>
+                  /></Col> */}
 
                   <Col span={1}>
                     <Text color="#ffffff">
@@ -126,7 +126,7 @@ export const UserOwnedCollection = (props: any) => {
                           borderRadius: "5px",
                         }}
                       >
-                        Floor Price :{floorPrice}
+                        Floor Price :{10}
                       </code>
                     </Text>
                   </Col>
@@ -140,7 +140,7 @@ export const UserOwnedCollection = (props: any) => {
                           borderRadius: "5px",
                         }}
                       >
-                        Trade Volume:{tradingVolume}
+                        Trade Volume:{10}
                       </code>
                     </Text>
                   </Col>

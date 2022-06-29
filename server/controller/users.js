@@ -9,7 +9,7 @@ export const createUser = async (req, res) => {
             signature,
             isSigned: true
         })
-        const existingUser = await User.findOne({ publicKey })
+        let existingUser = await User.findOne({ publicKey })
         if (existingUser) {
 
             existingUser.signature = signature;
@@ -27,7 +27,7 @@ export const createUser = async (req, res) => {
             return res.status(201).json({
                 success: true,
                 message: "User not found.",
-                data:newUser
+                data: newUser
             })
         }
     } catch (error) {
@@ -36,7 +36,31 @@ export const createUser = async (req, res) => {
 
 }
 
+export const editUser = async (req, res) => {
 
+    try {
+        const { publicKey, userName, displayName, email } = req.body
+        console.log(userName, email)
+        let existingUser = await User.findOne({ publicKey })
+        if (existingUser) {
+            existingUser.isSigned = true;
+            existingUser.userName = userName;
+            existingUser.email = email;
+            existingUser.displayName = displayName;
+            existingUser.save();
+            return res.status(201).json({
+                success: true,
+                data: existingUser,
+                message: "User Details updated"
+            })
+
+
+        }
+    } catch (error) {
+        return res.status(409).json({ error: error.message })
+    }
+
+}
 
 export const getUserDetails = async (req, res) => {
     // console.log(req)
