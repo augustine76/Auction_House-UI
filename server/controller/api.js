@@ -691,7 +691,7 @@ export const fetchAllUsers = async (req, res) => {
 }
 
 //fetch total trading volume of the marketplace
-export const fetchTotalTradingVolume = async (req, res) => {
+export const fetchTotalMarketplaceTradingVolume = async (req, res) => {
   try {
     const totalTradingVolume1 = Collection.aggregate([
       {
@@ -718,14 +718,14 @@ export const fetchTotalTradingVolume = async (req, res) => {
 }
 
 //fetch total trading volume of the marketplace based on the timestamp
-export const fetchTotalTradingVolumeBasedOnTimestamp = async (req, res) => {
+export const fetchTotalMarketplaceTradingVolumeBasedOnTimestamp = async (req, res) => {
   try {
     const totalTradingVolume1 = Collection.aggregate([
       {
         $match: {
           createdAt: {
             $gt: new Date(Date.now() - 24 * 60 * 60 * 1000), //For production: last 24 hours
-            // "createdAt": { $gt: new Date(Date.now() -  1000 * 60 * 1) //For development: last 1 mins
+            // "createdAt": { $gt: new Date(Date.now() -  1000 * 60 * 20) //For development: last 1 mins
           },
         },
       },

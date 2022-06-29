@@ -9,8 +9,8 @@ import {
   fetchUserCollectionOwnedNft,
   fetchAllCollections,
   fetchUserCollections,
-  fetchTotalTradingVolume,
-  fetchTotalTradingVolumeBasedOnTimestamp,
+  fetchTotalMarketplaceTradingVolume,
+  fetchTotalMarketplaceTradingVolumeBasedOnTimestamp,
   fetchUserCollectionTradingHistory,
   fetchMarketplaceTradingHistory
 } from '../controller/api.js'
@@ -27,8 +27,8 @@ router.get('/fetchAllUserOwnedNfts', fetchAllUserOwnedNfts)
 router.get('/fetchUserCollectionOwnedNft', fetchUserCollectionOwnedNft)
 router.get('/fetchAllCollections', fetchAllCollections)
 router.get('/fetchUserCollections', fetchUserCollections)
-router.get('/fetchTotalTradingVolume', fetchTotalTradingVolume)
-router.get('/fetchTotalTradingVolumeBasedOnTimestamp', fetchTotalTradingVolumeBasedOnTimestamp)
+router.get('/fetchTotalMarketplaceTradingVolume', fetchTotalMarketplaceTradingVolume)
+router.get('/fetchTotalMarketplaceTradingVolumeBasedOnTimestamp', fetchTotalMarketplaceTradingVolumeBasedOnTimestamp)
 router.get('/fetchUserCollectionTradingHistory', fetchUserCollectionTradingHistory)
 router.get('/fetchMarketplaceTradingHistory', fetchMarketplaceTradingHistory)
 export default router
