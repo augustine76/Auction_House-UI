@@ -64,7 +64,11 @@ const collectionSchema = mongoose.Schema({
     creator: {
         type: String,
         required: true
-    }
+    },
+
+    owners :[{
+        type: String
+    }]
 })
 
 export const Collection = mongoose.model('collections', collectionSchema);

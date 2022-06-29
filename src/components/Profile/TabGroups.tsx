@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Container, Row, Text } from "@nextui-org/react";
 import { StateHandle } from "./StateHandle";
 
-const types = ["Listed NFTs", "Owned NFTs", "Activity"];
+const types = ["Owned NFTs","Listed NFTs", "Activity"];
 
 export const TabGroup = () => {
   const [active, setActive] = useState(types[0]);

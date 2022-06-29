@@ -1,11 +1,43 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import Link from "next/link";
+import axios from "axios";
 
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 import { useAutoConnect } from '../contexts/AutoConnectProvider';
 
 export const AppBar: FC = props => {
   const { autoConnect, setAutoConnect } = useAutoConnect();
+  const [TPS, setTPS] = useState(false);
+  const [TPSinfo, setTPSinfo] = useState("");
+  const [solrate, setsolrate] = useState("");
+
+  // const getTPSinfo = async () => { 
+  //   const connection = new Connection(clusterApiUrl("devnet"));
+  //   const wallet = useWallet();
+  //   const metaplex = Metaplex.make(connection)
+  //   .use(keypairIdentity(wallet))
+  //   .use(bundlrStorage());
+  //   const tps = await metaplex.tps.fetch();
+  //   console.log(tps);
+  // }
+  const getTPSinfo = async () => { 
+    if(!TPS){
+      axios.get("https://api.binance.com/api/v3/ticker/price?symbol=SOLUSDT")
+      .then(res => setsolrate(res.data.price));
+      axios.post("https://api.mainnet-beta.solana.com", {
+        "jsonrpc":"2.0", "id":1, "method":"getRecentPerformanceSamples", "params": [1]
+      }).then(res => {
+        setTPSinfo(((res.data.result[0].numTransactions)/60).toString())
+        setTPS(true);
+      });
+
+    }
+
+  }
+  getTPSinfo();
+  const truncate = (str, n) => {
+    return str?.length > n ? str.substr(0, n - 1) : str;
+  };
 
   return (
     <div>
@@ -49,14 +81,19 @@ export const AppBar: FC = props => {
         </div>
 
         {/* Nav Links */}
-        {/* <div className="hidden md:inline md:navbar-center">
+        <div className="hidden md:inline md:navbar-center">
           <div className="flex items-stretch">
-            <Link href="/">
-              <a className="btn btn-ghost btn-sm rounded-btn">Home</a>
-            </Link>
-            
+              <a className="btn btn-ghost btn-sm rounded-btn">Solana TPS {truncate(TPSinfo,5)}</a>
           </div>
-        </div> */}
+
+        </div>
+        <div>
+        <div className="flex items-stretch">
+              <a className="btn btn-ghost btn-sm rounded-btn">Solana Price ${truncate(solrate,6)}</a>
+          </div>
+        </div>
+
+
 
         {/* Wallet & Settings */}
         <div className="navbar-end">

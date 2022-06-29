@@ -283,19 +283,34 @@ export const buyNft = async (req, res) => {
                 owner: owner
             })
             if (nft) {
-                if (nft.inSale == true) {
+                if (!nft.inSale == true) {
                     nft.inSale = false
                     nft.owner=buyer
                     const collectionName = nft.collectionName
-                    const collection = await Collection({ name : collectionName})
+                    const collection = await Collection.findOne({ name : collectionName})
 
                     let totalListedNfts = collection.totalListedNfts;
+                    
+                    const ownerr = await Collection.findOne({owners : buyer})
+                    const temp = await NFTS.find({ owner , collectionName});
+
+                    if(temp.length <=1){
+                        collection.owners =await collection.owners.filter(hi =>hi != owner);
+
+                    }
+                    if(!ownerr){
+                        await collection.owners.push(buyer);
+                    }
+
+                    collection.totalUniqueHolders = collection.owners.length 
                     collection.totalListedNfts = --totalListedNfts;
+                    collection.tradingVolume += nft.priceAmount;
                     await collection.save();
                     await nft.save();
+                    
                     res.status(200).json({
                         status: 1,
-                        data: nft,
+                        data: nft,collection,
                         message: "This NFT is sold"
                     })
                 }
