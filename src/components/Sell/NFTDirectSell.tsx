@@ -70,7 +70,7 @@ export const NFTDetails = (props) => {
             const nft = { owner: publicKey, mintKey: mint, priceAmount: price };
             axios.post(`${baseURL}/listNFT`, nft)
             .then(response => {console.log("response", response)
-            window.location.href = "http://localhost:3000/";
+            window.location.href = "http://localhost:3000/profile";
            
         }
             )
