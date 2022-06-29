@@ -23,7 +23,6 @@ export const createUser = async (req, res) => {
       newUser.displayName = ''
       newUser.save(async (_, user) => {
         res.status(201).json(user)
-        console.log(newUser.publicKey)
       })
     }
   } catch (error) {
@@ -173,7 +172,7 @@ export const createCollection = async (req, res) => {
         auctionHouseKey,
       } = req.body
       const findCollection = await Collection.findOne({
-        collectionName,
+        publicKey, collectionName,
       })
       if (!findCollection) {
         const newCollection = new Collection({
@@ -220,8 +219,7 @@ export const createListedNfts = async (req, res) => {
       publicKey,
     })
     const findMintKey = await Nft.findOne({
-      publicKey,
-      mintKey,
+      publicKey, mintKey, isExecuteSale: false
     })
     const findCollection = await Collection.findOne({
       publicKey,
@@ -248,7 +246,7 @@ export const createListedNfts = async (req, res) => {
               newNft.sellerWallet = user.publicKey
               newNft.buyerWallet = ''
               newNft.isListed = true
-              newNft.save(async (_, nft) => {
+              await newNft.save(async (_, nft) => {
                 res.status(201).json(nft)
               })
               var myquery = {
@@ -343,7 +341,7 @@ export const createBuy = async (req, res) => {
       publicKey,
     })
     const findMintKey = await Nft.findOne({
-      mintKey,
+      collectionName, mintKey, isExecuteSale: false
     })
     const findCollection = await Collection.findOne({
       collectionName,
@@ -351,7 +349,7 @@ export const createBuy = async (req, res) => {
     })
     if (user) {
       if (findCollection) {
-        const { amount, mintKey } = req.body
+        const { collectionName, publicKey, amount, mintKey } = req.body
         if (findMintKey.sellerWallet != publicKey) {
           if (
             findMintKey.mintKey == mintKey &&
@@ -462,7 +460,7 @@ export const createExecuteSale = async (req, res) => {
       sellerWallet,
     })
     const findMintKey = await Nft.findOne({
-      mintKey,
+      mintKey, collectionName, isListed: true, isBuy: true, isExecuteSale: false
     })
     const findCollection = await Collection.findOne({
       collectionName,
