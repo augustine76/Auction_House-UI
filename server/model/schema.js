@@ -18,7 +18,7 @@ const nftSchema = mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  isExecuteSell: {
+  isExecuteSale: {
     type: Boolean,
     default: false,
   },

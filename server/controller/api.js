@@ -358,7 +358,7 @@ export const createBuy = async (req, res) => {
             findMintKey.amount == amount &&
             findMintKey.isListed == true &&
             findMintKey.isBuy == false &&
-            findMintKey.isExecuteSell == false
+            findMintKey.isExecuteSale == false
           ) {
             var tradingVolumeOfBuyingNfts = findCollection.tradingVolume
             tradingVolumeOfBuyingNfts += amount
@@ -367,7 +367,9 @@ export const createBuy = async (req, res) => {
               tradingVolume: findCollection.tradingVolume,
             }
             var newvalues = {
-              $set: { tradingVolume: tradingVolumeOfBuyingNfts },
+              $set: {
+                tradingVolume: tradingVolumeOfBuyingNfts,
+              },
             }
             Collection.updateOne(myquery, newvalues, function (err, res) {
               if (err) throw err
@@ -408,7 +410,10 @@ export const createBuy = async (req, res) => {
               isBuy: false,
             }
             var newvalues = {
-              $set: { buyerWallet: publicKey, isBuy: true },
+              $set: {
+                buyerWallet: publicKey,
+                isBuy: true,
+              },
             }
             const updateValues = await Nft.updateOne(
               myquery,
@@ -449,7 +454,7 @@ export const createBuy = async (req, res) => {
 }
 
 //selling nfts:- execute sell
-export const createExecuteSell = async (req, res) => {
+export const createExecuteSale = async (req, res) => {
   try {
     const { buyerWallet, sellerWallet, mintKey, collectionName } = req.body
     const checkWallet = await Nft.findOne({
@@ -473,7 +478,7 @@ export const createExecuteSell = async (req, res) => {
           findMintKey.amount == amount &&
           findMintKey.isListed == true &&
           findMintKey.isBuy == true &&
-          findMintKey.isExecuteSell == false
+          findMintKey.isExecuteSale == false
         ) {
           var myquery = {
             collectionName: findCollection.collectionName,
@@ -487,8 +492,15 @@ export const createExecuteSell = async (req, res) => {
           Collection.updateOne(myquery, newvalues, function (err, res) {
             if (err) throw err
           })
-          var myquery = { mintKey: findMintKey.mintKey, isExecuteSell: false }
-          var newvalues = { $set: { isExecuteSell: true } }
+          var myquery = {
+            mintKey: findMintKey.mintKey,
+            isExecuteSale: false,
+          }
+          var newvalues = {
+            $set: {
+              isExecuteSale: true,
+            },
+          }
           const updateValues = await Nft.updateOne(
             myquery,
             newvalues,
@@ -693,6 +705,43 @@ export const fetchTotalTradingVolume = async (req, res) => {
       {
         $project: {
           _id: 0,
+          totalTradingVolume: '$tradingVolume',
+        },
+      },
+    ])
+    const JSONobject = JSON.stringify(await totalTradingVolume1).toString()
+    res.status(200).json({
+      success: true,
+      message: JSONobject,
+    })
+  } catch (error) {
+    res.status(409).json({ error: error.message })
+  }
+}
+
+//fetch total trading volume of the marketplace based on the timestamp
+export const fetchTotalTradingVolumeBasedOnTimestamp = async (req, res) => {
+  try {
+    const totalTradingVolume1 = Collection.aggregate([
+      {
+        "$match": {
+          "createdAt": { $gt: new Date(Date.now() - 24*60*60 * 1000) //For production: last 24 hours
+          // "createdAt": { $gt: new Date(Date.now() -  1000 * 60 * 1) //For development: last 1 mins
+         }
+        }
+      },
+      {
+        $group: {
+          _id: '',
+          tradingVolume: { $sum: '$tradingVolume' },
+          "first":{"$first":"$$ROOT"},
+          "last":{"$last":"$$ROOT"}
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          "h": {"$hour" : "$createdAt"},
           totalTradingVolume: '$tradingVolume',
         },
       },

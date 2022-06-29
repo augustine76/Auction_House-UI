@@ -3,20 +3,21 @@ import {
   createListedNfts,
   fetchAllNfts,
   fetchAllUserOwnedNfts,
-  createExecuteSell,
+  createExecuteSale,
   createBuy,
   createCollection,
   fetchUserCollectionOwnedNft,
   fetchAllCollections,
   fetchUserCollections,
-  fetchTotalTradingVolume
+  fetchTotalTradingVolume,
+  fetchTotalTradingVolumeBasedOnTimestamp
 } from '../controller/api.js'
 import { isAuthenticated } from '../middleware/auth.js'
 
 const router = express.Router()
 
 router.post('/createListedNfts', createListedNfts)
-router.post('/createExecuteSell', createExecuteSell)
+router.post('/createExecuteSale', createExecuteSale)
 router.post('/createBuy', createBuy)
 router.post('/createCollection', createCollection)
 router.get('/fetchAllNfts', fetchAllNfts)
@@ -25,5 +26,6 @@ router.get('/fetchUserCollectionOwnedNft', fetchUserCollectionOwnedNft)
 router.get('/fetchAllCollections', fetchAllCollections)
 router.get('/fetchUserCollections', fetchUserCollections)
 router.get('/fetchTotalTradingVolume', fetchTotalTradingVolume)
+router.get('/fetchTotalTradingVolumeBasedOnTimestamp', fetchTotalTradingVolumeBasedOnTimestamp)
 
 export default router
