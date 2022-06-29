@@ -21,6 +21,7 @@ import {
   Grid,
   Button,
   Text,
+  Modal,
 } from "@nextui-org/react";
 
 // import { signIn, signOut, useSession } from 'next-auth/client';
@@ -39,8 +40,14 @@ export const UserDetails = () => {
   const { publicKey, signMessage } = useWallet();
   const [displayName, setDisplayName] = useState("");
   const [userName, setUserName] = useState("");
-
   const wallet = useWallet();
+  const [visible, setVisible] = useState(false);
+  const handler = () => setVisible(true);
+
+  const closeHandler = () => {
+    setVisible(false);
+    console.log("closed");
+  };
 
   async function fetchNonce() {
     const response = await fetch("api/login");
@@ -132,12 +139,12 @@ export const UserDetails = () => {
             <Row justify="center" align="center">
               <Col span={5}>
                 <Grid.Container gap={2} justify="center">
-                  <Grid xs={4} justify="center">
-                    <Button size="sm" color="gradient">
+                  <Grid xs={12} xl={4} md={4} justify="center">
+                    <Button size="sm" color="gradient" onClick={handler}>
                       Edit Profile
                     </Button>
                   </Grid>
-                  <Grid xs={4} justify="center">
+                  <Grid xs={12} xl={4} md={4} justify="center">
                     <Button size="sm" color="gradient">
                       <Link
                         href={{
@@ -149,7 +156,7 @@ export const UserDetails = () => {
                       </Link>
                     </Button>
                   </Grid>
-                  <Grid xs={4} justify="center">
+                  <Grid xs={12} xl={4} md={4} justify="center">
                     <Button size="sm" color="gradient">
                       <Link href="/">SignOut</Link>
                     </Button>
@@ -175,6 +182,53 @@ export const UserDetails = () => {
             </Row>
           </>
         )}
+
+        <Modal
+          closeButton
+          aria-labelledby="modal-title"
+          open={visible}
+          onClose={closeHandler}
+        >
+          <Modal.Header>
+            <Text id="modal-title" size={18}>
+              Change Details
+            </Text>
+          </Modal.Header>
+          <Modal.Body>
+            <Row css={{padding: "5px 0"}}>
+              <Input
+                value={displayName}
+                clearable
+                bordered
+                fullWidth
+                color="primary"
+                size="lg"
+                placeholder="Name"
+                helperText="Change Name"
+              />
+            </Row>
+            <Row css={{padding: "5px 0"}}>
+              <Input
+                clearable
+                bordered
+                fullWidth
+                color="primary"
+                size="lg"
+                placeholder="Email"
+                helperText="Change Email"
+              />
+            </Row>
+            <Row justify="space-between"></Row>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button auto flat color="error" onClick={closeHandler}>
+              Close
+            </Button>
+            <Button auto onClick={closeHandler}>
+              Change
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </Container>
     </>
   );

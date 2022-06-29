@@ -12,7 +12,7 @@ import { Input, Container, Row, Col, Textarea, Button} from "@nextui-org/react";
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 import { useWallet } from "@solana/wallet-adapter-react";
 
-const baseURL = "http://localhost:5000"; 
+const baseURL = "http://localhost:5100"; 
 
 export function CollectionForm () {
     const [name, setName] = useState("");
@@ -23,6 +23,7 @@ export function CollectionForm () {
     const [list, setList] = useState([]);
     const [arrLoaded, setarrLoaded] = useState(false);
     const [loading, setloading] = useState("Load NFTs from CM ID");
+    const [err, setErr] = useState(null);
 
     const { publicKey } = useWallet();
     const wallet = useWallet();
@@ -85,11 +86,11 @@ export function CollectionForm () {
             console.log("arr is" ,arr);
             setList(arr);
             setarrLoaded(true);
-            
-    
         }
         else {
             console.log("wallet address is not the authority of given candy machine")
+            alert("wallet address is not the authority of given candy machine");
+            setErr("Wrong CM Authority");
         }
         setloading("NFTs loaded from CM");
       }
@@ -204,7 +205,6 @@ export function CollectionForm () {
             align="center"
           >
             <Col css={{ w: "100%" }} align="center" span={3}>
-              {/* <FilePicker /> */}
             </Col>
           </Row>
           
