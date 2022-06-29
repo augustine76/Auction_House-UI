@@ -1,13 +1,5 @@
-import { useWallet } from "@solana/wallet-adapter-react";
 import { FC, useCallback, useState } from "react";
 import React, { useEffect } from "react";
-import { notify } from "../../utils/notifications";
-import {
-  Metaplex,
-  bundlrStorage,
-  walletAdapterIdentity,
-} from "@metaplex-foundation/js-next";
-import { Connection, clusterApiUrl } from "@solana/web3.js";
 import { Collections } from "./Collections";
 import { Container, Card, Col, Row, Grid } from "@nextui-org/react";
 import axios from "axios";
@@ -20,19 +12,13 @@ export const ListedCollections = () => {
   const getCollections = async () => {
     try {
       const response = await axios.post(`${baseURL}/fetchAllCollection`)
-        .then(res => { 
-                   return res;
-          
-        
+        .then(res => {
+          return res;
         });
-      // const response = await axios(`${baseURL}/fetchAllCollection`);
-      // const result = await response.json();
-      console.log("Inside Fetch",response);
-      // console.log(response.data);
+
+      console.log("Inside Fetch", response);
       return response.data;
-      let data = await response.data;
-      await setCollectionList(data);
-      console.log(collectionList);
+
     } catch (error) {
       console.log("ERROR", error);
     }
@@ -46,7 +32,7 @@ export const ListedCollections = () => {
   };
 
   useEffect(() => {
-    setTimeout(() => {}, 10000);
+    setTimeout(() => { }, 10000);
     console.log("Exucute useEffect");
     onClick();
   }, []);

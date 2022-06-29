@@ -21,6 +21,9 @@ import {
   Image,
   Button,
 } from "@nextui-org/react";
+const baseURL = "http://localhost:5100";
+import { buy } from "../../api/src/auction-house";
+import axios from "axios";
 
 export const Nfts = (props) => {
   console.log("props", props);
@@ -35,11 +38,14 @@ export const Nfts = (props) => {
     console.log("closed");
   };
 
+  const connection = new Connection(clusterApiUrl("devnet"));
+  const { publicKey } = useWallet();
+  const wallet = useWallet();
+  let auctionHouseAddress = "4kAkuX3eqqb6dFnpbBtbAi9g3tswyAEyns8kDE4nYuvo";
+
   const pic = async (data) => {
     console.log("data", data);
-    const connection = new Connection(clusterApiUrl("devnet"));
-    const { publicKey } = useWallet();
-    const wallet = useWallet();
+
     const metaplex = Metaplex.make(connection)
       //@ts-ignore
       .use(walletAdapterIdentity(wallet))
@@ -55,6 +61,29 @@ export const Nfts = (props) => {
     setupdated(true);
   };
   pic(props.data.mintKey);
+
+
+
+  function getBuy() {
+
+    let price = props.data.priceAmount;
+    let mint = props.data.mintKey;
+    let sellerWallet = props.data.owner;
+    buy({ auctionHouse: auctionHouseAddress, buyPrice: price, tokenSize: '1', mint: mint, env: 'devnet', wallet: wallet, sellerWallet: sellerWallet }).then(x => {
+      // alert('Buy / offer Action'+'Offer: '+x);
+      const data = { mintKey: mint, owner: sellerWallet, buyer: publicKey };
+      axios.post(`${baseURL}/buyNft`, data)
+        .then(response => {
+          console.log(response)
+          window.location.href = "http://localhost:3000/";
+        })
+        .catch(error => {
+          console.error('There was an error!', error);
+        });
+
+    })
+
+  }
 
   return (
     <>
@@ -96,7 +125,7 @@ export const Nfts = (props) => {
                 {name}
               </Text>
               <Text size={12} weight="bold" transform="uppercase" color="#fff">
-                Price: {props.data.amount}
+                Price: {props.data.priceAmount}
               </Text>
               <Text size={12} weight="bold" transform="uppercase" color="#fff">
                 {props.collection}
@@ -136,8 +165,8 @@ export const Nfts = (props) => {
           <Row>
             <Col>
               <Row justify="center">
-                <Button color={"gradient"} auto onClick={() => alert("Buy option")}>
-                  Buy For {props.data.amount} SOL
+                <Button color={"gradient"} auto onClick={getBuy}>
+                  Buy For {props.data.priceAmount} SOL
                 </Button>
               </Row>
             </Col>

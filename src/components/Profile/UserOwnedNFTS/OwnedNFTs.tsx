@@ -17,20 +17,22 @@ export const UserOwnedNFTs = (props) => {
 
   const getListedNFTS = async () => {
     try {
-      console.log("abc", publicKey.toBase58());
-      const owner = publicKey.toBase58();
-      const response = await axios
-        .post(`${baseURL}/FetchOwnedNFTsInCollection`, {
-          owner: owner,
-          collectionName: props.data,
-        })
-        .then((res) => {
+
+      console.log("abc", publicKey.toBase58())
+      const owner = publicKey.toBase58()
+      const response = await axios.post(`${baseURL}/FetchOwnedNFTsInCollection`, { owner: owner, collectionName: props.data })
+        .then(res => {
           return res;
+
+
         });
       console.log("collectionList", response);
 
+
       console.log("abc final f", response);
       return response.data;
+
+
     } catch (error) {
       console.log("ERROR 2", error);
     }
@@ -38,14 +40,14 @@ export const UserOwnedNFTs = (props) => {
   const fetchedNft = async () => {
     res = await getListedNFTS();
 
-    console.log("res f", res);
+
     setupdated(true);
     setNFTList(res);
     console.log("collection", NFTList);
   };
 
   useEffect(() => {
-    setTimeout(() => {}, 10000);
+    setTimeout(() => { }, 10000);
 
     fetchedNft();
   }, []);
@@ -54,12 +56,16 @@ export const UserOwnedNFTs = (props) => {
       <Container gap={0}>
         <p>{props.type}</p>
         <Row gap={0}>
-          <Grid.Container gap={2} justify="center">
+
+          <Grid.Container gap={2} >
+
             {NFTList.map((x) => {
               return (
                 <>
                   <Grid xs={12} md={2} lg={2}>
-                    <NFTS mintKey={x.mintKey} price={x.price} />
+
+                    <NFTS mintKey={x.mintKey}  />
+
                   </Grid>
                 </>
               );
@@ -68,5 +74,6 @@ export const UserOwnedNFTs = (props) => {
         </Row>
       </Container>
     </>
+    
   );
 };

@@ -1,4 +1,4 @@
-// import { FC } from 'react';
+
 import { produceWithPatches } from "immer";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
@@ -65,7 +65,9 @@ export const NFTS = (props) => {
             <Col
               css={{
                 padding: "10px 0",
+
                 textAlign: "center",
+
               }}
             >
               <Text
@@ -74,23 +76,28 @@ export const NFTS = (props) => {
                 weight="bold"
                 transform="uppercase"
                 color="#fff"
+                
               >
                 {name}
               </Text>
 
+
               <Text size={12} weight="bold" transform="uppercase" color="#fff">
+
                 {description}
               </Text>
-              {/* <Link
+              <Link
                 href={{
-                  pathname: "/sell",
-                  query: { mint: props.data.mintKey.toString() },
+                  pathname: "/nftdetails",
+                  query: { mint: props.mintKey.toString() ,image:image,name:name},
                 }}
-              > */}
-              <Button size="sm" color="gradient" css={{ margin: "auto" }}>
-                <span className="block group-disabled:hidden ">Sell</span>
-              </Button>
-              {/* </Link> */}
+
+              >
+                <Button size="sm" color="gradient" css={{margin: "auto"}}>
+                  <span className="block group-disabled:hidden ">Sell</span>
+                </Button>
+              </Link>
+
             </Col>
           </Row>
         </Card.Footer>
@@ -98,3 +105,4 @@ export const NFTS = (props) => {
     </>
   );
 };
+
