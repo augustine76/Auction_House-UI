@@ -13,7 +13,7 @@ import {
   walletAdapterIdentity,
 } from "@metaplex-foundation/js-next";
 import { Connection, clusterApiUrl, PublicKey } from "@solana/web3.js";
-import { UserOwnedNFTs } from "./OwnedNFTs"
+import { UserOwnedNFTs } from "./OwnedNFTs";
 const baseURL = "http://localhost:5100";
 
 let collectionNames = [];
@@ -31,7 +31,9 @@ export const UserOwnedCollection = (props: any) => {
       console.log("abc", publicKey.toBase58());
       const owner = publicKey.toBase58();
       const response = await axios
+
         .post(`${baseURL}/FetchCollectionsByAddress`, { owner: owner ,inSale:false})
+
         .then((res) => {
           return res.data;
         });
@@ -44,6 +46,7 @@ export const UserOwnedCollection = (props: any) => {
 
   const fetchedNft = async () => {
     res = await getCollections();
+
     try {
       res.map((x) => {
         if (collectionNames.indexOf(x.collectionName) == -1) {
@@ -75,6 +78,7 @@ export const UserOwnedCollection = (props: any) => {
     } catch (error) {
       console.log("ERROR", error);
     }
+
   };
 
   useEffect(() => {
@@ -82,6 +86,7 @@ export const UserOwnedCollection = (props: any) => {
   }, []);
 
   return (
+
     <>
       {updated && collectionNames
         ? collectionNames.map((nft) => {
@@ -152,5 +157,6 @@ export const UserOwnedCollection = (props: any) => {
 
       {/* </Grid.Container> */}
     </>
+
   );
 };

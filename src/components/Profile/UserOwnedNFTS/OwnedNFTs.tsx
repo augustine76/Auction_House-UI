@@ -12,11 +12,12 @@ export const UserOwnedNFTs = (props) => {
   let Ikey = 0;
   const [NFTList, setNFTList] = useState([]);
   const [updated, setupdated] = useState(false);
-  console.log("props", props)
+  console.log("props", props);
   const { publicKey } = useWallet();
 
   const getListedNFTS = async () => {
     try {
+
       console.log("abc", publicKey.toBase58())
       const owner = publicKey.toBase58()
       const response = await axios.post(`${baseURL}/FetchOwnedNFTsInCollection`, { owner: owner, collectionName: props.data })
@@ -31,6 +32,7 @@ export const UserOwnedNFTs = (props) => {
       console.log("abc final f", response);
       return response.data;
 
+
     } catch (error) {
       console.log("ERROR 2", error);
     }
@@ -39,7 +41,6 @@ export const UserOwnedNFTs = (props) => {
     res = await getListedNFTS();
 
 
-    console.log("res f", res)
     setupdated(true);
     setNFTList(res);
     console.log("collection", NFTList);
@@ -55,12 +56,16 @@ export const UserOwnedNFTs = (props) => {
       <Container gap={0}>
         <p>{props.type}</p>
         <Row gap={0}>
+
           <Grid.Container gap={2} >
+
             {NFTList.map((x) => {
               return (
                 <>
                   <Grid xs={12} md={2} lg={2}>
+
                     <NFTS mintKey={x.mintKey}  />
+
                   </Grid>
                 </>
               );

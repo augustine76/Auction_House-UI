@@ -65,6 +65,9 @@ export const NFTS = (props) => {
             <Col
               css={{
                 padding: "10px 0",
+
+                textAlign: "center",
+
               }}
             >
               <Text
@@ -77,8 +80,10 @@ export const NFTS = (props) => {
               >
                 {name}
               </Text>
-             
-              <Text color="#fff" size={12} margin="3px">
+
+
+              <Text size={12} weight="bold" transform="uppercase" color="#fff">
+
                 {description}
               </Text>
               <Link
@@ -86,11 +91,13 @@ export const NFTS = (props) => {
                   pathname: "/nftdetails",
                   query: { mint: props.mintKey.toString() ,image:image,name:name},
                 }}
+
               >
                 <Button size="sm" color="gradient" css={{margin: "auto"}}>
                   <span className="block group-disabled:hidden ">Sell</span>
                 </Button>
               </Link>
+
             </Col>
           </Row>
         </Card.Footer>

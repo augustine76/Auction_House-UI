@@ -89,6 +89,7 @@ export const UserNFT = (props: any) => {
     <>
       {updated && collectionNames
         ? collectionNames.map((nft) => {
+
           getCollectionInfo(nft)
 
           return (
@@ -153,6 +154,7 @@ export const UserNFT = (props: any) => {
             // </Row>
           );
         })
+
         : "not Updated"}
 
       {/* </Grid.Container> */}
