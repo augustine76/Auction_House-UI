@@ -126,7 +126,11 @@ export const UserOwnedCollection = (props: any) => {
                           borderRadius: "5px",
                         }}
                       >
+
+                    
+
                         Floor Price :{10}
+
                       </code>
                     </Text>
                   </Col>
@@ -140,7 +144,10 @@ export const UserOwnedCollection = (props: any) => {
                           borderRadius: "5px",
                         }}
                       >
+
+                        
                         Trade Volume:{10}
+
                       </code>
                     </Text>
                   </Col>
