@@ -283,7 +283,7 @@ export const buyNft = async (req, res) => {
                 owner: owner
             })
             if (nft) {
-                if (!nft.inSale == true) {
+                if (nft.inSale == true) {
                     nft.inSale = false
                     nft.owner=buyer
                     const collectionName = nft.collectionName
