@@ -85,7 +85,7 @@ export const ListedNfts = () => {
     color: "#fff",
     padding: "15px",
     justify: "center",
-    background: "#000",
+    background: "#2572f5",
     width: "100%",
     textAlign: "center",
   };
@@ -155,9 +155,9 @@ export const ListedNfts = () => {
           gap={2}
           justify="center"
           align="center"
-          css={{ marginTop: "20px" }}
+          css={{ marginTop: "20px", padding: "20px 0", borderBottom: "1px solid" }}
         >
-          <p>All Items</p>
+          <h4>All Items</h4>
         </Row>
         <Row gap={2} justify="center" align="center">
           <Grid.Container gap={2} justify="center">
