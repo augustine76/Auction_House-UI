@@ -82,7 +82,7 @@ export const signIn = async (req, res) => {
         message: 'User not found.',
       })
     } else {
-      if(!userSignedIn){
+      if (!userSignedIn) {
         var myquery = {
           publicKey: user.publicKey,
           isSigned: false,
@@ -96,7 +96,7 @@ export const signIn = async (req, res) => {
           if (err) throw err
           console.log('User signedIn successfully.')
         })
-      }else{
+      } else {
         return res.status(404).json({
           success: false,
           message: 'User is already signedIn.',
@@ -113,14 +113,14 @@ export const signOut = async (req, res) => {
   try {
     const { publicKey } = req.body
     const user = await User.findOne({ publicKey })
-    const userSignedOut = await User.findOne({ publicKey, isSigned: false})
+    const userSignedOut = await User.findOne({ publicKey, isSigned: false })
     if (!user) {
       return res.status(404).json({
         success: false,
         message: 'User not found.',
       })
     } else {
-      if(!userSignedOut){
+      if (!userSignedOut) {
         var myquery = {
           publicKey: user.publicKey,
           isSigned: true,
@@ -134,7 +134,7 @@ export const signOut = async (req, res) => {
           if (err) throw err
           console.log('User signedOut successfully')
         })
-      }else{
+      } else {
         return res.status(404).json({
           success: false,
           message: 'User is already signedOut.',
