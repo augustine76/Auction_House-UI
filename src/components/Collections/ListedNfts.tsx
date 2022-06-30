@@ -97,8 +97,8 @@ export const ListedNfts = () => {
           <Avatar
             color="gradient"
             bordered
-            src={"collectionImage"}
-            css={{ size: "$50", width: "250px" }}
+            src={collectionImage}
+            css={{ size: "250px", width: "250px" }}
           />
         </Row>
         <Row justify="center" align="center">

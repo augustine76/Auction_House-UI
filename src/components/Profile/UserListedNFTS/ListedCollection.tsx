@@ -17,7 +17,7 @@ import { UserListedNFTs } from "./UserListedNFTs";
 const baseURL = "http://localhost:5100";
 
 let collectionNames = [];
-
+let cls=[];
 export const UserNFT = (props: any) => {
   let res = [];
   let Ikey = 0;
@@ -47,9 +47,20 @@ export const UserNFT = (props: any) => {
   const fetchedNft = async () => {
     res = await getCollections();
     try {
-      res.map((x) => {
+      res.map(async(x) => {
         if (collectionNames.indexOf(x.collectionName) == -1) {
-          collectionNames.push(x.collectionName);
+         await axios(
+                  `${baseURL}/getCollectionInfo/${x.collectionName}`
+          ).
+          then(
+            response => {
+              console.log("")
+              collectionNames.push(x.collectionName)
+              cls.push(response.data.data);
+              console.log("p",response.data.data)
+            }
+            )
+          
 
         }
 
@@ -87,9 +98,9 @@ export const UserNFT = (props: any) => {
   // };
   return (
     <>
-      {updated && collectionNames
-        ? collectionNames.map((nft) => {
-
+      {updated && cls
+        ? cls.map((nft) => {
+          console.log("p",nft)
           // getCollectionInfo(nft)
 
           return (
@@ -102,18 +113,18 @@ export const UserNFT = (props: any) => {
                   padding: "16px 0 8px 0 ",
                 }}
               >
-                {/* <Col span={1}>
+                <Col span={1}>
                   <Card.Image
-                    src={"collectionImage"}
+                    src={nft.image}
 
                     width="40%"
                     height="40%"
                     objectFit="cover"
                              alt="Card example background"
-                  /></Col> */}
+                  /></Col>
                 <Col span={1}>
                   <Text color="#ffffff">
-                    {nft}
+                    {nft.name}
                     {"   "}
                   </Text>
                 </Col>
@@ -128,7 +139,7 @@ export const UserNFT = (props: any) => {
                       }}
                     >
 
-                      Floor Price :{10}
+                      Floor Price :{nft.floorPrice}
                     </code>
                   </Text>
                 </Col>
@@ -142,13 +153,13 @@ export const UserNFT = (props: any) => {
                         borderRadius: "5px",
                       }}
                     >
-                      Trade Volume:{10}
+                      Trade Volume:{nft.tradingVolume}
                     </code>
                   </Text>
                 </Col>
               </Row>
               <Row>
-                <UserListedNFTs data={nft} />
+                <UserListedNFTs data={nft.name} />
               </Row>
             </>
             // </Row>

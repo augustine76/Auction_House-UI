@@ -83,7 +83,7 @@ export const AppBar: FC = props => {
         {/* Nav Links */}
         <div className="hidden md:inline md:navbar-center">
           <div className="flex items-stretch">
-              <a className="btn btn-ghost btn-sm rounded-btn">Solana TPS {truncate(TPSinfo,5)}</a>
+              <a className="btn btn-ghost btn-sm rounded-btn">Solana {truncate(TPSinfo,5)} TPS</a>
           </div>
 
         </div>
@@ -117,7 +117,7 @@ export const AppBar: FC = props => {
                 <div className="form-control">
                   <label className="cursor-pointer label">
                     <Link href="/profile">
-                      <a >Change Profile</a>
+                      <a >Profile</a>
                     </Link>
                   </label>
                 </div>

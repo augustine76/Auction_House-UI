@@ -16,9 +16,9 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import { sell } from "../../api/src/auction-house";
 import { useWallet } from '@solana/wallet-adapter-react';
-
+import { Input, Container, Row, Col, Textarea, Button } from "@nextui-org/react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+
 const baseURL = "http://localhost:5100";
 const useStyles = makeStyles(() => ({
     root: {
@@ -105,27 +105,26 @@ export const NFTDetails = (props) => {
                 </CardContent>
             </Card>
             <div>
-                <Box
-                    component="form"
-                    sx={{
-                        '& > :not(style)': { m: 2, width: '25ch' },
-                        input: {
-                            background: "black"
-                        }
-                    }}
-                    noValidate
-                    autoComplete="off"
-                >
-
-                    <TextField
-                        label="Price"
-                        variant='filled'
-                        color='success'
-                        text-color="red"
-                        onChange={(e) => { setPrice(e.target.value) }}
-                        size='small'
-                    />
-                </Box>
+               <br/>
+                <Row
+          gap={1}
+          css={{ padding: "30px 0" }}
+          justify="center"
+          align="center"
+        >
+          <Col span={3}>
+            <Input
+              css={{ w: "100%" }}
+              
+              labelPlaceholder="Price"
+              color="primary"
+              size="lg"
+              clearable
+              underlined
+              onChange={(e) => { setPrice(e.target.value) }}
+            />
+          </Col>
+        </Row>
                 <button
                     className="group w-60 m-2 btn animate-pulse disabled:animate-none bg-gradient-to-r from-[#9945FF] to-[#14F195] hover:from-pink-500 hover:to-yellow-500 ... "
                     onClick={getSell} disabled={!publicKey}
