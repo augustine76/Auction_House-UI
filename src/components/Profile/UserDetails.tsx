@@ -134,7 +134,7 @@ export const UserDetails = () => {
                 color="gradient"
                 bordered
                 src="https://gateway.pinata.cloud/ipfs/QmPVYGdoczCw8rJxR8e98Q7ELp3hGb1jVz1AfCcmbJExeD"
-                css={{ size: "$50" }}
+                css={{ size: "200px" }}
               />
              
             </Row>
@@ -191,7 +191,7 @@ export const UserDetails = () => {
                 color="gradient"
                 bordered
                 src="https://gateway.pinata.cloud/ipfs/QmPVYGdoczCw8rJxR8e98Q7ELp3hGb1jVz1AfCcmbJExeD"
-                css={{ size: "$50" }}
+                css={{ size: "200px" }}
               />
             </Row>
             <Row justify="center" align="center" css={{ padding: "30px 0" }}>

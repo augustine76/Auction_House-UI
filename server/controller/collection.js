@@ -29,7 +29,9 @@ export const addCollection = async(req,res) => {
         description : description,
         nfts : nfts,
         image : image,
-        creator : creator
+        creator : creator,
+        totalUniqueHolders:1
+    
     })
     for (let i=0;i<nfts.length;i++) {
         const newNFT= new NFTS({ 
@@ -40,7 +42,7 @@ export const addCollection = async(req,res) => {
         })
         newNFT.save();
     }
-
+    await collection.owners.push(creator)
    const newCollection =  await collection.save();
 
     return res.status(201).json({message:"New collection Added",collection: newCollection})

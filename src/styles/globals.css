@@ -36,14 +36,14 @@ a {
 }
 input[type="text"]
 {
-    color: rgb(12, 12, 12) !important;
+    color: rgb(240, 232, 232) !important;
 }
 textarea{
-  color: rgb(22, 20, 20) !important;
+  color: rgb(221, 210, 210) !important;
 }
 input[type="number"]
 {
-    color: black !important;
+    color: rgb(243, 235, 235) !important;
 }
 .max_width{
   max-width: 18rem;
