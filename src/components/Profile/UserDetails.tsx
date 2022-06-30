@@ -34,13 +34,14 @@ export const UserDetails = () => {
     new PhantomWalletAdapter(),
     new SolflareWalletAdapter({ network }),
   ];
-  const endpoint = clusterApiUrl(network);
+
   const [pubkey, setPubkey] = useState("");
-  const connection = new Connection(endpoint);
+
   const { publicKey, signMessage } = useWallet();
   const [displayName, setDisplayName] = useState("");
   const [userName, setUserName] = useState("");
-  const wallet = useWallet();
+  const [email, setEmail] = useState("");
+
   const [visible, setVisible] = useState(false);
   const handler = () => setVisible(true);
 
@@ -107,6 +108,16 @@ export const UserDetails = () => {
       console.log(err);
     }
   };
+  const changeHandler = async () => {
+    const user = { publicKey: publicKey, userName: userName, displayName: displayName, email: email };
+    axios
+      .post(`${baseURL}/editUser`, user)
+      .then((response) => console.log(response))
+      .catch((error) => {
+        console.error("There was an error!", error);
+      });
+      setVisible(false);
+  }
 
   const getSignout = async () => {
     signOut();
@@ -125,13 +136,21 @@ export const UserDetails = () => {
                 src="https://i.pravatar.cc/150?u=a04258114e29026702d"
                 css={{ size: "$50" }}
               />
-              <Text>{displayName}</Text>
+             
+            </Row>
+            <Row justify="center" align="center">
+            <Text css={{ size: "$10",color: "white" }}>{userName}</Text>
+           
+            </Row>
+            <Row justify="center" align="center">
+            <Text css={{ size: "$50",color: "white" }}>{displayName}</Text>
+           
             </Row>
             <Row justify="center" align="center">
               <Col>
                 <Grid.Container gap={2} justify="center">
                   <Grid xs={4} justify="center">
-                    <Text blockquote>{pubkey}</Text>
+                    <Text blockquote className="publicKey">{pubkey}</Text>
                   </Grid>
                 </Grid.Container>
               </Col>
@@ -195,7 +214,20 @@ export const UserDetails = () => {
             </Text>
           </Modal.Header>
           <Modal.Body>
-            <Row css={{padding: "5px 0"}}>
+            <Row css={{ padding: "5px 0" }}>
+              <Input
+                value={userName}
+                clearable
+                bordered
+                fullWidth
+                color="primary"
+                size="lg"
+                placeholder="Name"
+                helperText="Change user Name"
+                onChange={(e) => { setUserName(e.target.value) }}
+              />
+            </Row>
+            <Row css={{ padding: "5px 0" }}>
               <Input
                 value={displayName}
                 clearable
@@ -204,10 +236,11 @@ export const UserDetails = () => {
                 color="primary"
                 size="lg"
                 placeholder="Name"
-                helperText="Change Name"
+                helperText="Change display Name"
+                onChange={(e) => { setDisplayName(e.target.value) }}
               />
             </Row>
-            <Row css={{padding: "5px 0"}}>
+            <Row css={{ padding: "5px 0" }}>
               <Input
                 clearable
                 bordered
@@ -216,6 +249,7 @@ export const UserDetails = () => {
                 size="lg"
                 placeholder="Email"
                 helperText="Change Email"
+                onChange={(e) => { setEmail(e.target.value) }}
               />
             </Row>
             <Row justify="space-between"></Row>
@@ -224,7 +258,7 @@ export const UserDetails = () => {
             <Button auto flat color="error" onClick={closeHandler}>
               Close
             </Button>
-            <Button auto onClick={closeHandler}>
+            <Button auto onClick={changeHandler}>
               Change
             </Button>
           </Modal.Footer>

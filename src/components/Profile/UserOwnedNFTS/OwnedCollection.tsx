@@ -102,7 +102,7 @@ export const UserOwnedCollection = (props: any) => {
                 >
                   {/* <Col span={1}>
                   <Card.Image
-                    src={collectionImage}
+                    src={"collectionImage"}
 
                     width="40%"
                     height="40%"
@@ -126,7 +126,11 @@ export const UserOwnedCollection = (props: any) => {
                           borderRadius: "5px",
                         }}
                       >
-                        Floor Price :{69}
+
+                    
+
+                        Floor Price :{10}
+
                       </code>
                     </Text>
                   </Col>
@@ -140,7 +144,10 @@ export const UserOwnedCollection = (props: any) => {
                           borderRadius: "5px",
                         }}
                       >
-                        Trade Volume:{420}
+
+                        
+                        Trade Volume:{10}
+
                       </code>
                     </Text>
                   </Col>
