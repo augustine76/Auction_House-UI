@@ -128,7 +128,7 @@ export const UserOwnedCollection = (props: any) => {
                       {"   "}
                     </Text>
                   </Col>
-                  <Col span={1}>
+                  <Col span={2}>
                     <Text>
                       <code
                         style={{
