@@ -75,28 +75,33 @@ export const signIn = async (req, res) => {
   try {
     const { publicKey, signature } = req.body
     const user = await User.findOne({ publicKey })
+    const userSignedIn = await User.findOne({ publicKey, isSigned: true })
     if (!user) {
       return res.status(404).json({
         success: false,
         message: 'User not found.',
       })
     } else {
-      var myquery = {
-        publicKey: user.publicKey,
-        isSigned: false,
-        signature: user.signature,
+      if(!userSignedIn){
+        var myquery = {
+          publicKey: user.publicKey,
+          isSigned: false,
+          signature: user.signature,
+        }
+        var newvalues = { $set: { isSigned: true, signature } }
+        const updateValues = await User.updateOne(myquery, newvalues, function (
+          err,
+          res,
+        ) {
+          if (err) throw err
+          console.log('User signedIn successfully.')
+        })
+      }else{
+        return res.status(404).json({
+          success: false,
+          message: 'User is already signedIn.',
+        })
       }
-      var newvalues = { $set: { isSigned: true, signature } }
-      const updateValues = await User.updateOne(myquery, newvalues, function (
-        err,
-        res,
-      ) {
-        if (err) throw err
-        console.log('User signedIn successfully.')
-      })
-      res
-        .status(201)
-        .json({ data: updateValues, message: 'User is already signedIn.' })
     }
   } catch (error) {
     return res.status(409).json({ error: error.message })
@@ -106,30 +111,35 @@ export const signIn = async (req, res) => {
 //signout
 export const signOut = async (req, res) => {
   try {
-    const { publicKey, signature } = req.body
+    const { publicKey } = req.body
     const user = await User.findOne({ publicKey })
+    const userSignedOut = await User.findOne({ publicKey, isSigned: false})
     if (!user) {
       return res.status(404).json({
         success: false,
         message: 'User not found.',
       })
     } else {
-      var myquery = {
-        publicKey: user.publicKey,
-        isSigned: true,
-        signature: user.signature,
+      if(!userSignedOut){
+        var myquery = {
+          publicKey: user.publicKey,
+          isSigned: true,
+          signature: user.signature,
+        }
+        var newvalues = { $set: { isSigned: false, signature: '' } }
+        const updateValues = await User.updateOne(myquery, newvalues, function (
+          err,
+          res,
+        ) {
+          if (err) throw err
+          console.log('User signedOut successfully')
+        })
+      }else{
+        return res.status(404).json({
+          success: false,
+          message: 'User is already signedOut.',
+        })
       }
-      var newvalues = { $set: { isSigned: false, signature: '' } }
-      const updateValues = await User.updateOne(myquery, newvalues, function (
-        err,
-        res,
-      ) {
-        if (err) throw err
-        console.log('User signedOut successfully')
-      })
-      res
-        .status(201)
-        .json({ data: updateValues, message: 'User is already signedOut.' })
     }
   } catch (error) {
     return res.status(409).json({ error: error.message })
@@ -172,7 +182,8 @@ export const createCollection = async (req, res) => {
         auctionHouseKey,
       } = req.body
       const findCollection = await Collection.findOne({
-        publicKey, collectionName,
+        publicKey,
+        collectionName,
       })
       if (!findCollection) {
         const newCollection = new Collection({
@@ -219,7 +230,9 @@ export const createListedNfts = async (req, res) => {
       publicKey,
     })
     const findMintKey = await Nft.findOne({
-      publicKey, mintKey, isExecuteSale: false
+      publicKey,
+      mintKey,
+      isExecuteSale: false,
     })
     const findCollection = await Collection.findOne({
       publicKey,
@@ -341,7 +354,9 @@ export const createBuy = async (req, res) => {
       publicKey,
     })
     const findMintKey = await Nft.findOne({
-      collectionName, mintKey, isExecuteSale: false
+      collectionName,
+      mintKey,
+      isExecuteSale: false,
     })
     const findCollection = await Collection.findOne({
       collectionName,
@@ -460,7 +475,11 @@ export const createExecuteSale = async (req, res) => {
       sellerWallet,
     })
     const findMintKey = await Nft.findOne({
-      mintKey, collectionName, isListed: true, isBuy: true, isExecuteSale: false
+      mintKey,
+      collectionName,
+      isListed: true,
+      isBuy: true,
+      isExecuteSale: false,
     })
     const findCollection = await Collection.findOne({
       collectionName,
@@ -718,7 +737,10 @@ export const fetchTotalMarketplaceTradingVolume = async (req, res) => {
 }
 
 //fetch total trading volume of the marketplace based on the timestamp
-export const fetchTotalMarketplaceTradingVolumeBasedOnTimestamp = async (req, res) => {
+export const fetchTotalMarketplaceTradingVolumeBasedOnTimestamp = async (
+  req,
+  res,
+) => {
   try {
     const totalTradingVolume1 = Collection.aggregate([
       {
@@ -776,7 +798,7 @@ export const fetchUserCollectionTradingHistory = async (req, res) => {
         if (nft) {
           res.status(200).json({
             success: true,
-            message: nft
+            message: nft,
           })
         } else {
           res.status(404).json({
