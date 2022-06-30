@@ -1,5 +1,6 @@
 import { NFTS } from "../model/nfts.js";
 import { Collection } from "../model/collection.js";
+import { User } from "../model/users.js";
 export const listNFT = async (req, res) => {
     try {
 
@@ -14,7 +15,7 @@ export const listNFT = async (req, res) => {
         const collection = await Collection.findOne({
             name: nftCollection
         })
-        console.log(collection)
+
         if (Nft && collection) {
             try {
 
@@ -31,6 +32,18 @@ export const listNFT = async (req, res) => {
                 }
                 collection.totalListedNfts = collection.totalListedNfts + 1;
                 await collection.save();
+
+                const activity = {
+                    mintKey : mintKey,
+                    type : 'listed',
+                    seller : owner,
+                    priceAmount : priceAmount,
+                }
+
+                const user = await User.findOne({ owner })
+                user.activity.push(activity);
+                await user.save();
+
                 return res.status(201).json({ message: "Nft is listed ", data: collection })
             } catch (error) {
                 return res.status(400).json({ message: error.message })
@@ -44,7 +57,8 @@ export const listNFT = async (req, res) => {
                 message: "NFT is not part of any collection or collection does not exits"
             })
         }
-    } catch (error) {
+    }
+    catch (error) {
         return res.status(409).json({ error: error.message })
     }
 }
@@ -294,6 +308,28 @@ export const buyNft = async (req, res) => {
                     const ownerr = await Collection.findOne({owners : buyer})
                     const temp = await NFTS.find({ owner , collectionName});
 
+                    const buyerActivity = {
+                        mintKey : mintKey,
+                        type : 'buy',
+                        buyer : buyer,
+                        seller : owner,
+                        priceAmount : priceAmount,
+                    }
+    
+                    const buyer = await User.findOne({ buyer })
+                    buyer.activity.push(buyerActivity);
+
+                    const sellerActivity = {
+                        mintKey : mintKey,
+                        type : 'sell',
+                        buyer : buyer,
+                        seller : owner,
+                        priceAmount : priceAmount,
+                    }
+    
+                    const seller = await User.findOne({ owner })
+                    seller.activity.push(sellerActivity);
+
                     if(temp.length <=1){
                         collection.owners =await collection.owners.filter(publicKey => publicKey != owner);
 
@@ -307,6 +343,8 @@ export const buyNft = async (req, res) => {
                     collection.tradingVolume += nft.priceAmount;
                     await collection.save();
                     await nft.save();
+                    await seller.save();
+                    await buyer.save();
                     
                     res.status(200).json({
                         status: 1,
