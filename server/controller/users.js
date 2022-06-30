@@ -47,7 +47,7 @@ export const editUser = async (req, res) => {
             existingUser.userName = userName;
             existingUser.email = email;
             existingUser.displayName = displayName;
-            existingUser.save();
+            await existingUser.save();
             return res.status(201).json({
                 success: true,
                 data: existingUser,

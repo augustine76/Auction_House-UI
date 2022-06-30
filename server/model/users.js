@@ -3,7 +3,7 @@ const userSchema = mongoose.Schema({
 
     publicKey: String,
     displayName: String,
-    username: String,
+    userName: String,
     signature: String,
     isSigned: {
         type: Boolean,

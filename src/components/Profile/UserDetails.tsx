@@ -133,7 +133,7 @@ export const UserDetails = () => {
               <Avatar
                 color="gradient"
                 bordered
-                src="https://i.pravatar.cc/150?u=a04258114e29026702d"
+                src="https://gateway.pinata.cloud/ipfs/QmPVYGdoczCw8rJxR8e98Q7ELp3hGb1jVz1AfCcmbJExeD"
                 css={{ size: "$50" }}
               />
              
@@ -190,7 +190,7 @@ export const UserDetails = () => {
               <Avatar
                 color="gradient"
                 bordered
-                src="https://i.pravatar.cc/150?u=a04258114e29026702d"
+                src="https://gateway.pinata.cloud/ipfs/QmPVYGdoczCw8rJxR8e98Q7ELp3hGb1jVz1AfCcmbJExeD"
                 css={{ size: "$50" }}
               />
             </Row>
