@@ -295,7 +295,7 @@ export const buyNft = async (req, res) => {
                     const temp = await NFTS.find({ owner , collectionName});
 
                     if(temp.length <=1){
-                        collection.owners =await collection.owners.filter(hi =>hi != owner);
+                        collection.owners =await collection.owners.filter(publicKey => publicKey != owner);
 
                     }
                     if(!ownerr){
