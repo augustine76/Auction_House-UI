@@ -1,4 +1,41 @@
 import mongoose from "mongoose";
+
+
+const userActivitySchema = mongoose.Schema({
+
+
+    mintKey : {
+        type : String,
+        required : true
+    },
+    
+    type :{
+        type : String,
+        enum : ['buy','listed','sell']
+    },
+
+    buyer : {
+        type : String
+    },
+
+    seller : {
+        type : String
+    },
+
+    priceAmount : {
+        type : Number
+    },
+    
+    transactionId : {
+        type : String
+    },
+
+    timeStamp: {
+        type: Date,
+        default: new Date()
+    }
+})
+
 const userSchema = mongoose.Schema({
 
     publicKey: String,
@@ -12,6 +49,10 @@ const userSchema = mongoose.Schema({
     createdAt: {
         type: Date,
         default: new Date()
+    },
+
+    activity : {
+        type : [userActivitySchema]
     }
 })
 
