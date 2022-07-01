@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 import { Nfts } from "./Nfts";
 import axios from "axios";
+import NftActivity from "./NftActivity";
 import {
   Container,
   Row,
@@ -12,11 +13,13 @@ import {
   Modal,
   Text,
   Image,
-  Button
+  Button,
 } from "@nextui-org/react";
+const types = ["All Items", "NFTs Activity"];
 
 const baseURL = "http://localhost:5100";
 export const ListedNfts = () => {
+  const [active, setActive] = useState(types[0]);
   const router = useRouter();
   const {
     query: { collectionName },
@@ -67,8 +70,8 @@ export const ListedNfts = () => {
     setCollectionList(res);
     setCollectionImage(res2.image);
     setFloorPrice(res2.floorPrice);
-    setTotalListedNfts(res2.totalListedNfts)
-    setTotalUniqueHolders(res2.totalUniqueHolders)
+    setTotalListedNfts(res2.totalListedNfts);
+    setTotalUniqueHolders(res2.totalUniqueHolders);
     setTradingVolume(res2.tradingVolume);
     console.log("collectionList", collectionList);
   };
@@ -85,11 +88,11 @@ export const ListedNfts = () => {
     color: "#fff",
     padding: "15px",
     justify: "center",
-    background: "#2572f5",
+    background: "#b559d9",
     width: "100%",
     textAlign: "center",
   };
-  
+
   return (
     <>
       <Container>
@@ -155,20 +158,33 @@ export const ListedNfts = () => {
           gap={2}
           justify="center"
           align="center"
-          css={{ marginTop: "20px", padding: "20px 0", borderBottom: "1px solid" }}
+          css={{
+            marginTop: "20px",
+            padding: "50px 0",
+          }}
         >
-          <h4>All Items</h4>
+          <Button.Group color="gradient" ghost ripple>
+            {types.map((type) => (
+              <Button key={type} onClick={() => setActive(type)}>
+                {type}
+              </Button>
+            ))}
+          </Button.Group>
         </Row>
-        <Row gap={2} justify="center" align="center">
-          <Grid.Container gap={2} justify="center">
-            {collectionList.map((x) => {
-              return (
-                <Grid xs={12} md={4} lg={2} justify="center">
-                  <Nfts data={x} key={Ikey++} />
-                </Grid>
-              );
-            })}
-          </Grid.Container>
+        <Row gap={2} justify="center" align="center" css={{marginBottom: "50px"}}>
+          {active == types[0] ? (
+            <Grid.Container gap={2} justify="center">
+              {collectionList.map((x) => {
+                return (
+                  <Grid xs={12} md={4} lg={2} justify="center">
+                    <Nfts data={x} key={Ikey++} />
+                  </Grid>
+                );
+              })}
+            </Grid.Container>
+          ) : (
+            <NftActivity />
+          )}
         </Row>
       </Container>
     </>
