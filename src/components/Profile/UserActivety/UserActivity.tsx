@@ -1,6 +1,13 @@
 import { Table, useAsyncList } from "@nextui-org/react";
 import axios from "axios";
 import { useWallet } from "@solana/wallet-adapter-react";
+import TimeAgo from 'javascript-time-ago'
+import en from 'javascript-time-ago/locale/en'
+
+TimeAgo.addDefaultLocale(en)
+
+const timeAgo = new TimeAgo('en-US');
+
 const baseURL = "http://localhost:5100";
 export default function UserActivity() {
   const columns = [
@@ -10,7 +17,7 @@ export default function UserActivity() {
     { name: "Seller", uid: "seller" },
     { name: "PriceAmount", uid: "priceAmount" },
     { name: "TransctionID", uid: "transactionId" },
-    { name: "Timestemp", uid: "timeStamp" },
+    { name: "Timestamp", uid: "timeStamp" },
   ];
   const { publicKey } = useWallet();
   async function load({ signal, cursor }) {
@@ -37,6 +44,12 @@ export default function UserActivity() {
     );
     const json = await res.json();
     console.log("json",json);
+    // let res3 = res2.map((x) => {
+    //   x.timeStamp = timeAgo.format(new Date(x.timeStamp));
+    // })
+    for(let i = 0; i < res2.length; i++){
+      res2[i].timeStamp = timeAgo.format(new Date(res2[i].timeStamp));
+    }
     return {
       items: res2,
       // cursor: json.next,
