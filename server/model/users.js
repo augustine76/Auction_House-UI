@@ -45,7 +45,7 @@ const userSchema = mongoose.Schema({
     isSigned: {
         type: Boolean,
         default: false
-    },
+    },                                                                      
     createdAt: {
         type: Date,
         default: new Date()

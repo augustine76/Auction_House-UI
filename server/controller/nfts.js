@@ -40,7 +40,7 @@ export const listNFT = async (req, res) => {
                     priceAmount : priceAmount,
                 }
 
-                const user = await User.findOne({ owner })
+                const user = await User.findOne({ publicKey:owner })
                 user.activity.push(activity);
                 await user.save();
 
@@ -318,7 +318,7 @@ export const buyNft = async (req, res) => {
                         priceAmount : priceAmount,
                     }
     
-                    const buyer2 = await User.findOne({ buyer })
+                    const buyer2 = await User.findOne({ publicKey: buyer })
                     buyer2.activity.push(buyerActivity);
 
                     const sellerActivity = {
@@ -329,7 +329,7 @@ export const buyNft = async (req, res) => {
                         priceAmount : priceAmount,
                     }
     
-                    const seller = await User.findOne({ owner })
+                    const seller = await User.findOne({publicKey: owner })
                     seller.activity.push(sellerActivity);
                     if(temp.length <=1){
                         collection.owners =await collection.owners.filter(publicKey => publicKey != owner);
