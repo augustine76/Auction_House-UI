@@ -38,6 +38,7 @@ const nftSchema = mongoose.Schema({
         required: true,
         default: new Date()
     },
+    
    
 
 })

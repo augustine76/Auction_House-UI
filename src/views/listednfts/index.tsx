@@ -6,9 +6,9 @@ export const ListedNftsView: FC = ({}) => {
     <>
       <Container>
         <Row justify="center" align="center">
-          <h1 className="text-center text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-tr from-[#9945FF] to-[#14F195]">
+          {/* <h1 className="text-center text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-tr from-[#9945FF] to-[#14F195]">
             Listed NFTS
-          </h1>
+          </h1> */}
         </Row>
         <Row justify="center" align="center">
           <ListedNfts />

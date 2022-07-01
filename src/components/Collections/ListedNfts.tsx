@@ -124,6 +124,8 @@ export const ListedNfts = () => {
                   <p>{totalListedNfts}</p>
                 </div>
               </Grid>
+              </Grid.Container>
+              <Grid.Container gap={1} justify="center">
               <Grid xs={12} md={4} lg={4} justify="center">
                 <div style={gridCardStyle}>
                   <p>Total Unique Holders</p>
@@ -136,7 +138,7 @@ export const ListedNfts = () => {
                   <p>{tradingVolume}</p>
                 </div>
               </Grid>
-              <Grid xs={12} md={4} lg={4} justify="center">
+              {/* <Grid xs={12} md={4} lg={4} justify="center">
                 <div style={gridCardStyle}>
                   <p>FLOOR PRICE</p>
                   <p>0.03</p>
@@ -147,7 +149,7 @@ export const ListedNfts = () => {
                   <p>FLOOR PRICE</p>
                   <p>0.03</p>
                 </div>
-              </Grid>
+              </Grid> */}
             </Grid.Container>
           </Col>
         </Row>
