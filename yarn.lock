@@ -3735,10 +3735,6 @@ available-typed-arrays@^1.0.5:
   resolved "https://registry.npmjs.org/available-typed-arrays/-/available-typed-arrays-1.0.5.tgz"
   integrity sha512-DMD0KiN46eipeziST1LPP/STfDU0sufISXmjSgvVsoU2tqxctQeASejWcfNtxYKqETM1UxQ8sp2OrSBWpHY6sw==
 
-"avsc@https://github.com/Bundlr-Network/avsc#csp-fixes":
-  version "5.4.7"
-  resolved "git+ssh://git@github.com/Bundlr-Network/avsc.git#a730cc8018b79e114b6a3381bbb57760a24c6cef"
-
 axe-core@^4.3.5:
   version "4.3.5"
   resolved "https://registry.npmjs.org/axe-core/-/axe-core-4.3.5.tgz"
