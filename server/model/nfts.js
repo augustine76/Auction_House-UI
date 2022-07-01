@@ -1,7 +1,5 @@
 import mongoose from "mongoose";
-import uniqueValidator from "mongoose-unique-validator";
-import pkgg from "validator";
-const { isBase58 } = pkgg;
+
 const nftSchema = mongoose.Schema({
     mintKey: {
         type: String,
