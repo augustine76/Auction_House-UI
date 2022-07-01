@@ -17,7 +17,7 @@ export const NFTS = (props) => {
   const [description, setDescription] = useState("");
   const findNft = async (mintKey) => {
     const connection = new Connection(clusterApiUrl("devnet"));
-    const { publicKey } = useWallet();
+    
     const wallet = useWallet();
     const metaplex = Metaplex.make(connection)
       //@ts-ignore

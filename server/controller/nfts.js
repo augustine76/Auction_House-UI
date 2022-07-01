@@ -34,13 +34,13 @@ export const listNFT = async (req, res) => {
                 await collection.save();
 
                 const activity = {
-                    mintKey : mintKey,
-                    type : 'listed',
-                    seller : owner,
-                    priceAmount : priceAmount,
+                    mintKey: mintKey,
+                    type: 'listed',
+                    seller: owner,
+                    priceAmount: priceAmount,
                 }
 
-                const user = await User.findOne({ publicKey:owner })
+                const user = await User.findOne({ publicKey: owner })
                 user.activity.push(activity);
                 await user.save();
 
@@ -290,7 +290,7 @@ export const FetchOwnedNFTsInCollection = async (req, res) => {
 export const buyNft = async (req, res) => {
     try {
 
-        const { mintKey,owner,buyer } = req.body
+        const { mintKey, owner, buyer } = req.body
         if (mintKey) {
             const nft = await NFTS.findOne({
                 mintKey: mintKey,
@@ -299,47 +299,48 @@ export const buyNft = async (req, res) => {
             if (nft) {
                 if (nft.inSale == true) {
                     nft.inSale = false
-                    nft.owner=buyer
+                    nft.owner = buyer
+                    nft.priceAmount=0;
                     const priceAmount = nft.priceAmount;
                     const collectionName = nft.collectionName
-                    const collection = await Collection.findOne({ name : collectionName})
+                    const collection = await Collection.findOne({ name: collectionName })
                     console.log(collection);
                     let totalListedNfts = collection.totalListedNfts;
-                    
-                    const ownerr = await Collection.findOne({owners : buyer})
-                    const temp = await NFTS.find({ owner , collectionName});
-                    
+
+                    const ownerr = await Collection.findOne({ owners: buyer })
+                    const temp = await NFTS.find({ owner, collectionName });
+
 
                     const buyerActivity = {
-                        mintKey : mintKey,
-                        type : 'buy',
-                        buyer : buyer,
-                        seller : owner,
-                        priceAmount : priceAmount,
+                        mintKey: mintKey,
+                        type: 'buy',
+                        buyer: buyer,
+                        seller: owner,
+                        priceAmount: priceAmount,
                     }
-    
+
                     const buyer2 = await User.findOne({ publicKey: buyer })
                     buyer2.activity.push(buyerActivity);
 
                     const sellerActivity = {
-                        mintKey : mintKey,
-                        type : 'sell',
-                        buyer : buyer,
-                        seller : owner,
-                        priceAmount : priceAmount,
+                        mintKey: mintKey,
+                        type: 'sell',
+                        buyer: buyer,
+                        seller: owner,
+                        priceAmount: priceAmount,
                     }
-    
-                    const seller = await User.findOne({publicKey: owner })
+
+                    const seller = await User.findOne({ publicKey: owner })
                     seller.activity.push(sellerActivity);
-                    if(temp.length <=1){
-                        collection.owners =await collection.owners.filter(publicKey => publicKey != owner);
+                    if (temp.length <= 1) {
+                        collection.owners = await collection.owners.filter(publicKey => publicKey != owner);
 
                     }
-                    if(!ownerr){
+                    if (!ownerr) {
                         await collection.owners.push(buyer);
                     }
 
-                    collection.totalUniqueHolders = collection.owners.length 
+                    collection.totalUniqueHolders = collection.owners.length
                     collection.totalListedNfts = --totalListedNfts;
                     collection.tradingVolume += nft.priceAmount;
                     await collection.save();
@@ -348,13 +349,83 @@ export const buyNft = async (req, res) => {
                     await buyer2.save();
                     res.status(200).json({
                         status: 1,
-                        data: nft,collection,
+                        data: nft, collection,
                         message: "This NFT is sold"
                     })
                 }
-                else{
+                else {
                     res.status(200).json({
-                        
+
+                        message: "This NFT is notListed"
+                    })
+                }
+
+            }
+            else {
+                res.status(200).json({
+                    status: 0,
+                    message: "This NFT is not found"
+                })
+            }
+
+        }
+        else return res.status(404).json({
+            success: false,
+            message: "Nft is not found"
+        })
+    }
+    catch (error) {
+        res.status(409).json({ error: error.message })
+    }
+}
+
+export const cancelNFTListing = async (req, res) => {
+    try {
+
+        const { mintKey, owner } = req.body
+        if (mintKey) {
+            const nft = await NFTS.findOne({
+                mintKey: mintKey,
+                owner: owner
+            })
+            if (nft) {
+                if (nft.inSale == true) {
+                    nft.inSale = false
+
+                    nft.priceAmount=0;
+                    const collectionName = nft.collectionName
+                    const collection = await Collection.findOne({ name: collectionName })
+                    console.log(collection);
+
+
+                    const Activity = {
+                        mintKey: mintKey,
+                        type: 'cancelListing',
+                        buyer: buyer,
+                        seller: owner,
+                        priceAmount: priceAmount,
+                    }
+
+                    const user = await User.findOne({ publicKey: owner })
+                    user.activity.push(Activity);
+
+
+                    let totalListedNfts = collection.totalListedNfts;
+                    collection.totalListedNfts = totalListedNfts - 1;
+
+                    await collection.save();
+
+                    await user.save();
+
+                    res.status(200).json({
+                        status: 1,
+                        data: nft, collection,
+                        message: "This NFT is cancel for listing"
+                    })
+                }
+                else {
+                    res.status(200).json({
+
                         message: "This NFT is notListed"
                     })
                 }
