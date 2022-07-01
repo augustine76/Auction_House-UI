@@ -300,13 +300,15 @@ export const buyNft = async (req, res) => {
                 if (nft.inSale == true) {
                     nft.inSale = false
                     nft.owner=buyer
+                    const priceAmount = nft.priceAmount;
                     const collectionName = nft.collectionName
                     const collection = await Collection.findOne({ name : collectionName})
-
+                    console.log(collection);
                     let totalListedNfts = collection.totalListedNfts;
                     
                     const ownerr = await Collection.findOne({owners : buyer})
                     const temp = await NFTS.find({ owner , collectionName});
+                    
 
                     const buyerActivity = {
                         mintKey : mintKey,
@@ -316,8 +318,8 @@ export const buyNft = async (req, res) => {
                         priceAmount : priceAmount,
                     }
     
-                    const buyer = await User.findOne({ buyer })
-                    buyer.activity.push(buyerActivity);
+                    const buyer2 = await User.findOne({ buyer })
+                    buyer2.activity.push(buyerActivity);
 
                     const sellerActivity = {
                         mintKey : mintKey,
@@ -329,7 +331,6 @@ export const buyNft = async (req, res) => {
     
                     const seller = await User.findOne({ owner })
                     seller.activity.push(sellerActivity);
-
                     if(temp.length <=1){
                         collection.owners =await collection.owners.filter(publicKey => publicKey != owner);
 
@@ -344,8 +345,7 @@ export const buyNft = async (req, res) => {
                     await collection.save();
                     await nft.save();
                     await seller.save();
-                    await buyer.save();
-                    
+                    await buyer2.save();
                     res.status(200).json({
                         status: 1,
                         data: nft,collection,
