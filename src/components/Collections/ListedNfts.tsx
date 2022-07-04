@@ -188,7 +188,7 @@ export const ListedNfts = () => {
               })}
             </Grid.Container>
           ) : (
-            <NftActivity />
+            <NftActivity collectionName={collectionName} />
           )}
         </Row>
       </Container>

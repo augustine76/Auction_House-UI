@@ -1,6 +1,7 @@
 import { NFTS } from "../model/nfts.js";
 import { Collection } from "../model/collection.js";
 import { User } from "../model/users.js";
+import { createUser } from "./users.js";
 export const listNFT = async (req, res) => {
     try {
 
@@ -292,7 +293,7 @@ export const FetchOwnedNFTsInCollection = async (req, res) => {
 export const buyNft = async (req, res) => {
     try {
 
-        const { mintKey, owner, buyer } = req.body
+        const { mintKey, owner, buyer, txid } = req.body
         if (mintKey) {
             const nft = await NFTS.findOne({
                 mintKey: mintKey,
@@ -318,10 +319,20 @@ export const buyNft = async (req, res) => {
                         buyer: buyer,
                         seller: owner,
                         priceAmount: priceAmount,
+                        transactionId: txid
                     }
 
-                    const buyer2 = await User.findOne({ publicKey: buyer })
+                    let buyer2 = await User.findOne({ publicKey: buyer });
+                    if(!buyer2){
+                        buyer2 = new User({
+                            publicKey:buyer,
+                            signature: "",
+                            isSigned: true
+                        });
+                        await buyer2.save();
+                    }
                     buyer2.activity.push(buyerActivity);
+                
 
                     const sellerActivity = {
                         mintKey: mintKey,
@@ -329,7 +340,10 @@ export const buyNft = async (req, res) => {
                         buyer: buyer,
                         seller: owner,
                         priceAmount: priceAmount,
+                        transactionId: txid
+
                     }
+                    
 
                     const collectionActivity = {
                         mintKey: mintKey,
@@ -337,9 +351,9 @@ export const buyNft = async (req, res) => {
                         buyer: buyer,
                         seller: owner,
                         priceAmount: priceAmount,
+                        transactionId: txid
                     }
-
-                    const seller = await User.findOne({ publicKey: owner })
+                    const seller = await User.findOne({ publicKey: owner });
                     seller.activity.push(sellerActivity);
                     if (nfts.length <= 1) {
                         collection.owners = await collection.owners.filter(publicKey => publicKey != owner);

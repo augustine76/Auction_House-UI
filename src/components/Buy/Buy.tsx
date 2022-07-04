@@ -40,9 +40,10 @@ export const Buy: FC = () => {
         // })
         console.log("mintkey",mint)
         console.log("seller",sellerWallet)
-        buy({ auctionHouse: auctionHouseAddress, buyPrice: price, tokenSize: '1', mint: mint, env: 'devnet', wallet: wallet,sellerWallet : sellerWallet }).then(x => {
+        let res = buy({ auctionHouse: auctionHouseAddress, buyPrice: price, tokenSize: '1', mint: mint, env: 'devnet', wallet: wallet,sellerWallet : sellerWallet }).then(x => {
             alert('Buy / offer Action'+'Offer: '+x);
-        })
+        });
+        console.log("txid res",res);
         // const buyer = { buyer: publicKey  };
     //   axios.post(`${baseURL}/buy`, buyer)
     //     .then(response => console.log(response))

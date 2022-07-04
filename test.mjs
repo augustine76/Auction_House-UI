@@ -7,4 +7,5 @@ TimeAgo.addDefaultLocale(en)
 // Create formatter (English).
 const timeAgo = new TimeAgo('en-US');
 
-console.log(timeAgo.format(new Date("2022-07-01T09:47:33.345+00:00")));
+console.log(timeAgo.format(Date.now()));
+console.log("time is", new Date());

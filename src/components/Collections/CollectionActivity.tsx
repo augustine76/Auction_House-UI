@@ -9,7 +9,7 @@ TimeAgo.addDefaultLocale(en)
 const timeAgo = new TimeAgo('en-US');
 
 const baseURL = "http://localhost:5100";
-export default function NftActivity(props) {
+export default function CollectionActivity() {
   const columns = [
     { name: "MintKey", uid: "mintKey" },
     { name: "Type", uid: "type" },
@@ -23,13 +23,12 @@ export default function NftActivity(props) {
   async function load({ signal, cursor }) {
     // If no cursor is available, then we're loading the first page.
     // Otherwise, the cursor is the next URL to load, as returned from the previous page.
-  
-   console.log("Collection",props.collectionName);
 
-   let res2= await axios
-        .get(`${baseURL}/getCollectionInfo/${props.collectionName}`)
+
+   const res2= await axios
+        .get(`${baseURL}/getUserDetails/${publicKey}`)
         .then((response) => {
-          console.log("collection details", response);
+          console.log("user details", response);
           // console.log("pub key", response.data.data.publicKey);
           return response.data.data.activity;
         })
@@ -50,9 +49,7 @@ export default function NftActivity(props) {
     // })
     for(let i = 0; i < res2.length; i++){
       res2[i].timeStamp = timeAgo.format(new Date(res2[i].timeStamp));
-      res2[i].transactionId = `https://explorer.solana.com/tx/${res2[i].transactionId}?cluster=devnet#ix-2`
     }
-    res2 = res2.reverse();
     return {
       items: res2,
       // cursor: json.next,
@@ -81,18 +78,7 @@ export default function NftActivity(props) {
         {(item) => (
           <Table.Row key={item}>
             {(key) => (
-              <Table.Cell css={{ color: "#fff" }}>{ 
-                
-                key === "transactionId" ? 
-
-              <a href={item[key]} target="_blank" >{item[key]}</a> 
-
-              :
-
-              item[key]
-
-              
-              }</Table.Cell>
+              <Table.Cell css={{ color: "#fff" }}>{item[key]}</Table.Cell>
             )}
           </Table.Row>
         )}

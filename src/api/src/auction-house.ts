@@ -858,7 +858,7 @@ export const buy = async (cmd : any ) => {
         .map(k => (k.isSigner = true));
     }
 
-    await sendTransactionWithRetryWithKeypair(
+    const {txid} = await sendTransactionWithRetryWithKeypair(
       anchorProgram.provider.connection,
       auctionHouseSigns ? auctionHouseKeypairLoaded : walletKeyPair,
       [instruction,instruction0],
@@ -878,16 +878,18 @@ export const buy = async (cmd : any ) => {
       buyPrice,
       'from your account with Auction House',
       auctionHouse,
+      'with txid', txid
     );
     var output =  {'mintAddress': mint,
     'inwallet':sellerWalletKey.toBase58(),
     'towallet':walletKeyPair.publicKey.toBase58(),
     'price':buyPrice,
-    'account':auctionHouse}
+    'account':auctionHouse,
+    'txid':txid}
 
-    return output
+    return txid;
   
-  };
+};
 
 export const deposit = async (cmd : any) => {
     const { wallet, env, amount, auctionHouse, auctionHouseKeypair } =
@@ -1008,7 +1010,7 @@ export const deposit = async (cmd : any) => {
       currBal + amountAdjusted,
     );
     var output = {'deposited': amountAdjusted,'account':auctionHouse,'newBalance':currBal + amountAdjusted}
-
+    
     return output
   };
 

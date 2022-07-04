@@ -3,6 +3,7 @@ import axios from "axios";
 import { useWallet } from "@solana/wallet-adapter-react";
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
+import { reverse } from "dns";
 
 TimeAgo.addDefaultLocale(en)
 
@@ -25,7 +26,7 @@ export default function UserActivity() {
     // Otherwise, the cursor is the next URL to load, as returned from the previous page.
 
 
-   const res2= await axios
+   let res2= await axios
         .get(`${baseURL}/getUserDetails/${publicKey}`)
         .then((response) => {
           console.log("user details", response);
@@ -49,7 +50,9 @@ export default function UserActivity() {
     // })
     for(let i = 0; i < res2.length; i++){
       res2[i].timeStamp = timeAgo.format(new Date(res2[i].timeStamp));
+      res2[i].transactionId = `https://explorer.solana.com/tx/${res2[i].transactionId}?cluster=devnet#ix-2`
     }
+    res2 = res2.reverse();
     return {
       items: res2,
       // cursor: json.next,
@@ -78,7 +81,18 @@ export default function UserActivity() {
         {(item) => (
           <Table.Row key={item}>
             {(key) => (
-              <Table.Cell css={{ color: "#fff" }}>{item[key]}</Table.Cell>
+              <Table.Cell css={{ color: "#fff" }}>{ 
+                
+                key === "transactionId" ? 
+
+              <a href={item[key]} target="_blank" >{item[key]}</a> 
+
+              :
+
+              item[key]
+
+              
+              }</Table.Cell>
             )}
           </Table.Row>
         )}
