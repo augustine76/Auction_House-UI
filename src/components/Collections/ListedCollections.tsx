@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { Collections } from "./Collections";
 import { Container, Card, Col, Row, Grid } from "@nextui-org/react";
 import axios from "axios";
-const baseURL = "http://localhost:5100";
+const baseURL = "http://34.224.215.17:5100";
 export const ListedCollections = () => {
   let res = [];
   let Ikey = 0;

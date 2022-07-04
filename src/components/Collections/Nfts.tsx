@@ -21,7 +21,7 @@ import {
   Image,
   Button,
 } from "@nextui-org/react";
-const baseURL = "http://localhost:5100";
+const baseURL = "http://34.224.215.17:5100";
 import { buy } from "../../api/src/auction-house";
 import axios from "axios";
 

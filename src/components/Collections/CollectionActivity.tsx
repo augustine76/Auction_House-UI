@@ -8,7 +8,7 @@ TimeAgo.addDefaultLocale(en)
 
 const timeAgo = new TimeAgo('en-US');
 
-const baseURL = "http://localhost:5100";
+const baseURL = "http://34.224.215.17:5100";
 export default function CollectionActivity() {
   const columns = [
     { name: "MintKey", uid: "mintKey" },

@@ -25,7 +25,7 @@ import {
 } from "@nextui-org/react";
 
 // import { signIn, signOut, useSession } from 'next-auth/client';
-const baseURL = "http://localhost:5100";
+const baseURL = "http://34.224.215.17:5100";
 import {Cancel} from '../../AuctionHouseComponents/Cancel'
 export const UserDetails = () => {
   const [issignin, setIssignin] = useState(false);
