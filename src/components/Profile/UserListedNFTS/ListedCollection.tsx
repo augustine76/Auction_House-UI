@@ -42,13 +42,14 @@ export const UserNFT = (props: any) => {
     }
   };
 
-
+  
 
   const fetchedNft = async () => {
     res = await getCollections();
     try {
       res.map(async(x) => {
         if (collectionNames.indexOf(x.collectionName) == -1) {
+         
          await axios(
                   `${baseURL}/getCollectionInfo/${x.collectionName}`
           ).

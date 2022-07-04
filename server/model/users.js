@@ -11,7 +11,7 @@ const userActivitySchema = mongoose.Schema({
     
     type :{
         type : String,
-        enum : ['buy','listed','sell']
+        enum : ['buy','listed','cancelListing','sell']
     },
 
     buyer : {

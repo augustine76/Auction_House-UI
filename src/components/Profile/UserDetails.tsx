@@ -26,6 +26,7 @@ import {
 
 // import { signIn, signOut, useSession } from 'next-auth/client';
 const baseURL = "http://localhost:5100";
+import {Cancel} from '../../AuctionHouseComponents/Cancel'
 export const UserDetails = () => {
   const [issignin, setIssignin] = useState(false);
   // const [session] = useSession();
@@ -126,6 +127,7 @@ export const UserDetails = () => {
 
   return (
     <>
+    {/* <Cancel/> */}
       <Container>
         {issignin ? (
           <>

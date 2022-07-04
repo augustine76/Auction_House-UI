@@ -1,5 +1,40 @@
 import mongoose from "mongoose";
 
+const collectionActivitySchema = mongoose.Schema({
+
+
+    mintKey : {
+        type : String,
+        required : true
+    },
+    
+    type :{
+        type : String,
+        enum : ['listed','cancelListing','sale']
+    },
+
+    buyer : {
+        type : String
+    },
+
+    seller : {
+        type : String
+    },
+
+    priceAmount : {
+        type : Number
+    },
+    
+    transactionId : {
+        type : String
+    },
+
+    timeStamp: {
+        type: Date,
+        default: new Date()
+    }
+})
+
 const collectionSchema = mongoose.Schema({
 
     collectionId: {
@@ -68,7 +103,12 @@ const collectionSchema = mongoose.Schema({
 
     owners :[{
         type: String
-    }]
+    }],
+
+    activity : {
+        type : [collectionActivitySchema]
+    }
+
 })
 
 export const Collection = mongoose.model('collections', collectionSchema);
