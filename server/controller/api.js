@@ -370,7 +370,7 @@ export const createListedNfts = async (req, res) => {
   }
 }
 
-//Cancel nft's listing
+//Cancel listing nft's
 export const cancelListingNft = async (req, res) => {
   try {
     const { publicKey, mintKey, collectionName, auctionHouseKey } = req.body
