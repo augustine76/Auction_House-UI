@@ -238,6 +238,12 @@ export const createListedNfts = async (req, res) => {
       publicKey,
       collectionName,
     })
+    const cancelNftListing = await Nft.findOne({
+      publicKey,
+      collectionName,
+      mintKey,
+      isListed: false,
+    })
     if (user) {
       if (findCollection) {
         const { url, amount, auctionHouseKey, mintKey } = req.body
@@ -255,6 +261,24 @@ export const createListedNfts = async (req, res) => {
         )
         if (newNft.mintKey && newNft.publicKey) {
           if (amount != 0) {
+            if (cancelNftListing) {
+              var myquery = {
+                publicKey: user.publicKey,
+                collectionName: findCollection.collectionName,
+                mintKey: findMintKey.mintKey,
+                isListed: false,
+                amount: findMintKey.amount,
+              }
+              var newvalues = { $set: { isListed: true, amount } }
+              const updateValues = await Nft.updateOne(
+                myquery,
+                newvalues,
+                function (err, res) {
+                  if (err) throw err
+                  console.log('User`s cancel nft listed updated successfully.')
+                },
+              )
+            }
             if (!findMintKey) {
               newNft.sellerWallet = user.publicKey
               newNft.buyerWallet = ''
@@ -346,10 +370,79 @@ export const createListedNfts = async (req, res) => {
   }
 }
 
+//Cancel nft's listing
+export const cancelListingNft = async (req, res) => {
+  try {
+    const { publicKey, mintKey, collectionName, auctionHouseKey } = req.body
+    const user = await User.findOne({ publicKey })
+    const findCollection = await Collection.findOne({
+      publicKey,
+      collectionName,
+    })
+    const findMintKey = await Nft.findOne({
+      publicKey,
+      mintKey,
+      auctionHouseKey,
+    })
+    const cancelNftListing = await Nft.findOne({
+      publicKey,
+      collectionName,
+      mintKey,
+      isListed: false,
+    })
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found.',
+      })
+    } else {
+      if (findCollection) {
+        if (findMintKey) {
+          if (!cancelNftListing) {
+            var myquery = {
+              publicKey: user.publicKey,
+              collectionName: findMintKey.collectionName,
+              mintKey: findMintKey.mintKey,
+              isListed: true,
+            }
+            var newvalues = { $set: { isListed: false } }
+            const updateValues = await Nft.updateOne(
+              myquery,
+              newvalues,
+              function (err, res) {
+                if (err) throw err
+                console.log('User cancelled nft sale or buy successfully')
+              },
+            )
+          } else {
+            return res.status(404).json({
+              success: false,
+              message:
+                'User already cancelled nft sale or buy at this mintKey successfully.',
+            })
+          }
+        } else {
+          return res.status(404).json({
+            success: false,
+            message: 'No mintKey found.',
+          })
+        }
+      } else {
+        return res.status(404).json({
+          success: false,
+          message: 'No collection found for this publicKey.',
+        })
+      }
+    }
+  } catch (error) {
+    return res.status(409).json({ error: error.message })
+  }
+}
+
 //buying nfts
 export const createBuy = async (req, res) => {
   try {
-    const { publicKey, mintKey, collectionName } = req.body
+    const { publicKey, mintKey, collectionName, auctionHouseKey } = req.body
     const user = await User.findOne({
       publicKey,
     })
@@ -371,6 +464,7 @@ export const createBuy = async (req, res) => {
             findMintKey.amount == amount &&
             findMintKey.isListed == true &&
             findMintKey.isBuy == false &&
+            findMintKey.auctionHouseKey == auctionHouseKey &&
             findMintKey.isExecuteSale == false
           ) {
             var tradingVolumeOfBuyingNfts = findCollection.tradingVolume
@@ -469,7 +563,13 @@ export const createBuy = async (req, res) => {
 //selling nfts:- execute sell
 export const createExecuteSale = async (req, res) => {
   try {
-    const { buyerWallet, sellerWallet, mintKey, collectionName } = req.body
+    const {
+      buyerWallet,
+      sellerWallet,
+      mintKey,
+      collectionName,
+      auctionHouseKey,
+    } = req.body
     const checkWallet = await Nft.findOne({
       buyerWallet,
       sellerWallet,
@@ -493,6 +593,7 @@ export const createExecuteSale = async (req, res) => {
         if (
           findMintKey.amount == amount &&
           findMintKey.amount == amount &&
+          findMintKey.auctionHouseKey == auctionHouseKey &&
           findMintKey.isListed == true &&
           findMintKey.isBuy == true &&
           findMintKey.isExecuteSale == false
@@ -790,15 +891,21 @@ export const fetchUserCollectionTradingHistory = async (req, res) => {
         collectionName,
       })
       if (collection) {
-        const nft = await Nft.find({
+        const nftWithExecutedSale = await Nft.find({
           publicKey,
           collectionName,
           isExecuteSale: true,
         })
-        if (nft) {
+        const nftwithCancelledSaleOrBuy = await Nft.find({
+          publicKey,
+          collectionName,
+          isListed: false,
+        })
+        if (nftWithExecutedSale) {
           res.status(200).json({
             success: true,
-            message: nft,
+            message: nftWithExecutedSale,
+            nftwithCancelledSaleOrBuy,
           })
         } else {
           res.status(404).json({

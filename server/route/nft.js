@@ -6,6 +6,7 @@ import {
   createExecuteSale,
   createBuy,
   createCollection,
+  cancelListingNft,
   fetchUserCollectionOwnedNft,
   fetchAllCollections,
   fetchUserCollections,
@@ -22,6 +23,7 @@ router.post('/createListedNfts', createListedNfts)
 router.post('/createExecuteSale', createExecuteSale)
 router.post('/createBuy', createBuy)
 router.post('/createCollection', createCollection)
+router.post('/cancelListingNft', cancelListingNft)
 router.get('/fetchAllNfts', fetchAllNfts)
 router.get('/fetchAllUserOwnedNfts', fetchAllUserOwnedNfts)
 router.get('/fetchUserCollectionOwnedNft', fetchUserCollectionOwnedNft)
