@@ -31,7 +31,7 @@ const collectionActivitySchema = mongoose.Schema({
 
     timeStamp: {
         type: Date,
-        default: new Date()
+        default: Date.now()
     }
 })
 

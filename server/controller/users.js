@@ -1,6 +1,5 @@
 import { User } from "../model/users.js"
 export const createUser = async (req, res) => {
-
     try {
         const { publicKey, signature } = req.body
         const newUser = new User({
@@ -31,7 +30,8 @@ export const createUser = async (req, res) => {
             })
         }
     } catch (error) {
-        return res.status(409).json({ error: error.message })
+        // return res.status(409).json({ error: error.message })
+        console.log("error", error)
     }
 
 }

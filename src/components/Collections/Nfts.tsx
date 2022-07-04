@@ -69,9 +69,12 @@ export const Nfts = (props) => {
     let price = props.data.priceAmount;
     let mint = props.data.mintKey;
     let sellerWallet = props.data.owner;
-   buy({ auctionHouse: auctionHouseAddress, buyPrice: price, tokenSize: '1', mint: mint, env: 'devnet', wallet: wallet, sellerWallet: sellerWallet }).then(x => {
+    buy({ auctionHouse: auctionHouseAddress, buyPrice: price, tokenSize: '1', mint: mint, env: 'devnet', wallet: wallet, sellerWallet: sellerWallet }).then(x => {
       // alert('Buy / offer Action'+'Offer: '+x);
-      const data = { mintKey: mint, owner: sellerWallet, buyer: publicKey };
+      console.log("txid res", x);
+
+      // alert("this is the buy")
+      const data = { mintKey: mint, owner: sellerWallet, buyer: publicKey,txid:x };
       axios.post(`${baseURL}/buyNft`, data)
         .then(response => {
           console.log(response)
@@ -80,7 +83,6 @@ export const Nfts = (props) => {
         .catch(error => {
           console.error('There was an error!', error);
         });
-
     })
 
   }
