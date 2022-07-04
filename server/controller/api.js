@@ -259,6 +259,12 @@ export const createListedNfts = async (req, res) => {
           },
           totalListedNft++,
         )
+        const findNft = await Nft.findOne({
+          publicKey,
+          collectionName,
+        })
+          .sort({ amount: +1 })
+          .limit(1)
         if (newNft.mintKey && newNft.publicKey) {
           if (amount != 0) {
             if (cancelNftListing) {
@@ -270,7 +276,7 @@ export const createListedNfts = async (req, res) => {
                 amount: findMintKey.amount,
               }
               var newvalues = { $set: { isListed: true, amount } }
-              const updateValues = await Nft.updateOne(
+              const updateValues = Nft.updateOne(
                 myquery,
                 newvalues,
                 function (err, res) {
@@ -278,6 +284,37 @@ export const createListedNfts = async (req, res) => {
                   console.log('User`s cancel nft listed updated successfully.')
                 },
               )
+              if (findCollection.floorPrice == 0) {
+                var myquery = {
+                  publicKey: user.publicKey,
+                  collectionName: findCollection.collectionName,
+                  floorPrice: 0,
+                }
+                var newvalues = { $set: { floorPrice: amount } }
+                const updateValues = Collection.updateOne(
+                  myquery,
+                  newvalues,
+                  function (err, res) {
+                    if (err) throw err
+                    console.log('Floor Price for collection updated properly.')
+                  },
+                )
+              } else if (findNft.amount > amount) {
+                var myquery = {
+                  publicKey: user.publicKey,
+                  collectionName: findCollection.collectionName,
+                  floorPrice: findCollection.floorPrice,
+                }
+                var newvalues = { $set: { floorPrice: amount } }
+                const updateValues = Collection.updateOne(
+                  myquery,
+                  newvalues,
+                  function (err, res) {
+                    if (err) throw err
+                    console.log('Floor Price for collection updated properly..')
+                  },
+                )
+              }
             }
             if (!findMintKey) {
               newNft.sellerWallet = user.publicKey
@@ -299,12 +336,6 @@ export const createListedNfts = async (req, res) => {
               Collection.updateOne(myquery, newvalues, function (err, res) {
                 if (err) throw err
               })
-              const findNft = await Nft.findOne({
-                publicKey,
-                collectionName,
-              })
-                .sort({ amount: +1 })
-                .limit(1)
               if (findCollection.floorPrice == 0) {
                 var myquery = {
                   publicKey: user.publicKey,
@@ -312,7 +343,7 @@ export const createListedNfts = async (req, res) => {
                   floorPrice: 0,
                 }
                 var newvalues = { $set: { floorPrice: amount } }
-                const updateValues = await Collection.updateOne(
+                const updateValues = Collection.updateOne(
                   myquery,
                   newvalues,
                   function (err, res) {
@@ -327,7 +358,7 @@ export const createListedNfts = async (req, res) => {
                   floorPrice: findCollection.floorPrice,
                 }
                 var newvalues = { $set: { floorPrice: amount } }
-                const updateValues = await Collection.updateOne(
+                const updateValues = Collection.updateOne(
                   myquery,
                   newvalues,
                   function (err, res) {
