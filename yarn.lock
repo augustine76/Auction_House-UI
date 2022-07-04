@@ -3747,7 +3747,6 @@
     "algosdk" "^1.13.1"
     "arweave" "^1.11.4"
     "arweave-stream-tx" "^1.1.0"
-    "avsc" "https://github.com/Bundlr-Network/avsc#csp-fixes"
     "axios" "^0.21.3"
     "base64url" "^3.0.1"
     "bs58" "^4.0.1"
@@ -3911,9 +3910,6 @@
   "resolved" "https://registry.npmjs.org/available-typed-arrays/-/available-typed-arrays-1.0.5.tgz"
   "version" "1.0.5"
 
-"avsc@https://github.com/Bundlr-Network/avsc#csp-fixes":
-  "resolved" "git+ssh://git@github.com/Bundlr-Network/avsc.git#a730cc8018b79e114b6a3381bbb57760a24c6cef"
-  "version" "5.4.7"
 
 "axe-core@^4.3.5":
   "integrity" "sha512-WKTW1+xAzhMS5dJsxWkliixlO/PqC4VhmO9T4juNYcaTg9jzWiJsou6m5pxWYGfigWbwzJWeFY6z47a+4neRXA=="
