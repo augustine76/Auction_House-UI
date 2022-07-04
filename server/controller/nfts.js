@@ -26,7 +26,7 @@ export const listNFT = async (req, res) => {
                 if (collection.floorPrice == 0) {
                     collection.floorPrice = priceAmount;
 
-                }
+                }   
                 if (priceAmount < collection.floorPrice) {
                     collection.floorPrice = priceAmount;
                 }
@@ -391,17 +391,15 @@ export const cancelNFTListing = async (req, res) => {
             if (nft) {
                 if (nft.inSale == true) {
                     nft.inSale = false
-
-                    nft.priceAmount=0;
+                    const priceAmount=nft.priceAmount
                     const collectionName = nft.collectionName
                     const collection = await Collection.findOne({ name: collectionName })
                     console.log(collection);
 
-
                     const Activity = {
                         mintKey: mintKey,
                         type: 'cancelListing',
-                        buyer: buyer,
+                        
                         seller: owner,
                         priceAmount: priceAmount,
                     }

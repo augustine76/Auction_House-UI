@@ -48,12 +48,13 @@ export const ListedNfts = () => {
   const [totalListedNfts, setTotalListedNfts] = useState(0);
   const [totalUniqueHolders, setTotalUniqueHolders] = useState(0);
   const [tradingVolume, setTradingVolume] = useState(0);
+  
   const getCollectionInfo = async () => {
     try {
       const response = await axios(
         `${baseURL}/getCollectionInfo/${collectionName}`
       );
-
+      
       console.log("Inside Fetch");
       console.log(response.data);
       return response.data.data;
@@ -66,6 +67,7 @@ export const ListedNfts = () => {
     console.log("collection nft", res);
     res2 = await getCollectionInfo();
     console.log("collection info", res2);
+    if(res2&&res){
     setupdated(true);
     setCollectionList(res);
     setCollectionImage(res2.image);
@@ -73,14 +75,15 @@ export const ListedNfts = () => {
     setTotalListedNfts(res2.totalListedNfts);
     setTotalUniqueHolders(res2.totalUniqueHolders);
     setTradingVolume(res2.tradingVolume);
-    console.log("collectionList", collectionList);
+    }
+    
   };
 
   useEffect(() => {
     setTimeout(() => {}, 10000);
     console.log("Exucute useEffect");
     onClick();
-  }, []);
+  }, [collectionName]);
 
   const gridCardStyle = {
     bg: "rgb(66 64 64)",
@@ -176,7 +179,7 @@ export const ListedNfts = () => {
         <Row gap={2} justify="center" align="center" css={{marginBottom: "50px"}}>
           {active == types[0] ? (
             <Grid.Container gap={2} justify="center">
-              {collectionList.map((x) => {
+              {collectionList && collectionList.map((x) => {
                 return (
                   <Grid xs={12} md={4} lg={2} justify="center">
                     <Nfts data={x} key={Ikey++} />
