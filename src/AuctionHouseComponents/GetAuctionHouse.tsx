@@ -101,8 +101,11 @@ export const GetAuctionHouse: FC = () => {
     const getAuctionHouse = () => {
       
         show({ env: 'devnet', wallet: wallet }).then(x => {
+            // @ts-ignore
             arr.push(x.auctionHouseKey, x.treasuryMint.toBase58(), x.authority.toBase58(),
+            // @ts-ignore
             x.creator.toBase58(),x.auctionHouseFeeAccount.toBase58(),
+            // @ts-ignore
             x.auctionHouseTreasury.toBase58(), x.feeWithdrawalDestination.toBase58(), x.feeWithdrawalDestination.toBase58(),
             x.sellerFeeBasisPoints, x.requiresSignOff, x.canChangeSalePrice, x.bump, x.feePayerBump,
             x.treasuryBump
