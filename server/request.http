@@ -1,4 +1,4 @@
-@base_url = https://34.238.117.105:5100
+@base_url = https://powerful-coast-99873.herokuapp.com
 
 ### Create user signup
 POST {{base_url}}/createSignUp

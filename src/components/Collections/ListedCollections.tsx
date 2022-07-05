@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import { Collections } from "./Collections";
 import { Container, Card, Col, Row, Grid } from "@nextui-org/react";
 import axios from "axios";
-const baseURL = "https://34.238.117.105:5100";
+const baseURL = "https://powerful-coast-99873.herokuapp.com";
 export const ListedCollections = () => {
   let res = [];
   let Ikey = 0;

@@ -22,7 +22,7 @@ import {
   Image,
   Button,
 } from "@nextui-org/react";
-const baseURL = "https://34.238.117.105:5100";
+const baseURL = "https://powerful-coast-99873.herokuapp.com";
 import { buy } from "../../api/src/auction-house";
 import axios from "axios";
 

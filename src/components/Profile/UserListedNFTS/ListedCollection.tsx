@@ -15,7 +15,7 @@ import {
 } from "@metaplex-foundation/js-next";
 import { Connection, clusterApiUrl, PublicKey } from "@solana/web3.js";
 import { UserListedNFTs } from "./UserListedNFTs";
-const baseURL = "https://34.238.117.105:5100";
+const baseURL = "https://powerful-coast-99873.herokuapp.com";
 
 let collectionNames = [];
 let cls=[];

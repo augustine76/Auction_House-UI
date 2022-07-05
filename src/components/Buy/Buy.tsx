@@ -6,7 +6,7 @@ import Box from '@mui/material/Box';
 import { useRouter } from "next/router";
 import { buy } from "../../api/src/auction-house";
 import axios from "axios";
-const baseURL = "https://34.238.117.105:5100";
+const baseURL = "https://powerful-coast-99873.herokuapp.com";
 
 export const Buy: FC = () => {
     const router = useRouter()

@@ -18,7 +18,7 @@ import {
 } from "@nextui-org/react";
 const types = ["All Items", "NFTs Activity"];
 
-const baseURL = "https://34.238.117.105:5100";
+const baseURL = "https://powerful-coast-99873.herokuapp.com";
 export const ListedNfts = () => {
   const [active, setActive] = useState(types[0]);
   const router = useRouter();

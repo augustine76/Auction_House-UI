@@ -6,7 +6,7 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import { NFTS } from "./NFTS";
 import { Grid, Container, Row } from "@nextui-org/react";
 
-const baseURL = "https://34.238.117.105:5100";
+const baseURL = "https://powerful-coast-99873.herokuapp.com";
 
 export const UserOwnedNFTs = (props) => {
   let res = [];

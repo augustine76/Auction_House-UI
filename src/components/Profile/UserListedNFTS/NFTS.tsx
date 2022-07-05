@@ -12,7 +12,7 @@ import { Connection, clusterApiUrl, PublicKey } from "@solana/web3.js";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { cancel } from "../../../api/src/auction-house"
 const axios = require("axios").default;
-const baseURL = "https://34.238.117.105:5100";
+const baseURL = "https://powerful-coast-99873.herokuapp.com";
 
 
 
