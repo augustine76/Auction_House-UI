@@ -9,7 +9,7 @@ TimeAgo.addDefaultLocale(en)
 
 const timeAgo = new TimeAgo('en-US');
 
-const baseURL = "http://54.172.59.172:5100";
+const baseURL = "http://34.238.117.105:5100";
 export default function NftActivity(props) {
   const columns = [
     { name: "MintKey", uid: "mintKey" },

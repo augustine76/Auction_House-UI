@@ -1,4 +1,4 @@
-@base_url = http://54.172.59.172:5100
+@base_url = http://34.238.117.105:5100
 
 ### Create user signup
 POST {{base_url}}/createSignUp

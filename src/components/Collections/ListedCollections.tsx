@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import { Collections } from "./Collections";
 import { Container, Card, Col, Row, Grid } from "@nextui-org/react";
 import axios from "axios";
-const baseURL = "http://54.172.59.172:5100";
+const baseURL = "http://34.238.117.105:5100";
 export const ListedCollections = () => {
   let res = [];
   let Ikey = 0;
@@ -19,7 +19,6 @@ export const ListedCollections = () => {
 
       console.log("Inside Fetch", response);
       return response.data;
-
     } catch (error) {
       console.log("ERROR", error);
     }

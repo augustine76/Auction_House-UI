@@ -6,7 +6,7 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import { NFTS } from "./NFTS";
 import { Grid, Container, Row } from "@nextui-org/react";
 
-const baseURL = "http://54.172.59.172:5100";
+const baseURL = "http://34.238.117.105:5100";
 
 export const UserOwnedNFTs = (props) => {
   let res = [];

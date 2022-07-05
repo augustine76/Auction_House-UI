@@ -12,7 +12,7 @@ import { Connection, clusterApiUrl, PublicKey } from "@solana/web3.js";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { cancel } from "../../../api/src/auction-house"
 const axios = require("axios").default;
-const baseURL = "http://54.172.59.172:5100";
+const baseURL = "http://34.238.117.105:5100";
 
 
 

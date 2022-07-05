@@ -18,7 +18,7 @@ import {
 } from "@nextui-org/react";
 const types = ["All Items", "NFTs Activity"];
 
-const baseURL = "http://54.172.59.172:5100";
+const baseURL = "http://34.238.117.105:5100";
 export const ListedNfts = () => {
   const [active, setActive] = useState(types[0]);
   const router = useRouter();
