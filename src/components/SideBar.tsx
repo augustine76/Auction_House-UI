@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { FC } from 'react';
 import Link from "next/link";
 export const ContentContainer: FC = props => {

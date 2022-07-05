@@ -1,3 +1,4 @@
+// @ts-nocheck
 import Box from "@mui/material/Box";
 import { useState } from "react";
 import axios from "axios";

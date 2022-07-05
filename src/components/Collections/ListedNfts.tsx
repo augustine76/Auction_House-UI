@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { FC, useCallback, useState } from "react";
 import React, { useEffect } from "react";
 import { useRouter } from "next/router";

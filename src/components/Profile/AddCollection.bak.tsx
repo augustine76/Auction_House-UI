@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { FormContainer, TextFieldElement } from "react-hook-form-mui";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";

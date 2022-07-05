@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { FC } from "react";
 import { ListedNfts } from "../../components/Collections/ListedNfts";
 import { Container, Row } from "@nextui-org/react";

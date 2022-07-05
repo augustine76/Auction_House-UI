@@ -1,3 +1,4 @@
+// @ts-nocheck
 
 import React, { useEffect, useState } from "react";
 import { Card, Col, Row, Text } from "@nextui-org/react";

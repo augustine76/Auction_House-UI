@@ -1,3 +1,4 @@
+// @ts-nocheck
 // import { FC } from 'react';
 import { produceWithPatches } from 'immer';
 import { FC, useCallback, useState } from 'react';

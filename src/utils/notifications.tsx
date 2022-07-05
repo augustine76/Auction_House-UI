@@ -1,3 +1,4 @@
+// @ts-nocheck
 import useNotificationStore from "../stores/useNotificationStore";
 
 export function notify(newNotification: {

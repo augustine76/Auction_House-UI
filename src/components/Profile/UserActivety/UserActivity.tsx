@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Table, useAsyncList } from "@nextui-org/react";
 import axios from "axios";
 import { useWallet } from "@solana/wallet-adapter-react";
