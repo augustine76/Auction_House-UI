@@ -6,7 +6,7 @@ import Link from "next/link";
 import axios from "axios";
 import { Card, Col, Row, Text, Button } from "@nextui-org/react";
 
-const baseURL = "http://34.238.117.105:5100";
+const baseURL = "https://34.238.117.105:5100";
 
 export const NFTS = (props) => {
   const [image, setimage] = useState("");

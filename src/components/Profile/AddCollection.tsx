@@ -13,7 +13,7 @@ import { Input, Container, Row, Col, Textarea, Button } from "@nextui-org/react"
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 import { useWallet } from "@solana/wallet-adapter-react";
 
-const baseURL = "http://34.238.117.105:5100";
+const baseURL = "https://34.238.117.105:5100";
 
 export function CollectionForm() {
   const [name, setName] = useState("");
