@@ -10,7 +10,7 @@ TimeAgo.addDefaultLocale(en)
 
 const timeAgo = new TimeAgo('en-US');
 
-const baseURL = "http://34.224.215.17:5100";
+const baseURL = "http://54.172.59.172:5100";
 export default function UserActivity() {
   const columns = [
     { name: "MintKey", uid: "mintKey" },
