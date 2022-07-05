@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { FC, useCallback, useState } from 'react';
 import { useConnection, useWallet } from '@solana/wallet-adapter-react';
 import { show} from "../api/src/auction-house";
