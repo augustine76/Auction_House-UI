@@ -46,7 +46,7 @@ export const UserOwnedCollection = (props: any) => {
 
   const fetchedNft = async () => {
     res = await getCollections();
-    try {
+   
       res.map(async(x) => {
         if (collectionNames.indexOf(x.collectionName) == -1) {
          await axios(
@@ -69,7 +69,7 @@ export const UserOwnedCollection = (props: any) => {
       console.log("res", res);
       setupdated(true);
       setNFTList(res);
-    } catch { }
+   
     console.log("collection", NFTList);
   };
   // const [collectionImage, setCollectionImage] = useState("");
