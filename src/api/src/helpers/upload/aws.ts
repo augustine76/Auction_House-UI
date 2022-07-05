@@ -1,3 +1,4 @@
+// @ts-nocheck
 import log from 'loglevel';
 import { basename } from 'path';
 import { createReadStream } from 'fs';

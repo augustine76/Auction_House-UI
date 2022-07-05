@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { sendTransactionWithRetryWithKeypair } from '../helpers/transactions';
 import {
   getTokenWallet,

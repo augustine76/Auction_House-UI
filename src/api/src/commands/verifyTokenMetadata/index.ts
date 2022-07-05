@@ -1,3 +1,4 @@
+// @ts-nocheck
 import path from 'path';
 import log from 'loglevel';
 import { validate } from 'jsonschema';
