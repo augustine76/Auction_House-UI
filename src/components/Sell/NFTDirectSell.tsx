@@ -64,21 +64,25 @@ export const NFTDetails = (props) => {
     function getSell() {
         console.log("ah,auction", auctionHouseAddress);
 
-        sell({ auctionHouse: auctionHouseAddress, buyPrice: price, mint: mint, tokenSize: '1', wallet: wallet }).then(x => {
+        // sell({ auctionHouse: auctionHouseAddress, buyPrice: price, mint: mint, tokenSize: '1', wallet: wallet }).then(x => {
 
-            alert('Create Sell Action' + 'Account' + x.account + 'MintAddress' + x.mintAddress + 'Price' + x.price);
-            const nft = { owner: publicKey, mintKey: mint, priceAmount: price };
-            axios.post(`${baseURL}/listNFT`, nft)
-            .then(response => {console.log("response", response)
-            window.location.href = "http://localhost:3000/profile";
+        //     alert('Create Sell Action' + 'Account' + x.account + 'MintAddress' + x.mintAddress + 'Price' + x.price);
+        //     const nft = { owner: publicKey, mintKey: mint, priceAmount: price };
+        //     axios.post(`${baseURL}/listNFT`, nft)
+        //     .then(response => {console.log("response", response)
+        //     window.location.href = "http://localhost:3000/profile";
            
-        }
-            )
-            .catch(error => {
-                console.error('There was an error!', error);
-            });
-        })
-        
+        // }
+        //     )
+        //     .catch(error => {
+        //         console.error('There was an error!', error);
+        //     });
+        // })
+        const res =  await sell({ auctionHouse: auctionHouseAddress, buyPrice: price, mint: mint, tokenSize: '1', wallet: wallet })
+        console.log("response is", res);
+        const nft = { owner: publicKey, mintKey: mint, priceAmount: price };
+        await axios.post(`${baseURL}/listNFT`, nft);
+        console.log("response is", res);
 
     }
     // console.log("nft details", uri);
