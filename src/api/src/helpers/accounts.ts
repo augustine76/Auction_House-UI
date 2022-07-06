@@ -654,17 +654,24 @@ export async function loadAuctionHouseProgram(
   customRpcUrl?: string,
 ) {
   if (customRpcUrl) console.log('USING CUSTOM URL', customRpcUrl);
-
+  console.log("inside accounts 1");
   // @ts-ignore
   const solConnection = new anchor.web3.Connection(
     //@ts-ignore
     customRpcUrl || getCluster(env),
   );
+  console.log("inside accounts 2");
+
   const walletWrapper = walletKeyPair;
+  console.log("inside accounts 3");
+
   const provider = new Provider(solConnection, walletWrapper, {
     preflightCommitment: 'recent',
   });
+  console.log("inside accounts 4");
+
   const idl = await anchor.Program.fetchIdl(AUCTION_HOUSE_PROGRAM_ID, provider);
+  console.log("inside accounts 5");
 
   return new anchor.Program(idl, AUCTION_HOUSE_PROGRAM_ID, provider);
 }
