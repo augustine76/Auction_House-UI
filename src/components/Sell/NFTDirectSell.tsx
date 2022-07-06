@@ -78,7 +78,7 @@ export const NFTDetails = (props) => {
         //         console.error('There was an error!', error);
         //     });
         // })
-        const res =  await sell({ auctionHouse: auctionHouseAddress, buyPrice: price, mint: mint, tokenSize: '1', wallet: wallet })
+        const res =  await sell({ auctionHouse: auctionHouseAddress, buyPrice: price, mint: mint, tokenSize: '1', wallet: wallet, env: "devnet" })
         console.log("response is", res);
         const nft = { owner: publicKey, mintKey: mint, priceAmount: price };
         await axios.post(`${baseURL}/listNFT`, nft);
