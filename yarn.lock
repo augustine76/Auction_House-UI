@@ -1766,7 +1766,7 @@
     "@metaplex-foundation/beet-solana" "^0.1.1"
     "@metaplex-foundation/mpl-candy-machine" "^4.2.0"
     "@metaplex-foundation/mpl-token-metadata" "^2.1.1"
-    "@solana/spl-token" "^0.2.0"
+    "@solana/spl-token" "^0.1.8"
     "@solana/wallet-adapter-base" "^0.9.3"
     "@solana/web3.js" "^1.37.0"
     abort-controller "^3.0.0"
@@ -1793,7 +1793,7 @@
     "@metaplex-foundation/mpl-auction-house" "^2.0.0"
     "@metaplex-foundation/mpl-candy-machine" "^4.2.0"
     "@metaplex-foundation/mpl-token-metadata" "^2.1.2"
-    "@solana/spl-token" "^0.2.0"
+    "@solana/spl-token" "^0.1.8"
     "@solana/web3.js" "^1.44.0"
     abort-controller "^3.0.0"
     bignumber.js "^9.0.2"
@@ -1892,7 +1892,7 @@
     "@metaplex-foundation/beet" "^0.1.0"
     "@metaplex-foundation/beet-solana" "^0.1.1"
     "@metaplex-foundation/cusper" "^0.0.2"
-    "@solana/spl-token" "^0.2.0"
+    "@solana/spl-token" "^0.1.8"
     "@solana/web3.js" "^1.35.1"
     bn.js "^5.2.0"
     debug "^4.3.3"
@@ -2872,9 +2872,9 @@
     buffer-layout "^1.2.0"
     dotenv "10.0.0"
 
-"@solana/spl-token@^0.2.0":
+"@solana/spl-token@^0.1.8":
   version "0.2.0"
-  resolved "https://registry.npmjs.org/@solana/spl-token/-/spl-token-0.2.0.tgz"
+  resolved "https://registry.npmjs.org/@solana/spl-token/-/spl-token-0.1.8.tgz"
   integrity sha512-RWcn31OXtdqIxmkzQfB2R+WpsJOVS6rKuvpxJFjvik2LyODd+WN58ZP3Rpjpro03fscGAkzlFuP3r42doRJgyQ==
   dependencies:
     "@solana/buffer-layout" "^4.0.0"
