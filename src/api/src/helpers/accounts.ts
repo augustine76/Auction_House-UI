@@ -40,6 +40,8 @@ export type AccountAndPubkey = {
 };
 import {Wallet} from "@project-serum/anchor";
 import {Provider} from "@project-serum/anchor";
+import { Program, AnchorProvider, web3 } from "@project-serum/anchor";
+
 
 export type StringPublicKey = string;
 
@@ -665,7 +667,7 @@ export async function loadAuctionHouseProgram(
   const walletWrapper = walletKeyPair;
   console.log("inside accounts 3");
 
-  const provider = anchor.Provider(solConnection, walletWrapper, {
+  const provider = new AnchorProvider(solConnection, walletWrapper, {
     preflightCommitment: 'recent',
   });
   console.log("inside accounts 4");
