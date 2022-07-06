@@ -61,7 +61,7 @@ export const NFTDetails = (props) => {
     const wallet = useWallet();
     let auctionHouseAddress = "BnHNmwRwMHpjq9LBkvQYTkMGRAY4yuWcT5nnGhVq4SBr";
     const [price, setPrice] = useState(''); // '' is the initial state value
-    function getSell() {
+    async function getSell() {
         console.log("ah,auction", auctionHouseAddress);
 
         // sell({ auctionHouse: auctionHouseAddress, buyPrice: price, mint: mint, tokenSize: '1', wallet: wallet }).then(x => {
