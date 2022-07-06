@@ -647,7 +647,7 @@ export async function loadFairLaunchProgram(
 }
 
 export async function loadAuctionHouseProgram(
-  walletKeyPair: anchor.Wallet,
+  walletKeyPair: Wallet,
   env: string,
   customRpcUrl?: string,
 ) {
