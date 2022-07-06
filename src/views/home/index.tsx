@@ -3,6 +3,7 @@ import { FC } from "react";
 import { Container, Row } from "@nextui-org/react";
 import { ListedCollections } from "../../components/Collections/ListedCollections";
 import { RequestAirdrop } from "components/RequestAirdrop";
+import { SignMessage } from "components/SignMessage";
 export const HomeView: FC = ({}) => {
   return (
     <Container>
@@ -15,6 +16,7 @@ export const HomeView: FC = ({}) => {
         <div className="text-center">
           <ListedCollections />
           <RequestAirdrop />
+          <SignMessage />
         </div>
       </Row>
     </Container>
