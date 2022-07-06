@@ -64,7 +64,6 @@ export const NFTDetails = (props) => {
     function getSell() {
         console.log("ah,auction", auctionHouseAddress);
 
-
         sell({ auctionHouse: auctionHouseAddress, buyPrice: price, mint: mint, tokenSize: '1', wallet: wallet }).then(x => {
 
             // alert('Create Sell Action' + 'Account' + x.account + 'MintAddress' + x.mintAddress + 'Price' + x.price);
