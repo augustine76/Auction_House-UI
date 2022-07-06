@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { FC } from "react";
 import { CollectionForm } from "../../components/Profile/AddCollection";
 import { Container, Row } from "@nextui-org/react";

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { FC } from "react";
 import { Container, Row } from "@nextui-org/react";
 import { Profile } from "../../components/Profile/Profile";

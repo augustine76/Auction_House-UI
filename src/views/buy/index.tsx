@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { FC } from "react";
 import { Buy } from "../../components/Buy/Buy";
 import { Container, Row } from "@nextui-org/react";

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import log from 'loglevel';
 import fetch from 'node-fetch';
 import { create, globSource } from 'ipfs-http-client';

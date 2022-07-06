@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { LAMPORTS_PER_SOL, AccountInfo } from '@solana/web3.js';
 // import fs from 'fs';
 import weighted from 'weighted';

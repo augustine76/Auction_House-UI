@@ -1,3 +1,4 @@
+// @ts-nocheck
 import create, { State } from "zustand";
 import produce from "immer";
 

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useEffect, useState } from "react";
 
 const axios = require("axios").default;
@@ -5,7 +6,7 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import { ListedNFTS } from "./NFTS";
 import { Grid, Container, Row } from "@nextui-org/react";
 
-const baseURL = "http://localhost:5100";
+const baseURL = "https://powerful-coast-99873.herokuapp.com";
 
 export const UserListedNFTs = (props) => {
   let res = [];

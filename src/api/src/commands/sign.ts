@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Keypair, PublicKey, TransactionInstruction } from '@solana/web3.js';
 import { TOKEN_METADATA_PROGRAM_ID } from '../helpers/constants';
 import { sendTransactionWithRetryWithKeypair } from '../helpers/transactions';

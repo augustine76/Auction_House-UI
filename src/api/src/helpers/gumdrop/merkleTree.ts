@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { keccak_256 } from 'js-sha3';
 
 export class MerkleTree {

@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { Metaplex, keypairIdentity, bundlrStorage } from "@metaplex-foundation/js";
 import { Connection, clusterApiUrl,  PublicKey } from "@solana/web3.js";
 import * as anchor from '@project-serum/anchor';

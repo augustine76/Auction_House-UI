@@ -1,3 +1,4 @@
+// @ts-nocheck
 import {
   AccountMeta,
   Connection as RPCConnection,

@@ -1,3 +1,4 @@
+// @ts-nocheck
 // import { FC } from 'react';
 import React from "react";
 import { UserDetails } from "./UserDetails";

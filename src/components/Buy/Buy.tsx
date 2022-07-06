@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useWallet } from '@solana/wallet-adapter-react';
 import { FC, useCallback, useState } from 'react';
 import TextField from '@mui/material/TextField';
@@ -5,7 +6,7 @@ import Box from '@mui/material/Box';
 import { useRouter } from "next/router";
 import { buy } from "../../api/src/auction-house";
 import axios from "axios";
-const baseURL = "http://localhost:5100";
+const baseURL = "https://powerful-coast-99873.herokuapp.com";
 
 export const Buy: FC = () => {
     const router = useRouter()

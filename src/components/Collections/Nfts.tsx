@@ -1,3 +1,4 @@
+// @ts-nocheck
 // import { FC } from 'react';
 import { produceWithPatches } from "immer";
 import React from "react";
@@ -21,7 +22,7 @@ import {
   Image,
   Button,
 } from "@nextui-org/react";
-const baseURL = "http://localhost:5100";
+const baseURL = "https://powerful-coast-99873.herokuapp.com";
 import { buy } from "../../api/src/auction-house";
 import axios from "axios";
 

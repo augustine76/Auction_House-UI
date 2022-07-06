@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useEffect, useState } from "react";
 import { UserNFT } from "./UserListedNFTS/ListedCollection";
 import { UserOwnedCollection } from "./UserOwnedNFTS/OwnedCollection";

@@ -1,3 +1,4 @@
+// @ts-nocheck
 
 import React, { useEffect, useState } from "react";
 import { Card, Col, Row, Text } from "@nextui-org/react";
@@ -14,7 +15,7 @@ import {
 } from "@metaplex-foundation/js-next";
 import { Connection, clusterApiUrl, PublicKey } from "@solana/web3.js";
 import { UserOwnedNFTs } from "./OwnedNFTs";
-const baseURL = "http://localhost:5100";
+const baseURL = "https://powerful-coast-99873.herokuapp.com";
 
 let collectionNames = [];
 let cls=[];

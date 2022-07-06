@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { PublicKey, Keypair } from '@solana/web3.js';
 import * as anchor from '@project-serum/anchor';
 import { sendTransactionWithRetryWithKeypair } from '../helpers/transactions';

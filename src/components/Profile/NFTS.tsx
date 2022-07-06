@@ -1,3 +1,4 @@
+// @ts-nocheck
 // import { FC } from 'react';
 import { produceWithPatches } from "immer";
 import React, { useState } from "react";
@@ -5,7 +6,7 @@ import Link from "next/link";
 import axios from "axios";
 import { Card, Col, Row, Text, Button } from "@nextui-org/react";
 
-const baseURL = "http://localhost:5100";
+const baseURL = "https://powerful-coast-99873.herokuapp.com";
 
 export const NFTS = (props) => {
   const [image, setimage] = useState("");

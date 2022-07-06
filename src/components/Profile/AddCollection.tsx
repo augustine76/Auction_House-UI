@@ -1,3 +1,4 @@
+// @ts-nocheck
 import Box from "@mui/material/Box";
 import { useState } from "react";
 import axios from "axios";
@@ -12,7 +13,7 @@ import { Input, Container, Row, Col, Textarea, Button } from "@nextui-org/react"
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 import { useWallet } from "@solana/wallet-adapter-react";
 
-const baseURL = "http://localhost:5100";
+const baseURL = "https://powerful-coast-99873.herokuapp.com";
 
 export function CollectionForm() {
   const [name, setName] = useState("");

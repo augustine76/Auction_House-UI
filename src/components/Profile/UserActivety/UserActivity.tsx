@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Table, useAsyncList } from "@nextui-org/react";
 import axios from "axios";
 import { useWallet } from "@solana/wallet-adapter-react";
@@ -9,7 +10,7 @@ TimeAgo.addDefaultLocale(en)
 
 const timeAgo = new TimeAgo('en-US');
 
-const baseURL = "http://localhost:5100";
+const baseURL = "https://powerful-coast-99873.herokuapp.com";
 export default function UserActivity() {
   const columns = [
     { name: "MintKey", uid: "mintKey" },

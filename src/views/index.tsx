@@ -1,3 +1,4 @@
+// @ts-nocheck
 export { HomeView } from "./home";
 // export { BasicsView } from "./basics";
 export { BuyView } from "./buy";

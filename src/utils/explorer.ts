@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { PublicKey, Transaction } from '@solana/web3.js'
 import base58 from 'bs58'
 

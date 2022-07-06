@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Keypair, PublicKey, SystemProgram } from '@solana/web3.js';
 import {
   getAtaForMint,

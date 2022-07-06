@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useState } from "react";
 import { Button, Container, Row, Text } from "@nextui-org/react";
 import { StateHandle } from "./StateHandle";

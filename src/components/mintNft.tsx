@@ -1,3 +1,4 @@
+// @ts-nocheck
 // TODO: SignMessage
 
 import { FC, useCallback, useState } from "react";
