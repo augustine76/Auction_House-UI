@@ -667,7 +667,7 @@ export async function loadAuctionHouseProgram(
   const walletWrapper = walletKeyPair;
   console.log("inside accounts 3");
 
-  const provider = new AnchorProvider(solConnection, walletWrapper, {
+  const provider = AnchorProvider(solConnection, walletWrapper, {
     preflightCommitment: 'recent',
   });
   console.log("inside accounts 4");
