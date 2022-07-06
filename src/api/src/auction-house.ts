@@ -188,22 +188,33 @@ export const sell = async (cmd : any) => {
       tokenSize,
       auctionHouseSigns,
     } = cmd;
+    console.log("inside sell");
 
     const auctionHouseKey = new web3.PublicKey(auctionHouse);
     const walletKeyPair = wallet;
+    console.log("inside sell");
 
     const mintKey = new web3.PublicKey(mint);
+    console.log("inside sell");
+
 
     const auctionHouseKeypairLoaded = auctionHouseKeypair
       ? loadWalletKey(auctionHouseKeypair)
       : null as any;;
+
+    console.log("inside sell");
+
     const anchorProgram = await loadAuctionHouseProgram(
       auctionHouseSigns ? auctionHouseKeypairLoaded : walletKeyPair,
       env,
     );
+
+    console.log("inside sell");
+
     const auctionHouseObj = await anchorProgram.account.auctionHouse.fetch(
       auctionHouseKey,
     );
+    console.log("inside sell");
 
     const buyPriceAdjusted = new BN(
       await getPriceWithMantissa(
@@ -213,6 +224,7 @@ export const sell = async (cmd : any) => {
         anchorProgram,
       ),
     );
+    console.log("inside sell");
 
     const tokenSizeAdjusted = new BN(
       await getPriceWithMantissa(
@@ -222,14 +234,17 @@ export const sell = async (cmd : any) => {
         anchorProgram,
       ),
     );
+    console.log("inside sell");
 
     const tokenAccountKey = (
       await getAtaForMint(mintKey, walletKeyPair.publicKey)
     )[0];
+    console.log("inside sell");
 
     const [programAsSigner, programAsSignerBump] =
       await getAuctionHouseProgramAsSigner();
    
+      console.log("inside sell");
 
     const [tradeState, tradeBump] = await getAuctionHouseTradeState(
       auctionHouseKey,
@@ -240,6 +255,7 @@ export const sell = async (cmd : any) => {
       tokenSizeAdjusted,
       buyPriceAdjusted,
     );
+    console.log("inside sell");
 
     const [freeTradeState, freeTradeBump] = await getAuctionHouseTradeState(
       auctionHouseKey,
@@ -250,6 +266,7 @@ export const sell = async (cmd : any) => {
       tokenSizeAdjusted,
       new BN(0),
     );
+    console.log("inside sell");
       
     const signers : Keypair[] = [];
     console.log("here done")

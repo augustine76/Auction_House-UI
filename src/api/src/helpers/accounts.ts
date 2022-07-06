@@ -38,7 +38,7 @@ export type AccountAndPubkey = {
   pubkey: string;
   account: AccountInfo<Buffer>;
 };
-
+import {Wallet} from "@project-serum/anchor";
 export type StringPublicKey = string;
 
 // TODO: expose in spl package
