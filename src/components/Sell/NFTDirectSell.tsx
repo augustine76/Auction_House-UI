@@ -66,7 +66,7 @@ export const NFTDetails = (props) => {
 
         sell({ auctionHouse: auctionHouseAddress, buyPrice: price, mint: mint, tokenSize: '1', wallet: wallet }).then(x => {
 
-            // alert('Create Sell Action' + 'Account' + x.account + 'MintAddress' + x.mintAddress + 'Price' + x.price);
+            alert('Create Sell Action' + 'Account' + x.account + 'MintAddress' + x.mintAddress + 'Price' + x.price);
             const nft = { owner: publicKey, mintKey: mint, priceAmount: price };
             axios.post(`${baseURL}/listNFT`, nft)
             .then(response => {console.log("response", response)

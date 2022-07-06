@@ -177,6 +177,7 @@ export const withdraw = async (cmd : any) => {
   };
 
 export const sell = async (cmd : any) => {
+    console.log("inside sell");
     const {
       wallet,
       env,
