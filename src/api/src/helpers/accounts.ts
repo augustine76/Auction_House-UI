@@ -40,7 +40,7 @@ export type AccountAndPubkey = {
 };
 import {Wallet} from "@project-serum/anchor";
 import {Provider} from "@project-serum/anchor";
-import { Program, AnchorProvider, web3 } from "@project-serum/anchor";
+import { AnchorProvider } from "@project-serum/anchor";
 
 
 export type StringPublicKey = string;
