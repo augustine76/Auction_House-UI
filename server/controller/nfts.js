@@ -43,7 +43,16 @@ export const listNFT = async (req, res) => {
                 await collection.activity.push(activity);
                 await collection.save();
 
-                const user = await User.findOne({ publicKey: owner })
+                let user = await User.findOne({ publicKey: owner })
+
+                if(!user){
+                    user = new User({
+                        publicKey:owner,
+                        signature: "",
+                        isSigned: true
+                    });
+                }
+
                 user.activity.push(activity);
                 await user.save();
 
