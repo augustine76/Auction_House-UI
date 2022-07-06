@@ -177,7 +177,7 @@ export const withdraw = async (cmd : any) => {
   };
 
 export const sell = async (cmd : any) => {
-    console.log("inside sell");
+    console.log("inside sell 1");
     const {
       wallet,
       env,
@@ -188,33 +188,33 @@ export const sell = async (cmd : any) => {
       tokenSize,
       auctionHouseSigns,
     } = cmd;
-    console.log("inside sell");
+    console.log("inside sell 2");
 
     const auctionHouseKey = new web3.PublicKey(auctionHouse);
     const walletKeyPair = wallet;
-    console.log("inside sell");
+    console.log("inside sell 3");
 
     const mintKey = new web3.PublicKey(mint);
-    console.log("inside sell");
+    console.log("inside sell 4");
 
 
     const auctionHouseKeypairLoaded = auctionHouseKeypair
       ? loadWalletKey(auctionHouseKeypair)
       : null as any;;
 
-    console.log("inside sell");
+    console.log("inside sell 5");
 
     const anchorProgram = await loadAuctionHouseProgram(
       auctionHouseSigns ? auctionHouseKeypairLoaded : walletKeyPair,
       env,
     );
 
-    console.log("inside sell");
+    console.log("inside sell 6");
 
     const auctionHouseObj = await anchorProgram.account.auctionHouse.fetch(
       auctionHouseKey,
     );
-    console.log("inside sell");
+    console.log("inside sell 7");
 
     const buyPriceAdjusted = new BN(
       await getPriceWithMantissa(
@@ -224,7 +224,7 @@ export const sell = async (cmd : any) => {
         anchorProgram,
       ),
     );
-    console.log("inside sell");
+    console.log("inside sell 8");
 
     const tokenSizeAdjusted = new BN(
       await getPriceWithMantissa(
@@ -234,17 +234,17 @@ export const sell = async (cmd : any) => {
         anchorProgram,
       ),
     );
-    console.log("inside sell");
+    console.log("inside sell 9");
 
     const tokenAccountKey = (
       await getAtaForMint(mintKey, walletKeyPair.publicKey)
     )[0];
-    console.log("inside sell");
+    console.log("inside sell 10");
 
     const [programAsSigner, programAsSignerBump] =
       await getAuctionHouseProgramAsSigner();
    
-      console.log("inside sell");
+      console.log("inside sell 11");
 
     const [tradeState, tradeBump] = await getAuctionHouseTradeState(
       auctionHouseKey,
@@ -255,7 +255,7 @@ export const sell = async (cmd : any) => {
       tokenSizeAdjusted,
       buyPriceAdjusted,
     );
-    console.log("inside sell");
+    console.log("inside sel 12l");
 
     const [freeTradeState, freeTradeBump] = await getAuctionHouseTradeState(
       auctionHouseKey,
@@ -266,7 +266,7 @@ export const sell = async (cmd : any) => {
       tokenSizeAdjusted,
       new BN(0),
     );
-    console.log("inside sell");
+    console.log("inside sell 13");
       
     const signers : Keypair[] = [];
     console.log("here done")

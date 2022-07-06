@@ -39,6 +39,8 @@ export type AccountAndPubkey = {
   account: AccountInfo<Buffer>;
 };
 import {Wallet} from "@project-serum/anchor";
+import {Provider} from "@project-serum/anchor";
+
 export type StringPublicKey = string;
 
 // TODO: expose in spl package
@@ -586,7 +588,7 @@ export async function loadCandyProgram(
   );
 
   const walletWrapper = new anchor.Wallet(walletKeyPair);
-  const provider = new anchor.Provider(solConnection, walletWrapper, {
+  const provider = new Provider(solConnection, walletWrapper, {
     preflightCommitment: 'recent',
   });
   const idl = await anchor.Program.fetchIdl(CANDY_MACHINE_PROGRAM_ID, provider);
@@ -609,7 +611,7 @@ export async function loadCandyProgramV2(
   );
 
   const walletWrapper = new anchor.Wallet(walletKeyPair);
-  const provider = new anchor.Provider(solConnection, walletWrapper, {
+  const provider = new Provider(solConnection, walletWrapper, {
     preflightCommitment: 'recent',
   });
   const idl = await anchor.Program.fetchIdl(
@@ -638,7 +640,7 @@ export async function loadFairLaunchProgram(
     customRpcUrl || getCluster(env),
   );
   const walletWrapper = new anchor.Wallet(walletKeyPair);
-  const provider = new anchor.Provider(solConnection, walletWrapper, {
+  const provider = new Provider(solConnection, walletWrapper, {
     preflightCommitment: 'recent',
   });
   const idl = await anchor.Program.fetchIdl(FAIR_LAUNCH_PROGRAM_ID, provider);
@@ -659,7 +661,7 @@ export async function loadAuctionHouseProgram(
     customRpcUrl || getCluster(env),
   );
   const walletWrapper = walletKeyPair;
-  const provider = new anchor.Provider(solConnection, walletWrapper, {
+  const provider = new Provider(solConnection, walletWrapper, {
     preflightCommitment: 'recent',
   });
   const idl = await anchor.Program.fetchIdl(AUCTION_HOUSE_PROGRAM_ID, provider);
@@ -680,7 +682,7 @@ export async function loadTokenEntanglementProgream(
     customRpcUrl || getCluster(env),
   );
   const walletWrapper = new anchor.Wallet(walletKeyPair);
-  const provider = new anchor.Provider(solConnection, walletWrapper, {
+  const provider = new Provider(solConnection, walletWrapper, {
     preflightCommitment: 'recent',
   });
   const idl = await anchor.Program.fetchIdl(
